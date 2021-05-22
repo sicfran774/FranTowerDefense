@@ -66,7 +66,7 @@ public class UpgradeAssets : MonoBehaviour
         }
         else if (treeOneLevel == 2)
         {
-            upgradeDescOne.text = "Larger\nProjectile";
+            upgradeDescOne.text = "Double\nDamage";
             upgradeImageOne.sprite = pogShooterImageOneOne;
             upgradePriceOne.text = upgradeOnePrice.ToString();
         }

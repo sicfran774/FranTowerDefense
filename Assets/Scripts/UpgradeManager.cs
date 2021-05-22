@@ -9,6 +9,9 @@ public class UpgradeManager : MonoBehaviour
     public float rangeUpgrade = 2f;
     public float fireRateUpgrade = 0.70f;
 
+    [Header("Upgraded Ammo")]
+    public GameObject pogShooterDoubleDamageProjectile;
+
     [Header("Other")]
     public float sellMultiplier;
 
@@ -23,14 +26,12 @@ public class UpgradeManager : MonoBehaviour
 
     private string towerType;
     private int refund;
-    private int upgradeTotalPrice;
 
     void Awake()
     {
         upgradeUI = GameObject.Find("Buttons");
         player = GameObject.Find("Player");
         refund = 0;
-        upgradeTotalPrice = 0;
     }
 
     void Update()
@@ -111,7 +112,7 @@ public class UpgradeManager : MonoBehaviour
         if (AffordUpgrade(price))
         {
             SubtractMoney(price);
-            upgradeTotalPrice += price; //This adds the upgrade price to the total value of the tower; specifically for the CalculateRefund() function
+            currentTower.GetComponent<Tower>().price += price; //This adds the upgrade price to the total value of the tower; specifically for the CalculateRefund() function
             UnlockUpgradeForSpecificTower(currentTower.GetComponent<Tower>().towerType, tree, upgradeLevel);
         }
     }
@@ -144,8 +145,7 @@ public class UpgradeManager : MonoBehaviour
 
     void CalculateRefund()
     {
-        int priceWithUpgrades = currentTower.GetComponent<Tower>().price + upgradeTotalPrice;
-        refund = (int)(priceWithUpgrades * sellMultiplier);
+        refund = (int)(currentTower.GetComponent<Tower>().price * sellMultiplier);
     }
 
     void ToggleUpgradeButton(int treeOneLevel, int treeTwoLevel)
@@ -190,7 +190,7 @@ public class UpgradeManager : MonoBehaviour
         }
         if(tree == 1 && upgradeLevel == 2)
         {
-            
+            UpgradeProjectile(pogShooterDoubleDamageProjectile);
         }
         if(tree == 2 && upgradeLevel == 1)
         {
@@ -198,9 +198,8 @@ public class UpgradeManager : MonoBehaviour
         }
         if(tree == 2 && upgradeLevel == 2)
         {
-
+            currentTower.GetComponent<SpreadShot>().activated = true;
         }
-
 
         upgrade.IncrementUpgradeLevel(tree);
     }
@@ -222,4 +221,8 @@ public class UpgradeManager : MonoBehaviour
         currentTower.GetComponent<Tower>().SetFireRate(fireRate);
     }
 
+    void UpgradeProjectile(GameObject projectile)
+    {
+        currentTower.GetComponent<Tower>().SetProjectile(projectile);
+    }
 }

@@ -59,6 +59,7 @@ GameObject:
   - component: {fileID: 7056536686930864658}
   - component: {fileID: 1516116484168645187}
   - component: {fileID: 6001982654673663277}
+  - component: {fileID: -2198238046915717195}
   - component: {fileID: 7508527706684978957}
   - component: {fileID: 238498002658992316}
   m_Layer: 9
@@ -169,7 +170,7 @@ MonoBehaviour:
   towerType: PogShooter
   rangeRadius: 1.5
   fireRate: 1
-  projectileSpeed: 600
+  projectileSpeed: 500
   price: 200
   upgrade11Price: 150
   upgrade12Price: 300
@@ -180,6 +181,19 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1281
   ammo: {fileID: 2729044805137084285, guid: 4affe7eaf3cb7e84996eda273f8bc3ce, type: 3}
+--- !u!114 &-2198238046915717195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2400081579519672122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32cb1a617fa098f4a9a405d25f88d0dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activated: 0
 --- !u!50 &7508527706684978957
 Rigidbody2D:
   serializedVersion: 4

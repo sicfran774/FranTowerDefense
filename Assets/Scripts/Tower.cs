@@ -90,22 +90,31 @@ public class Tower : MonoBehaviour
         UpdateRange();
     }
 
+    public GameObject InstantiateAmmo()
+    {
+        GameObject projectile = Instantiate(ammo, transform);
+        return projectile;
+    }
+
     void ShootEnemy(GameObject enemy)
     {
         if (timer > fireRate && GetComponent<PlaceTower>().placedTower)
         {
             Vector2 direction = PointAtEnemy(ref enemy);
 
-            bulletsShot++;
+            GameObject projectile = InstantiateAmmo();
 
-            GameObject projectile = Instantiate(ammo);
-            projectile.transform.position = transform.position;
-            projectile.transform.rotation = transform.rotation;
-            FlipImage(angle, projectile, projectile.transform.localScale.x);
+            if (GetComponent<SpreadShot>().activated)
+            {
+                GetComponent<SpreadShot>().ShootSpread(direction, projectileSpeed);
+                bulletsShot += 3;
+            }
+
             projectile.GetComponent<Rigidbody2D>().AddForce(direction * projectileSpeed);
 
             gameManager.GetComponent<GameManager>().PlayWhishNoise();
 
+            bulletsShot++;
             timer = 0;
         }
     }
@@ -172,6 +181,11 @@ public class Tower : MonoBehaviour
     public void SetFireRate(float fireRate)
     {
         this.fireRate = fireRate;
+    }
+
+    public void SetProjectile(GameObject ammo)
+    {
+        this.ammo = ammo;
     }
 
     void OnTriggerEnter2D(Collider2D collider)

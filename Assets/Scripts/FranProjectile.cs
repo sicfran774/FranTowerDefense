@@ -15,16 +15,12 @@ public class FranProjectile : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.tag == "Enemy")
-        {
-            RemoveEnemyHealth(collider);
-            UpdateEnemySpeed(collider);
+        RemoveEnemyHealth(collider);
+        UpdateEnemySpeed(collider);
 
-            GetComponent<BoxCollider2D>().enabled = false;
-            gameManager.GetComponent<GameManager>().PlayPopNoise(collider.gameObject);
-
-            Destroy(gameObject);
-        }
+        gameManager.GetComponent<GameManager>().PlayPopNoise(collider.gameObject);
+        GetComponent<BoxCollider2D>().enabled = false;
+        Destroy(gameObject);
     }
     
     void UpdateEnemySpeed(Collider2D collider)
@@ -39,7 +35,7 @@ public class FranProjectile : MonoBehaviour
 
     IEnumerator DestroyProjectile()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(3f);
         Destroy(gameObject);
     }
 }
