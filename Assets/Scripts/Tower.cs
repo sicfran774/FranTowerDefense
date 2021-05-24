@@ -101,17 +101,20 @@ public class Tower : MonoBehaviour
         if (timer > fireRate && GetComponent<PlaceTower>().placedTower)
         {
             Vector2 direction = PointAtEnemy(ref enemy);
+            //Debug.Log(direction);
 
             GameObject projectile = InstantiateAmmo();
 
             if (GetComponent<SpreadShot>().activated)
             {
+                projectile.GetComponent<Rigidbody2D>().AddForce(direction * projectileSpeed);
                 GetComponent<SpreadShot>().ShootSpread(direction, projectileSpeed);
-                bulletsShot += 3;
+                bulletsShot += 2;
             }
-
-            projectile.GetComponent<Rigidbody2D>().AddForce(direction * projectileSpeed);
-
+            else
+            {
+                projectile.GetComponent<Rigidbody2D>().AddForce(direction * projectileSpeed);
+            }
             gameManager.GetComponent<GameManager>().PlayWhishNoise();
 
             bulletsShot++;
@@ -186,6 +189,11 @@ public class Tower : MonoBehaviour
     public void SetProjectile(GameObject ammo)
     {
         this.ammo = ammo;
+    }
+
+    public void ChangeColor(Color color)
+    {
+        GetComponent<SpriteRenderer>().color = color;
     }
 
     void OnTriggerEnter2D(Collider2D collider)

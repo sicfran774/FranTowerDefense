@@ -35,7 +35,7 @@ public class FranProjectile : MonoBehaviour
 
     IEnumerator DestroyProjectile()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1f);
         Destroy(gameObject);
     }
 }

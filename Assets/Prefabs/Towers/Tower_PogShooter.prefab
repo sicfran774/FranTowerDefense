@@ -169,8 +169,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerType: PogShooter
   rangeRadius: 1.5
-  fireRate: 1
-  projectileSpeed: 500
+  fireRate: 1.1
+  projectileSpeed: 400
   price: 200
   upgrade11Price: 150
   upgrade12Price: 300
@@ -194,6 +194,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activated: 0
+  degreeSpread: 0.5
 --- !u!50 &7508527706684978957
 Rigidbody2D:
   serializedVersion: 4
