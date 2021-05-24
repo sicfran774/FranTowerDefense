@@ -53,19 +53,27 @@ public class Tower : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-        if (enemies.Count > 0)
+
+        if (GetComponent<JrollHandler>() != null && timer > fireRate && GetComponent<PlaceTower>().placedTower && GetComponent<JrollHandler>().hitPath)
         {
-            enemyWithinRange = true;
-            currentEnemy = enemies[0];
+            ApplyJroll();
         }
         else
         {
-            enemyWithinRange = false;
-        }
+            if (enemies.Count > 0)
+            {
+                enemyWithinRange = true;
+                currentEnemy = enemies[0];
+            }
+            else
+            {
+                enemyWithinRange = false;
+            }
 
-        if (enemyWithinRange && currentEnemy != null) //Shoot enemy
-        {
-            ShootEnemy(currentEnemy);
+            if (enemyWithinRange && currentEnemy != null && timer > fireRate && GetComponent<PlaceTower>().placedTower) //Shoot enemy
+            {
+                ShootEnemy(currentEnemy);
+            }
         }
 
         if (Input.GetMouseButtonDown(0))
@@ -98,28 +106,25 @@ public class Tower : MonoBehaviour
 
     void ShootEnemy(GameObject enemy)
     {
-        if (timer > fireRate && GetComponent<PlaceTower>().placedTower)
+        Vector2 direction = PointAtEnemy(ref enemy);
+        //Debug.Log(direction);
+
+        GameObject projectile = InstantiateAmmo();
+
+        if (GetComponent<SpreadShot>().activated)
         {
-            Vector2 direction = PointAtEnemy(ref enemy);
-            //Debug.Log(direction);
-
-            GameObject projectile = InstantiateAmmo();
-
-            if (GetComponent<SpreadShot>().activated)
-            {
-                projectile.GetComponent<Rigidbody2D>().AddForce(direction * projectileSpeed);
-                GetComponent<SpreadShot>().ShootSpread(direction, projectileSpeed);
-                bulletsShot += 2;
-            }
-            else
-            {
-                projectile.GetComponent<Rigidbody2D>().AddForce(direction * projectileSpeed);
-            }
-            gameManager.GetComponent<GameManager>().PlayWhishNoise();
-
-            bulletsShot++;
-            timer = 0;
+            projectile.GetComponent<Rigidbody2D>().AddForce(direction * projectileSpeed);
+            GetComponent<SpreadShot>().ShootSpread(direction, projectileSpeed);
+            bulletsShot += 2;
         }
+        else
+        {
+            projectile.GetComponent<Rigidbody2D>().AddForce(direction * projectileSpeed);
+        }
+        gameManager.GetComponent<GameManager>().PlayWhishNoise();
+
+        bulletsShot++;
+        timer = 0;
     }
 
     Vector2 PointAtEnemy(ref GameObject enemy)
@@ -152,12 +157,29 @@ public class Tower : MonoBehaviour
         }
     }
 
+    void ApplyJroll()
+    {
+        GameObject jrollSpike = InstantiateAmmo();
+        jrollSpike.GetComponent<Rigidbody2D>().AddForce(GetComponent<JrollHandler>().GetDirection() * projectileSpeed);
+
+        GetComponent<JrollHandler>().GenerateRandomLine();
+        timer = 0;
+    }
+
     void UpdateRange()
     {
         rangeIndicator.transform.localScale = new Vector3(rangeRadius * 2, rangeRadius * 2, 0);
         if (GetComponent<PlaceTower>().placedTower)
         {
-            transform.GetComponentInChildren<CircleCollider2D>().radius = rangeRadius;
+            if (GetComponent<JrollHandler>() != null)
+            {
+                GetComponent<JrollHandler>().range = rangeRadius;
+            }
+            else
+            {
+
+                transform.GetComponentInChildren<CircleCollider2D>().radius = rangeRadius;
+            }
         }
     }
 

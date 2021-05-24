@@ -9,10 +9,12 @@ public class TilePosition : MonoBehaviour
     private CircleCollider2D circle;
 
     public List<Bounds> availablePlaces;
+    public List<Bounds> legalTiles;
 
     void Awake()
     {
         availablePlaces = new List<Bounds>();
+        legalTiles = new List<Bounds>();
         circle = GetComponent<CircleCollider2D>();
 
         for (int n = tileMap.cellBounds.xMin; n < tileMap.cellBounds.xMax; n++)
@@ -39,13 +41,22 @@ public class TilePosition : MonoBehaviour
     {
         if (Input.GetKeyDown("space"))
         {
-            Debug.Log(string.Join("  ", availablePlaces));
+            Debug.Log(string.Join(", ", legalTiles));
         }
         if (Input.GetKeyDown("p"))
         {
-            if (circle.bounds.Intersects(availablePlaces[0]))
+            EstablishSpikeableTiles();
+        }
+    }
+
+    void EstablishSpikeableTiles()
+    {
+        legalTiles.Clear();
+        for(int i = 0; i < availablePlaces.Count; i++)
+        {
+            if (circle.bounds.Intersects(availablePlaces[i]))
             {
-                Debug.Log(availablePlaces[0] + " is within the collider");
+                legalTiles.Add(availablePlaces[i]);
             }
         }
     }

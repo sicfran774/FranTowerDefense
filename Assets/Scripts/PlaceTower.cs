@@ -8,7 +8,6 @@ public class PlaceTower : MonoBehaviour
 {
     public GameObject towerType;
     public bool placedTower;
-    public LayerMask layer;
 
     private int price, numObjects;
     public bool destroyable, overlapping, afford;
@@ -41,8 +40,6 @@ public class PlaceTower : MonoBehaviour
 
     void Update()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.zero, Mathf.Infinity, layer);
-
         if(numObjects == 0) //If there are no collisions occuring
         {
             rangeIndicator.GetComponent<SpriteRenderer>().color = color;
