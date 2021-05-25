@@ -113,13 +113,13 @@ public class UpgradeManager : MonoBehaviour
         {
             SubtractMoney(price);
             currentTower.GetComponent<Tower>().price += price; //This adds the upgrade price to the total value of the tower; specifically for the CalculateRefund() function
-            UnlockUpgradeForSpecificTower(currentTower.GetComponent<Tower>().towerType, tree, upgradeLevel);
+            UnlockUpgradeForSpecificTower(towerType, tree, upgradeLevel);
         }
     }
 
     public void UnlockUpgradeForSpecificTower(string towerType, int tree, int upgradeLevel)
     {
-        if(towerType == "PogShooter")
+        if(towerType == "Pog Shooter")
         {
             PogShooterUpgrades(tree, upgradeLevel);
         }

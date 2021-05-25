@@ -35,6 +35,7 @@ public class PlaceTower : MonoBehaviour
         color = rangeIndicator.GetComponent<SpriteRenderer>().color;
         colorRed = new Color(1f, 0f, 0f, 0.38f);
 
+        this.tag = "SelectedTower";
         price = GetComponent<Tower>().price;
     }
 
@@ -61,6 +62,7 @@ public class PlaceTower : MonoBehaviour
             DisableButtons();
             FollowMouse();
         }
+
         if (Input.GetMouseButtonDown(0))
         {
             if (destroyable)
@@ -72,7 +74,6 @@ public class PlaceTower : MonoBehaviour
             {
                 placedTower = true;
                 transform.GetChild(0).gameObject.SetActive(true);
-                this.tag = "SelectedTower";
 
                 SubtractMoney();
                 EnableButtons();

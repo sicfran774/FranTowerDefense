@@ -6,6 +6,7 @@ using UnityEngine.Tilemaps;
 public class JrollHandler : MonoBehaviour
 {
     public EdgeCollider2D edge;
+    public LayerMask layerMask;
     private TilemapCollider2D tileMap;
 
     private Vector2[] colliderpoints;
@@ -41,7 +42,7 @@ public class JrollHandler : MonoBehaviour
 
     public void GenerateRandomLine()
     {
-        x = Random.Range(-range, range);
+        x = Random.Range(0, range);
         MaintainHypotnuse();
 
         //Debug.Log("x: " + x + " y: " + y);
@@ -55,7 +56,7 @@ public class JrollHandler : MonoBehaviour
     {
         y = Mathf.Sqrt(Mathf.Pow(range, 2) - Mathf.Pow(x, 2));
 
-        int rand = Random.Range(0, 2);
+        int rand = Random.Range(0, 3);
         if(rand == 0)
         {
             x = -x;
@@ -63,6 +64,11 @@ public class JrollHandler : MonoBehaviour
         else if (rand == 1)
         {
             y = -y;
+        }
+        else if (rand == 2)
+        {
+            y = -y;
+            x = -x;
         }
     }
 
@@ -81,5 +87,27 @@ public class JrollHandler : MonoBehaviour
         {
             hitPath = false;
         }
+    }
+
+    float GetDistanceFromPath()
+    {
+        RaycastHit2D fromCenterToEdge = Physics2D.Raycast(transform.position, direction, range, ~layerMask);
+
+        if (fromCenterToEdge.collider != null)
+        {
+            float distance = range + (range - fromCenterToEdge.distance);
+
+            return distance;
+        }
+        else
+        {
+            return range;
+        }
+    }
+
+    public float GetLinearDrag()
+    {
+        //If you double the range, you calculate the drag needed to halve that distance. And so on and so on
+        return GetDistanceFromPath();
     }
 }

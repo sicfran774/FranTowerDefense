@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 4231876074497334396}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 20.8, y: 20.8, z: 1}
+  m_LocalScale: {x: 15.8, y: 15.8, z: 1}
   m_Children: []
   m_Father: {fileID: 4231876074660609648}
   m_RootOrder: 1
@@ -183,9 +183,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerType: {fileID: 4231876074660609655}
   placedTower: 0
-  layer:
-    serializedVersion: 2
-    m_Bits: 8193
   destroyable: 0
   overlapping: 0
   afford: 0
@@ -202,10 +199,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   towerType: Jroll
-  rangeRadius: 2
+  rangeRadius: 1.5
   fireRate: 1
   projectileSpeed: 100
-  price: 0
+  price: 800
   upgrade11Price: 0
   upgrade12Price: 0
   upgrade21Price: 0
@@ -214,7 +211,7 @@ MonoBehaviour:
   layer:
     serializedVersion: 2
     m_Bits: 1281
-  ammo: {fileID: 2729044805137084285, guid: 4affe7eaf3cb7e84996eda273f8bc3ce, type: 3}
+  ammo: {fileID: 5821463407135236317, guid: 0e0655ecaf8b5b44b9f3504a0315b1bb, type: 3}
 --- !u!70 &6207866987648167885
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -265,6 +262,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   edge: {fileID: 351920059294513019}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 5632
   range: 0
   hitPath: 0
 --- !u!1 &4231876074897509020
@@ -277,7 +277,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4231876074897509021}
   - component: {fileID: 351920059294513019}
-  m_Layer: 13
+  m_Layer: 10
   m_Name: Range
   m_TagString: Untagged
   m_Icon: {fileID: 0}

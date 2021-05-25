@@ -50,7 +50,7 @@ public class UpgradeAssets : MonoBehaviour
     {
         refundText.text = refund.ToString();
 
-        if(towerType == "PogShooter")
+        if(towerType == "Pog Shooter")
         {
             PogShooterAssets(treeOneLevel, treeTwoLevel, upgradeOnePrice, upgradeTwoPrice);
         }

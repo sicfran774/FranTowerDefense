@@ -54,25 +54,26 @@ public class Tower : MonoBehaviour
     {
         timer += Time.deltaTime;
 
-        if (GetComponent<JrollHandler>() != null && timer > fireRate && GetComponent<PlaceTower>().placedTower && GetComponent<JrollHandler>().hitPath)
+        if (enemies.Count > 0)
         {
-            ApplyJroll();
+            enemyWithinRange = true;
+            currentEnemy = enemies[0];
         }
         else
         {
-            if (enemies.Count > 0)
-            {
-                enemyWithinRange = true;
-                currentEnemy = enemies[0];
-            }
-            else
-            {
-                enemyWithinRange = false;
-            }
+            enemyWithinRange = false;
+        }
 
-            if (enemyWithinRange && currentEnemy != null && timer > fireRate && GetComponent<PlaceTower>().placedTower) //Shoot enemy
+        if (enemyWithinRange && currentEnemy != null && timer > fireRate && GetComponent<PlaceTower>().placedTower) //Shoot enemy
+        {
+            ShootEnemy(currentEnemy);
+        }
+
+        if (gameManager.GetComponent<GameManager>().roundInProgress)
+        {
+            if (GetComponent<JrollHandler>() != null && timer > fireRate && GetComponent<PlaceTower>().placedTower && GetComponent<JrollHandler>().hitPath)
             {
-                ShootEnemy(currentEnemy);
+                ApplyJroll();
             }
         }
 
@@ -160,6 +161,8 @@ public class Tower : MonoBehaviour
     void ApplyJroll()
     {
         GameObject jrollSpike = InstantiateAmmo();
+        jrollSpike.transform.position = transform.position;
+        jrollSpike.GetComponent<Rigidbody2D>().drag = GetComponent<JrollHandler>().GetLinearDrag();
         jrollSpike.GetComponent<Rigidbody2D>().AddForce(GetComponent<JrollHandler>().GetDirection() * projectileSpeed);
 
         GetComponent<JrollHandler>().GenerateRandomLine();
@@ -168,16 +171,16 @@ public class Tower : MonoBehaviour
 
     void UpdateRange()
     {
-        rangeIndicator.transform.localScale = new Vector3(rangeRadius * 2, rangeRadius * 2, 0);
         if (GetComponent<PlaceTower>().placedTower)
         {
             if (GetComponent<JrollHandler>() != null)
             {
+                rangeIndicator.transform.localScale = new Vector3(rangeRadius * 10 + 0.8f, rangeRadius * 10 + 0.8f, 0);
                 GetComponent<JrollHandler>().range = rangeRadius;
             }
             else
             {
-
+                rangeIndicator.transform.localScale = new Vector3(rangeRadius * 2, rangeRadius * 2, 0);
                 transform.GetComponentInChildren<CircleCollider2D>().radius = rangeRadius;
             }
         }

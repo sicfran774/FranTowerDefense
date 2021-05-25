@@ -149,9 +149,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerType: {fileID: 2400081579519672122}
   placedTower: 0
-  layer:
-    serializedVersion: 2
-    m_Bits: 8193
   destroyable: 0
   overlapping: 0
   afford: 0
@@ -167,7 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4cbd091e5f7a7a4b907c38ec2811138, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  towerType: PogShooter
+  towerType: Pog Shooter
   rangeRadius: 1.5
   fireRate: 1.1
   projectileSpeed: 400
@@ -229,8 +226,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.75, y: 0.75}
+  m_Offset: {x: -0.0030066418, y: -0.009020292}
+  m_Size: {x: 0.6998862, y: 0.71191347}
   m_Direction: 0
 --- !u!1 &3320951146349382510
 GameObject:
@@ -258,7 +255,7 @@ Transform:
   m_GameObject: {fileID: 3320951146349382510}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4, y: 4, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 1}
   m_Children: []
   m_Father: {fileID: 7482555864946041886}
   m_RootOrder: 1

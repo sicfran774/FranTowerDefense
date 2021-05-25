@@ -47,6 +47,9 @@ public class GameManager : MonoBehaviour
         upgradeUI.GetComponent<CanvasGroup>().interactable = false;
         upgradeUI.GetComponent<CanvasGroup>().alpha = 0;
 
+        //Same as above but tower info
+        gameUI.transform.GetChild(1).gameObject.SetActive(false);
+
         //Hide pause UI
         pauseMenu.SetActive(false);
     }

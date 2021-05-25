@@ -9,7 +9,10 @@ public class FranProjectile : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(DestroyProjectile());
+        if(transform.GetComponentInParent<JrollHandler>() == null)
+        {
+            StartCoroutine(DestroyProjectile());
+        }
         gameManager = GameObject.FindGameObjectWithTag("GameController");
     }
 
