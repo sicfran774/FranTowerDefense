@@ -79,7 +79,7 @@ public class PlaceTower : MonoBehaviour
                 EnableButtons();
             }
         }
-        if(GameObject.Find("Player").GetComponent<Player>().money - price >= 0)
+        if(gameUI.GetComponent<Player>().money - price >= 0)
         {
             afford = true;
         }
@@ -107,7 +107,7 @@ public class PlaceTower : MonoBehaviour
 
     void SubtractMoney()
     {
-        GameObject.Find("Player").GetComponent<Player>().money -= price;
+        gameUI.GetComponent<Player>().money -= price;
     }
 
     void OnTriggerEnter2D(Collider2D collider)

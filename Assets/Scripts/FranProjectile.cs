@@ -5,7 +5,12 @@ using UnityEngine;
 public class FranProjectile : MonoBehaviour
 {
     public int damage;
+
+    public bool burn;
+    public int burnTick;
+
     private GameObject gameManager;
+    private int reward;
 
     void Start()
     {
@@ -18,9 +23,13 @@ public class FranProjectile : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider)
     {
+        CalculateReward(collider);
+
+        collider.GetComponent<Enemy>().reward = reward;
+
         RemoveEnemyHealth(collider);
         UpdateEnemySpeed(collider);
-
+        
         gameManager.GetComponent<GameManager>().PlayPopNoise(collider.gameObject);
         GetComponent<BoxCollider2D>().enabled = false;
         Destroy(gameObject);
@@ -34,6 +43,17 @@ public class FranProjectile : MonoBehaviour
     void RemoveEnemyHealth(Collider2D collider)
     {
         collider.GetComponent<Enemy>().health -= damage;
+    }
+    void CalculateReward(Collider2D collider)
+    {
+        if(damage > collider.GetComponent<Enemy>().health)
+        {
+            reward = collider.GetComponent<Enemy>().health;
+        }
+        else
+        {
+            reward = damage;
+        }
     }
 
     IEnumerator DestroyProjectile()

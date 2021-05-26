@@ -34,7 +34,7 @@ public class Tower : MonoBehaviour
 
     private GameObject rangeIndicator;
     private bool enemyWithinRange;
-    private float timer;
+    public float timer;
     private float angle;
 
     void Start()
@@ -54,26 +54,21 @@ public class Tower : MonoBehaviour
     {
         timer += Time.deltaTime;
 
-        if (enemies.Count > 0)
+        if (GetComponent<JrollHandler>() == null)
         {
-            enemyWithinRange = true;
-            currentEnemy = enemies[0];
-        }
-        else
-        {
-            enemyWithinRange = false;
-        }
-
-        if (enemyWithinRange && currentEnemy != null && timer > fireRate && GetComponent<PlaceTower>().placedTower) //Shoot enemy
-        {
-            ShootEnemy(currentEnemy);
-        }
-
-        if (gameManager.GetComponent<GameManager>().roundInProgress)
-        {
-            if (GetComponent<JrollHandler>() != null && timer > fireRate && GetComponent<PlaceTower>().placedTower && GetComponent<JrollHandler>().hitPath)
+            if (enemies.Count > 0)
             {
-                ApplyJroll();
+                enemyWithinRange = true;
+                currentEnemy = enemies[0];
+            }
+            else
+            {
+                enemyWithinRange = false;
+            }
+
+            if (enemyWithinRange && currentEnemy != null && timer > fireRate && GetComponent<PlaceTower>().placedTower) //Shoot enemy
+            {
+                ShootEnemy(currentEnemy);
             }
         }
 
@@ -84,6 +79,7 @@ public class Tower : MonoBehaviour
             {
                 this.tag = "SelectedTower";
                 ShowRange();
+                //Debug.Log(string.Join(", ", enemies));
             }
             else if(hit.collider != null && hit.collider.tag == "Upgrade")
             {
@@ -99,7 +95,7 @@ public class Tower : MonoBehaviour
         UpdateRange();
     }
 
-    public GameObject InstantiateAmmo()
+    public GameObject InstantiateAmmo(Transform transform)
     {
         GameObject projectile = Instantiate(ammo, transform);
         return projectile;
@@ -110,7 +106,7 @@ public class Tower : MonoBehaviour
         Vector2 direction = PointAtEnemy(ref enemy);
         //Debug.Log(direction);
 
-        GameObject projectile = InstantiateAmmo();
+        GameObject projectile = InstantiateAmmo(transform);
 
         if (GetComponent<SpreadShot>().activated)
         {
@@ -156,17 +152,6 @@ public class Tower : MonoBehaviour
         {
             obj.transform.localScale = new Vector2(scale, scale);
         }
-    }
-
-    void ApplyJroll()
-    {
-        GameObject jrollSpike = InstantiateAmmo();
-        jrollSpike.transform.position = transform.position;
-        jrollSpike.GetComponent<Rigidbody2D>().drag = GetComponent<JrollHandler>().GetLinearDrag();
-        jrollSpike.GetComponent<Rigidbody2D>().AddForce(GetComponent<JrollHandler>().GetDirection() * projectileSpeed);
-
-        GetComponent<JrollHandler>().GenerateRandomLine();
-        timer = 0;
     }
 
     void UpdateRange()

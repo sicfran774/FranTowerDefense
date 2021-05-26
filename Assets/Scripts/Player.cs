@@ -5,22 +5,20 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    GameObject parent;
-    Text healthText;
-    Text moneyText;
-    Text round;
+    private GameObject player;
+    private Text healthText;
+    private Text moneyText;
+    private Text round;
 
     public int health;
     public int money;
 
     void Awake()
     {
-        parent = transform.GetChild(0).gameObject;
-        healthText = parent.GetComponent<Text>();
-        parent = transform.GetChild(2).gameObject;
-        moneyText = parent.GetComponent<Text>();
-        parent = transform.GetChild(4).gameObject;
-        round = parent.GetComponent<Text>();
+        player = GameObject.FindGameObjectWithTag("Player");
+        healthText = player.transform.GetChild(0).GetComponent<Text>();
+        moneyText = player.transform.GetChild(1).GetComponent<Text>();
+        round = player.transform.GetChild(2).GetComponent<Text>();
     }
 
 

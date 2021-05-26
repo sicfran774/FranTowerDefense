@@ -8,30 +8,43 @@ public class Enemy : MonoBehaviour
     public int health;
     public int reward;
     public string direction;
+    public bool burning;
 
     private bool hit;
 
+    private GameObject gameManager;
+
     private Rigidbody2D rb;
+
     private SpriteRenderer sprite;
+    private GameObject spriteFire;
+
     private CircleCollider2D circle;
     private Color color;
 
-    void Start()
+    void Awake()
     {
+        gameManager = GameObject.FindGameObjectWithTag("GameController");
+
         rb = GetComponent<Rigidbody2D>();
+
         sprite = GetComponent<SpriteRenderer>();
+        spriteFire = transform.GetChild(0).gameObject;
+
         color = GetComponent<SpriteRenderer>().color;
         circle = GetComponent<CircleCollider2D>();
 
         hit = false;
+
+        spriteFire.SetActive(false);
     }
 
     void Update()
     {
         if (hit)
         {
-            RewardMoney();
             hit = false;
+            RewardMoney();
         }
 
         if (health <= 0)
@@ -41,12 +54,19 @@ public class Enemy : MonoBehaviour
         
         ChangeColor(health);
     }
-    public void OnTriggerEnter2D(Collider2D collider)
+    void OnTriggerEnter2D(Collider2D collider)
     {
         if(!hit && collider.tag == "Projectile")
         {
+            /*int burnTick = GetComponent<FranProjectile>().burnTick;
+            int damage = GetComponent<FranProjectile>().damage;*/
+
             hit = true;
-            Direction(collider);
+            if (collider.GetComponent<FranProjectile>().burn && !burning)
+            {
+                burning = true;
+                StartCoroutine(BurnTick(collider.GetComponent<FranProjectile>().burnTick, collider.GetComponent<FranProjectile>().damage));
+            }
         }
 
         if (rb != null)
@@ -60,7 +80,7 @@ public class Enemy : MonoBehaviour
     }
     void RewardMoney()
     {
-        GameObject.Find("Player").GetComponent<Player>().money += reward;
+        GameObject.Find("GameUI").GetComponent<Player>().money += reward;
     }
 
     void Direction(Collider2D collider)
@@ -84,7 +104,7 @@ public class Enemy : MonoBehaviour
         if (collider.gameObject.name == "DestroyBlock")
         {
             Destroy(gameObject);
-            GameObject.Find("Player").GetComponent<Player>().health -= health;
+            GameObject.Find("GameUI").GetComponent<Player>().health -= health;
         }
     }
 
@@ -128,5 +148,21 @@ public class Enemy : MonoBehaviour
                 sprite.color = Color.magenta;
                 break;
         }
+    }
+
+    IEnumerator BurnTick(int time, int damage)
+    {
+        spriteFire.SetActive(true);
+
+        for(int tick = 0; tick < time; tick++)
+        {
+            yield return new WaitForSeconds(1.5f);
+            health -= damage;
+            hit = true;
+            gameManager.GetComponent<GameManager>().PlayPopNoise(gameObject);
+        }
+
+        burning = false;
+        spriteFire.SetActive(false);
     }
 }

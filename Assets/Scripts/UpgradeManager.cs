@@ -6,11 +6,16 @@ using UnityEngine.UI;
 public class UpgradeManager : MonoBehaviour
 {
     [Header("Pog Shooter Upgrades")]
-    public float rangeUpgrade = 2f;
-    public float fireRateUpgrade = 0.70f;
+    public float pogRangeUpgrade = 2f;
+    public float pogFireRateUpgrade = 0.70f;
+
+    [Header("Jroll Upgrades")]
+    public float jrollFireRateUpgrade = 0.5f;
+    public int jrollPerStack = 3;
 
     [Header("Upgraded Ammo")]
     public GameObject pogShooterDoubleDamageProjectile;
+    public GameObject jrollBurnSpike;
 
     [Header("Other")]
     public float sellMultiplier;
@@ -22,7 +27,7 @@ public class UpgradeManager : MonoBehaviour
     private GameObject upgradeUI;
     private GameObject currentTower;
     private Upgrade upgrade;
-    private GameObject player;
+    private GameObject gameUI;
 
     private string towerType;
     private int refund;
@@ -30,7 +35,7 @@ public class UpgradeManager : MonoBehaviour
     void Awake()
     {
         upgradeUI = GameObject.Find("Buttons");
-        player = GameObject.Find("Player");
+        gameUI = GameObject.Find("GameUI");
         refund = 0;
     }
 
@@ -119,21 +124,28 @@ public class UpgradeManager : MonoBehaviour
 
     public void UnlockUpgradeForSpecificTower(string towerType, int tree, int upgradeLevel)
     {
-        if(towerType == "Pog Shooter")
+        switch (towerType)
         {
-            PogShooterUpgrades(tree, upgradeLevel);
+            case "Pog Shooter":
+                PogShooterUpgrades(tree, upgradeLevel);
+                break;
+            case "Jroll":
+                JrollUpgrades(tree, upgradeLevel);
+                break;
+            default:
+                break;
         }
     }
 
     public void SellTower()
     {
-        player.GetComponent<Player>().money += refund;
+        gameUI.GetComponent<Player>().money += refund;
         Destroy(currentTower);
     }
 
     private bool AffordUpgrade(int price)
     {
-        if (player.GetComponent<Player>().money - price >= 0)
+        if (gameUI.GetComponent<Player>().money - price >= 0)
         {
             return true;
         }
@@ -186,19 +198,49 @@ public class UpgradeManager : MonoBehaviour
     {
         if(tree == 1 && upgradeLevel == 1)
         {
-            UpgradeRange(rangeUpgrade);
+            UpgradeRange(pogRangeUpgrade);
+            Debug.Log("Pog Shooter upgrade 1-1");
         }
         if(tree == 1 && upgradeLevel == 2)
         {
             UpgradeProjectile(pogShooterDoubleDamageProjectile);
+            Debug.Log("Pog Shooter upgrade 1-2");
         }
         if(tree == 2 && upgradeLevel == 1)
         {
-            UpgradeFireRate(fireRateUpgrade);
+            UpgradeFireRate(pogFireRateUpgrade);
+            Debug.Log("Pog Shooter upgrade 2-1");
         }
         if(tree == 2 && upgradeLevel == 2)
         {
             currentTower.GetComponent<SpreadShot>().activated = true;
+            Debug.Log("Pog Shooter upgrade 2-2");
+        }
+
+        upgrade.IncrementUpgradeLevel(tree);
+    }
+
+    void JrollUpgrades(int tree, int upgradeLevel)
+    {
+        if (tree == 1 && upgradeLevel == 1)
+        {
+            UpgradeFireRate(jrollFireRateUpgrade);
+            Debug.Log("Jroll upgrade 1-1");
+        }
+        if (tree == 1 && upgradeLevel == 2)
+        {
+            currentTower.GetComponent<JrollHandler>().activatedStack = true;
+            Debug.Log("Jroll upgrade 1-2");
+        }
+        if (tree == 2 && upgradeLevel == 1)
+        {
+            
+            Debug.Log("Jroll upgrade 2-1");
+        }
+        if (tree == 2 && upgradeLevel == 2)
+        {
+            UpgradeProjectile(jrollBurnSpike);
+            Debug.Log("Jroll upgrade 2-2");
         }
 
         upgrade.IncrementUpgradeLevel(tree);
@@ -208,7 +250,7 @@ public class UpgradeManager : MonoBehaviour
 
     void SubtractMoney(int price)
     {
-        player.GetComponent<Player>().money -= price;
+        gameUI.GetComponent<Player>().money -= price;
     }
 
     void UpgradeRange(float range)

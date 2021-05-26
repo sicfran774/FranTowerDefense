@@ -22,7 +22,6 @@ public class GameManager : MonoBehaviour
     public AudioSource pop;
     public AudioSource whish;
 
-    private GameObject player;
     private GameObject spawner;
     private GameObject upgradeUI;
     private GameObject gameUI;
@@ -36,12 +35,11 @@ public class GameManager : MonoBehaviour
         paused = false;
 
         upgradeUI = GameObject.Find("Buttons");
-        player = GameObject.FindGameObjectWithTag("Player");
         spawner = GameObject.FindGameObjectWithTag("Spawner");
         gameUI = GameObject.Find("GameUI");
         pauseMenu = GameObject.Find("PauseMenu");
 
-
+        Time.timeScale = 1;
 
         //Start game with upgrade UI disabled and not showing
         upgradeUI.GetComponent<CanvasGroup>().interactable = false;
@@ -78,7 +76,7 @@ public class GameManager : MonoBehaviour
     public void RewardEndOfRound()
     {
         int bonus = (int)(round * spawner.GetComponent<SpawnManager>().numEnemiesSpawned * roundBonusMultiplier);
-        player.GetComponent<Player>().money += bonus;
+        gameUI.GetComponent<Player>().money += bonus;
         Debug.Log("Rewarded " + bonus + " money");
     }
 

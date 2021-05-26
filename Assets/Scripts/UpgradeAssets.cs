@@ -50,9 +50,14 @@ public class UpgradeAssets : MonoBehaviour
     {
         refundText.text = refund.ToString();
 
-        if(towerType == "Pog Shooter")
+        switch (towerType)
         {
-            PogShooterAssets(treeOneLevel, treeTwoLevel, upgradeOnePrice, upgradeTwoPrice);
+            case "Pog Shooter":
+                PogShooterAssets(treeOneLevel, treeTwoLevel, upgradeOnePrice, upgradeTwoPrice);
+                break;
+            case "Jroll":
+                JrollAssets(treeOneLevel, treeTwoLevel, upgradeOnePrice, upgradeTwoPrice);
+                break;
         }
     }
     
@@ -79,6 +84,34 @@ public class UpgradeAssets : MonoBehaviour
         else if (treeTwoLevel == 2)
         {
             upgradeDescTwo.text = "Spread\nShot";
+            upgradeImageTwo.sprite = pogShooterImageTwoTwo;
+            upgradePriceTwo.text = upgradeTwoPrice.ToString();
+        }
+    }
+
+    private void JrollAssets(int treeOneLevel, int treeTwoLevel, int upgradeOnePrice, int upgradeTwoPrice)
+    {
+        if (treeOneLevel == 1)
+        {
+            upgradeDescOne.text = "Faster\nJroll Spikes";
+            upgradeImageOne.sprite = pogShooterImageOneOne;
+            upgradePriceOne.text = upgradeOnePrice.ToString();
+        }
+        else if (treeOneLevel == 2)
+        {
+            upgradeDescOne.text = "Jroll\nSpike Stacks";
+            upgradeImageOne.sprite = pogShooterImageOneTwo;
+            upgradePriceOne.text = upgradeOnePrice.ToString();
+        }
+        if (treeTwoLevel == 1)
+        {
+            upgradeDescTwo.text = "";
+            upgradeImageTwo.sprite = pogShooterImageTwoOne;
+            upgradePriceTwo.text = upgradeTwoPrice.ToString();
+        }
+        else if (treeTwoLevel == 2)
+        {
+            upgradeDescTwo.text = "";
             upgradeImageTwo.sprite = pogShooterImageTwoTwo;
             upgradePriceTwo.text = upgradeTwoPrice.ToString();
         }

@@ -24,8 +24,8 @@ public class SpreadShot : MonoBehaviour
 
     public void ShootSpread(Vector2 direction, float projectileSpeed)
     {
-        GameObject projectileLeft = GetComponent<Tower>().InstantiateAmmo();
-        GameObject projectileRight = GetComponent<Tower>().InstantiateAmmo();
+        GameObject projectileLeft = GetComponent<Tower>().InstantiateAmmo(transform);
+        GameObject projectileRight = GetComponent<Tower>().InstantiateAmmo(transform);
 
         Vector2 directionLeft;
         Vector2 directionRight;

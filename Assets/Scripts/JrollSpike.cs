@@ -4,10 +4,7 @@ using UnityEngine;
 
 public class JrollSpike : FranProjectile
 {
-    public float distance;
 
-    void Awake()
-    {
-        //gameManager = GameObject.FindGameObjectWithTag("GameController");
-    }
 }
+
+
