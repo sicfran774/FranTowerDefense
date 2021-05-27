@@ -114,12 +114,39 @@ public class UpgradeManager : MonoBehaviour
         int upgradeLevel = upgrade.GetUpgradeLevel(tree); //The "1" is the specific tree, in this case, the first tree of upgrades
         int price = GetUpgradePrice(tree, upgradeLevel);
 
-        if (AffordUpgrade(price))
+        if(upgradeLevel == 4)
+        {
+            ActivateAbility();
+        }
+        else if (AffordUpgrade(price))
         {
             SubtractMoney(price);
             currentTower.GetComponent<Tower>().price += price; //This adds the upgrade price to the total value of the tower; specifically for the CalculateRefund() function
             UnlockUpgradeForSpecificTower(towerType, tree, upgradeLevel);
         }
+    }
+
+    void ActivateAbility()
+    {
+        switch (towerType)
+        {
+            case "Jroll":
+                Debug.Log("Activated jroll ability");
+                StartCoroutine(currentTower.GetComponent<JrollHandler>().RapidSpikes());
+                break;
+            default:
+                break;
+        }
+
+        StartCoroutine(AbilityCooldown());
+    }
+
+    IEnumerator AbilityCooldown()
+    {
+        GameObject tempObject = currentTower;
+        tempObject.GetComponent<Tower>().abilityOnCooldown = true;
+        yield return new WaitForSeconds(currentTower.GetComponent<Tower>().abilityCooldown);
+        tempObject.GetComponent<Tower>().abilityOnCooldown = false;
     }
 
     public void UnlockUpgradeForSpecificTower(string towerType, int tree, int upgradeLevel)
@@ -162,7 +189,7 @@ public class UpgradeManager : MonoBehaviour
 
     void ToggleUpgradeButton(int treeOneLevel, int treeTwoLevel)
     {
-        if(treeOneLevel > 2) 
+        if(treeOneLevel > 2 && treeOneLevel != 4 || currentTower.GetComponent<Tower>().abilityOnCooldown) 
         {
             upgradeUI.transform.GetChild(0).GetComponent<Button>().interactable = false;
         }
@@ -170,7 +197,7 @@ public class UpgradeManager : MonoBehaviour
         {
             upgradeUI.transform.GetChild(0).GetComponent<Button>().interactable = true;
         }
-        if(treeTwoLevel > 2)
+        if(treeTwoLevel > 2 && treeTwoLevel != 4)
         {
             upgradeUI.transform.GetChild(1).GetComponent<Button>().interactable = false;
         }
@@ -229,17 +256,18 @@ public class UpgradeManager : MonoBehaviour
         }
         if (tree == 1 && upgradeLevel == 2)
         {
-            currentTower.GetComponent<JrollHandler>().activatedStack = true;
+            upgrade.IncrementUpgradeLevel(1);
             Debug.Log("Jroll upgrade 1-2");
         }
         if (tree == 2 && upgradeLevel == 1)
         {
-            
+            UpgradeProjectile(jrollBurnSpike);
             Debug.Log("Jroll upgrade 2-1");
         }
         if (tree == 2 && upgradeLevel == 2)
         {
-            UpgradeProjectile(jrollBurnSpike);
+            currentTower.GetComponent<JrollHandler>().SetJrollPerStack(jrollPerStack);
+            currentTower.GetComponent<JrollHandler>().activatedStack = true;
             Debug.Log("Jroll upgrade 2-2");
         }
 

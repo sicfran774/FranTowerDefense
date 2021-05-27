@@ -4,27 +4,34 @@ using UnityEngine;
 
 public class Tower : MonoBehaviour
 {
+    [Header("Tower Info/Basic Stats")]
     public string towerType;
     public float rangeRadius;
     public float fireRate;
     public float projectileSpeed;
     public int price;
 
-    [Space(20)]
+    [Header("Type Of Ammo")]
+
+    public GameObject ammo;
+
+    [Header("Abilities")]
+
+    public float abilityDuration;
+    public float abilityCooldown;
+    public bool abilityOnCooldown;
+
+    [Header("Upgrade Prices")]
 
     public int upgrade11Price;
     public int upgrade12Price;
     public int upgrade21Price;
     public int upgrade22Price;
 
-    [Space(20)]
+    [Header("Misc")]
 
     public int bulletsShot;
     public LayerMask layer;
-
-    [Space(20)]
-
-    public GameObject ammo;
 
     private GameObject currentEnemy;
     private List<GameObject> enemies;

@@ -29,13 +29,19 @@ public class UpgradeAssets : MonoBehaviour
     public Sprite pogShooterImageTwoTwo;
     [Space(10)]
 
-    [Header("Pog Shooter Images")]
-    public Image jrollerangImageOneOne;
-    
+    [Header("Jroll Images")]
+    public Sprite jrollImageOneOne;
+    public Sprite jrollImageOneTwo;
+    public Sprite jrollImageTwoOne;
+    public Sprite jrollImageTwoTwo;
+
+    private GameObject upgradeOneGameObject;
+    private GameObject upgradeTwoGameObject;
+
     void Awake()
     {
-        GameObject upgradeOneGameObject = GameObject.Find("Upgrade 1");
-        GameObject upgradeTwoGameObject = GameObject.Find("Upgrade 2");
+        upgradeOneGameObject = GameObject.Find("Upgrade 1");
+        upgradeTwoGameObject = GameObject.Find("Upgrade 2");
 
         upgradeDescOne = upgradeOneGameObject.transform.GetChild(0).GetComponent<Text>();
         upgradeImageOne = upgradeOneGameObject.transform.GetChild(1).GetComponent<Image>();
@@ -94,25 +100,31 @@ public class UpgradeAssets : MonoBehaviour
         if (treeOneLevel == 1)
         {
             upgradeDescOne.text = "Faster\nJroll Spikes";
-            upgradeImageOne.sprite = pogShooterImageOneOne;
+            upgradeImageOne.sprite = jrollImageOneOne;
             upgradePriceOne.text = upgradeOnePrice.ToString();
         }
         else if (treeOneLevel == 2)
         {
-            upgradeDescOne.text = "Jroll\nSpike Stacks";
-            upgradeImageOne.sprite = pogShooterImageOneTwo;
+            upgradeDescOne.text = "Unlock Rapid\nSpikes Ability";
+            upgradeImageOne.sprite = jrollImageOneTwo;
             upgradePriceOne.text = upgradeOnePrice.ToString();
+        }
+        else
+        {
+            upgradeDescOne.text = "Activate\nRapid Spikes";
+            upgradePriceOne.text = null;
+            upgradeOneGameObject.transform.GetChild(3).gameObject.SetActive(false);
         }
         if (treeTwoLevel == 1)
         {
-            upgradeDescTwo.text = "";
-            upgradeImageTwo.sprite = pogShooterImageTwoOne;
+            upgradeDescTwo.text = "Fire\nSpikes";
+            upgradeImageTwo.sprite = jrollImageTwoOne;
             upgradePriceTwo.text = upgradeTwoPrice.ToString();
         }
         else if (treeTwoLevel == 2)
         {
-            upgradeDescTwo.text = "";
-            upgradeImageTwo.sprite = pogShooterImageTwoTwo;
+            upgradeDescTwo.text = "Jroll\nSpike Stacks";
+            upgradeImageTwo.sprite = jrollImageTwoTwo;
             upgradePriceTwo.text = upgradeTwoPrice.ToString();
         }
     }

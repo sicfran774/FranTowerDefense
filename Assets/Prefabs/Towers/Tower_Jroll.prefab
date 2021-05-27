@@ -93,9 +93,9 @@ GameObject:
   - component: {fileID: 4231876074660609651}
   - component: {fileID: 4231876074660609649}
   - component: {fileID: 4231876074660609653}
+  - component: {fileID: 1498182573893567549}
   - component: {fileID: 6207866987648167885}
   - component: {fileID: -8799140334240264610}
-  - component: {fileID: 1498182573893567549}
   m_Layer: 9
   m_Name: Tower_Jroll
   m_TagString: Tower
@@ -203,8 +203,12 @@ MonoBehaviour:
   fireRate: 1
   projectileSpeed: 100
   price: 800
-  upgrade11Price: 500
-  upgrade12Price: 1000
+  ability: 0
+  abilityDuration: 3
+  abilityCooldown: 5
+  abilityOnCooldown: 0
+  upgrade11Price: 0
+  upgrade12Price: 0
   upgrade21Price: 0
   upgrade22Price: 0
   bulletsShot: 0
@@ -213,6 +217,27 @@ MonoBehaviour:
     m_Bits: 5377
   ammo: {fileID: 5821463407135236317, guid: 0e0655ecaf8b5b44b9f3504a0315b1bb, type: 3}
   timer: 0
+--- !u!114 &1498182573893567549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4231876074660609655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99ca4606519e29145adfe85a264398df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  edge: {fileID: 351920059294513019}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 5632
+  jrollPerStack: 1
+  rapidFireRate: 0.1
+  range: 0
+  hitPath: 0
+  activatedStack: 0
 --- !u!70 &6207866987648167885
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -250,25 +275,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1498182573893567549
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4231876074660609655}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99ca4606519e29145adfe85a264398df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  edge: {fileID: 351920059294513019}
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 5632
-  range: 0
-  hitPath: 0
-  activatedStack: 0
 --- !u!1 &4231876074897509020
 GameObject:
   m_ObjectHideFlags: 0

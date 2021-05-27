@@ -12,6 +12,9 @@ public class JrollHandler : MonoBehaviour
 
     private Vector2[] colliderpoints;
     private Vector2 direction;
+    
+    private int jrollPerStack;
+    public float rapidFireRate;
 
     public float range;
     private float x;
@@ -132,7 +135,7 @@ public class JrollHandler : MonoBehaviour
 
         if (activatedStack)
         {
-            JrollStack(2);
+            JrollStack(jrollPerStack);
         }
 
         GetComponent<JrollHandler>().GenerateRandomLine();
@@ -149,9 +152,23 @@ public class JrollHandler : MonoBehaviour
         }
     }
 
+    public void SetJrollPerStack(int num)
+    {
+        jrollPerStack = num;
+    }
+
     void PushJroll(GameObject jroll)
     {
         jroll.GetComponent<Rigidbody2D>().drag = GetComponent<JrollHandler>().GetLinearDrag();
         jroll.GetComponent<Rigidbody2D>().AddForce(GetComponent<JrollHandler>().GetDirection() * GetComponent<Tower>().projectileSpeed);
+    }
+
+    public IEnumerator RapidSpikes()
+    {
+        float tempFireRate = GetComponent<Tower>().fireRate;
+        GetComponent<Tower>().fireRate = rapidFireRate;
+
+        yield return new WaitForSeconds(GetComponent<Tower>().abilityDuration);
+        GetComponent<Tower>().fireRate = tempFireRate;
     }
 }

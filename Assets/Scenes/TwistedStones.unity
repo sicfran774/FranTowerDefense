@@ -710,8 +710,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pogRangeUpgrade: 2
   pogFireRateUpgrade: 0.7
-  jrollFireRateUpgrade: 0.5
-  jrollPerStack: 3
+  jrollFireRateUpgrade: 0.75
+  jrollPerStack: 2
   pogShooterDoubleDamageProjectile: {fileID: 4769109584760763530, guid: 9864b6e4663a4e94abd39c9cb9ad4be3,
     type: 3}
   jrollBurnSpike: {fileID: 3166994110562841604, guid: 52a28515a31abd244bdf1b1228dc6b54,
@@ -4123,7 +4123,10 @@ MonoBehaviour:
     type: 3}
   pogShooterImageTwoTwo: {fileID: 21300000, guid: 8ef1f81056509eb4d9a78e5a827c1e8b,
     type: 3}
-  jrollerangImageOneOne: {fileID: 0}
+  jrollImageOneOne: {fileID: 21300000, guid: 94464ba31d3a27b429d6e41c99d0afaa, type: 3}
+  jrollImageOneTwo: {fileID: 21300000, guid: 6b1873eb6fcf7a9429320e547ff25cfe, type: 3}
+  jrollImageTwoOne: {fileID: 21300000, guid: d4509fb2edfdcc346b9fff9e87f0d01e, type: 3}
+  jrollImageTwoTwo: {fileID: 21300000, guid: 8b4fb888be810d6489c4a28aba3f334d, type: 3}
 --- !u!1 &924190172
 GameObject:
   m_ObjectHideFlags: 0

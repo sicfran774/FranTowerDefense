@@ -57,6 +57,8 @@ public class GameManager : MonoBehaviour
         if (!GameObject.FindGameObjectWithTag("Enemy") && roundInProgress) //Occurs only once when last enemy disappears
         {
             RewardEndOfRound();
+            ClearAllProjectiles();
+
             startRoundButton.interactable = true;
             roundInProgress = false;
         }
@@ -136,6 +138,14 @@ public class GameManager : MonoBehaviour
         {
             tower.GetComponent<PlaceTower>().enabled = true;
             tower.GetComponent<Tower>().enabled = true;
+        }
+    }
+
+    private void ClearAllProjectiles()
+    {
+        foreach (GameObject projectile in GameObject.FindGameObjectsWithTag("Projectile"))
+        {
+            Destroy(projectile);
         }
     }
 

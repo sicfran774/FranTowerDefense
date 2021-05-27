@@ -116,7 +116,8 @@ public class SpawnManager : MonoBehaviour
         GameObject newObject = Instantiate(enemyAbner);
         newObject.transform.SetParent(GameObject.Find("Enemies").transform);
         newObject.transform.position = this.transform.position;
+
         newObject.GetComponent<Enemy>().health = health;
-        newObject.GetComponent<Enemy>().speed = health + 0.5f;
+        newObject.GetComponent<Enemy>().speed = health > 5 ? 5 : health;
     }
 }
