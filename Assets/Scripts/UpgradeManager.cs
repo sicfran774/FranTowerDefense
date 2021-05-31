@@ -57,7 +57,7 @@ public class UpgradeManager : MonoBehaviour
             int priceOne = GetUpgradePrice(1, treeOneLevel);
             int priceTwo = GetUpgradePrice(2, treeTwoLevel);
 
-            upgradeAssets.GetComponent<UpgradeAssets>().UpdateImagesAndText(towerType, upgrade.GetUpgradeLevel(1), upgrade.GetUpgradeLevel(2), priceOne, priceTwo, refund);
+            upgradeAssets.GetComponent<UpgradeAssets>().UpdateImagesAndText(currentTower, upgrade.GetUpgradeLevel(1), upgrade.GetUpgradeLevel(2), priceOne, priceTwo, refund);
             ToggleUpgradeButton(treeOneLevel, treeTwoLevel);
         }
         else
@@ -138,15 +138,7 @@ public class UpgradeManager : MonoBehaviour
                 break;
         }
 
-        StartCoroutine(AbilityCooldown());
-    }
-
-    IEnumerator AbilityCooldown()
-    {
-        GameObject tempObject = currentTower;
-        tempObject.GetComponent<Tower>().abilityOnCooldown = true;
-        yield return new WaitForSeconds(currentTower.GetComponent<Tower>().abilityCooldown);
-        tempObject.GetComponent<Tower>().abilityOnCooldown = false;
+        StartCoroutine(currentTower.GetComponent<Tower>().AbilityCooldown());
     }
 
     public void UnlockUpgradeForSpecificTower(string towerType, int tree, int upgradeLevel)
@@ -167,6 +159,7 @@ public class UpgradeManager : MonoBehaviour
     public void SellTower()
     {
         gameUI.GetComponent<Player>().money += refund;
+        currentTower.GetComponent<Tower>().StopAllCoroutines();
         Destroy(currentTower);
     }
 

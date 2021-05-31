@@ -20,6 +20,7 @@ public class Tower : MonoBehaviour
     public float abilityDuration;
     public float abilityCooldown;
     public bool abilityOnCooldown;
+    public float secondsUntilCooldownDone;
 
     [Header("Upgrade Prices")]
 
@@ -115,7 +116,7 @@ public class Tower : MonoBehaviour
 
         GameObject projectile = InstantiateAmmo(transform);
 
-        if (GetComponent<SpreadShot>().activated)
+        if (GetComponent<SpreadShot>() != null && GetComponent<SpreadShot>().activated)
         {
             projectile.GetComponent<Rigidbody2D>().AddForce(direction * projectileSpeed);
             GetComponent<SpreadShot>().ShootSpread(direction, projectileSpeed);
@@ -226,6 +227,23 @@ public class Tower : MonoBehaviour
         if (collider.tag == "Enemy" && enemies.Count > 0)
         {
             enemies.RemoveAt(0);
+        }
+    }
+
+    public IEnumerator AbilityCooldown()
+    {
+        abilityOnCooldown = true;
+        StartCoroutine(CooldownCountdown());
+        yield return new WaitForSeconds(abilityCooldown);
+        abilityOnCooldown = false;
+    }
+
+    public IEnumerator CooldownCountdown()
+    {
+        for (int i = 1; i <= abilityCooldown; i++)
+        {
+            yield return new WaitForSeconds(1f);
+            secondsUntilCooldownDone = abilityCooldown - i;
         }
     }
 }

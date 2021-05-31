@@ -203,19 +203,19 @@ MonoBehaviour:
   fireRate: 1
   projectileSpeed: 100
   price: 800
-  ability: 0
-  abilityDuration: 3
-  abilityCooldown: 5
+  ammo: {fileID: 5821463407135236317, guid: 0e0655ecaf8b5b44b9f3504a0315b1bb, type: 3}
+  abilityDuration: 5
+  abilityCooldown: 30
   abilityOnCooldown: 0
-  upgrade11Price: 0
-  upgrade12Price: 0
-  upgrade21Price: 0
-  upgrade22Price: 0
+  secondsUntilCooldownDone: 0
+  upgrade11Price: 450
+  upgrade12Price: 1200
+  upgrade21Price: 500
+  upgrade22Price: 1000
   bulletsShot: 0
   layer:
     serializedVersion: 2
     m_Bits: 5377
-  ammo: {fileID: 5821463407135236317, guid: 0e0655ecaf8b5b44b9f3504a0315b1bb, type: 3}
   timer: 0
 --- !u!114 &1498182573893567549
 MonoBehaviour:
@@ -233,7 +233,6 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 5632
-  jrollPerStack: 1
   rapidFireRate: 0.1
   range: 0
   hitPath: 0

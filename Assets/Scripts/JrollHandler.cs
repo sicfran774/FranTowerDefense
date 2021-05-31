@@ -19,10 +19,11 @@ public class JrollHandler : MonoBehaviour
     public float range;
     private float x;
     private float y;
+    private bool towerDestroyed;
 
     public bool hitPath;
     public bool activatedStack;
-
+    
     void Awake()
     {
         range = GetComponentInParent<Tower>().rangeRadius;
@@ -168,7 +169,22 @@ public class JrollHandler : MonoBehaviour
         float tempFireRate = GetComponent<Tower>().fireRate;
         GetComponent<Tower>().fireRate = rapidFireRate;
 
+        Color color = GetComponent<SpriteRenderer>().color;
+        GetComponent<SpriteRenderer>().color = Color.yellow;
+
         yield return new WaitForSeconds(GetComponent<Tower>().abilityDuration);
-        GetComponent<Tower>().fireRate = tempFireRate;
+
+        if (!towerDestroyed)
+        {
+            GetComponent<Tower>().fireRate = tempFireRate;
+            GetComponent<SpriteRenderer>().color = color;
+        }
+        
+    }
+
+    void OnDestroy()
+    {
+        StopAllCoroutines();
+        towerDestroyed = true;
     }
 }

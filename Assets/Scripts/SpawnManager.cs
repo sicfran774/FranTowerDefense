@@ -118,6 +118,6 @@ public class SpawnManager : MonoBehaviour
         newObject.transform.position = this.transform.position;
 
         newObject.GetComponent<Enemy>().health = health;
-        newObject.GetComponent<Enemy>().speed = health > 5 ? 5 : health;
+        newObject.GetComponent<Enemy>().speed = health > 5 ? 5.5f : health + 0.5f;
     }
 }

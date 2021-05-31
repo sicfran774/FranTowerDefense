@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class UpgradeAssets : MonoBehaviour
 {
+
     [Header("Refund Text")]
     public Text refundText;
 
@@ -35,6 +36,8 @@ public class UpgradeAssets : MonoBehaviour
     public Sprite jrollImageTwoOne;
     public Sprite jrollImageTwoTwo;
 
+    private GameObject currentTower;
+
     private GameObject upgradeOneGameObject;
     private GameObject upgradeTwoGameObject;
 
@@ -52,9 +55,14 @@ public class UpgradeAssets : MonoBehaviour
         upgradePriceTwo = upgradeTwoGameObject.transform.GetChild(2).GetComponent<Text>();
     }
 
-    public void UpdateImagesAndText(string towerType, int treeOneLevel, int treeTwoLevel, int upgradeOnePrice, int upgradeTwoPrice, int refund)
+    public void UpdateImagesAndText(GameObject tower, int treeOneLevel, int treeTwoLevel, int upgradeOnePrice, int upgradeTwoPrice, int refund)
     {
+        currentTower = tower;
+        string towerType = currentTower.GetComponent<Tower>().towerType;
+
         refundText.text = refund.ToString();
+        upgradeOneGameObject.transform.GetChild(3).gameObject.SetActive(true);
+        upgradeTwoGameObject.transform.GetChild(3).gameObject.SetActive(true);
 
         switch (towerType)
         {
@@ -112,7 +120,16 @@ public class UpgradeAssets : MonoBehaviour
         else
         {
             upgradeDescOne.text = "Activate\nRapid Spikes";
-            upgradePriceOne.text = null;
+            
+            if(currentTower.GetComponent<Tower>().secondsUntilCooldownDone != 0)
+            {
+                upgradePriceOne.text = currentTower.GetComponent<Tower>().secondsUntilCooldownDone.ToString();
+            }
+            else
+            {
+                upgradePriceOne.text = null;
+            }
+
             upgradeOneGameObject.transform.GetChild(3).gameObject.SetActive(false);
         }
         if (treeTwoLevel == 1)
