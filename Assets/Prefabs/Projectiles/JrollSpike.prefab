@@ -144,4 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
-  distance: 0
+  burn: 0
+  slow: 0
+  burnTick: 0
+  slowTick: 0

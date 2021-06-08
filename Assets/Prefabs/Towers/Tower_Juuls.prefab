@@ -117,11 +117,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   towerType: Juuls
-  rangeRadius: 1.5
-  fireRate: 1.1
+  rangeRadius: 2
+  fireRate: 0.3
   projectileSpeed: 400
   price: 200
-  ammo: {fileID: 2729044805137084285, guid: 4affe7eaf3cb7e84996eda273f8bc3ce, type: 3}
+  ammo: {fileID: 2729044805137084285, guid: ad28d7161ee55ce41944506e202f490c, type: 3}
   abilityDuration: 0
   abilityCooldown: 0
   abilityOnCooldown: 0
@@ -198,7 +198,7 @@ Transform:
   m_GameObject: {fileID: 2300209982696303117}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 1}
+  m_LocalScale: {x: 4, y: 4, z: 1}
   m_Children: []
   m_Father: {fileID: 6209055789905118589}
   m_RootOrder: 1

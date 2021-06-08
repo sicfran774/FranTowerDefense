@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JrollSpike : FranProjectile
+public class JrollSpike : Projectile
 {
 
 }
-
-

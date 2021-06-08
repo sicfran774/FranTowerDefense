@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
         gameUI = GameObject.Find("GameUI");
         pauseMenu = GameObject.Find("PauseMenu");
 
-        Time.timeScale = 1;
+        Time.timeScale = 1f;
 
         //Start game with upgrade UI disabled and not showing
         upgradeUI.GetComponent<CanvasGroup>().interactable = false;

@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
     public int reward;
     public string direction;
     public bool burning;
+    public bool slowed;
 
     private bool hit;
 
@@ -18,6 +19,7 @@ public class Enemy : MonoBehaviour
 
     private SpriteRenderer sprite;
     private GameObject spriteFire;
+    private GameObject spriteIce;
 
     private CircleCollider2D circle;
     private Color color;
@@ -30,6 +32,7 @@ public class Enemy : MonoBehaviour
 
         sprite = GetComponent<SpriteRenderer>();
         spriteFire = transform.GetChild(0).gameObject;
+        spriteIce = transform.GetChild(1).gameObject;
 
         color = GetComponent<SpriteRenderer>().color;
         circle = GetComponent<CircleCollider2D>();
@@ -37,14 +40,22 @@ public class Enemy : MonoBehaviour
         hit = false;
 
         spriteFire.SetActive(false);
+        spriteIce.SetActive(false);
     }
 
     void Update()
     {
+        UpdateSpeed();
+
         if (hit)
         {
             hit = false;
             RewardMoney();
+
+            if (!slowed)
+            {
+                UpdateSpeedAfterHit();
+            }
         }
 
         if (health <= 0)
@@ -56,16 +67,21 @@ public class Enemy : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if(!hit && collider.tag == "Projectile")
+        if (!hit && collider.tag == "Projectile")
         {
-            /*int burnTick = GetComponent<FranProjectile>().burnTick;
-            int damage = GetComponent<FranProjectile>().damage;*/
-
-            hit = true;
-            if (collider.GetComponent<FranProjectile>().burn && !burning)
+            if (collider.GetComponent<Projectile>().damage > 0)
+            {
+                hit = true;
+            }
+            if (collider.GetComponent<Projectile>().burn && !burning)
             {
                 burning = true;
-                StartCoroutine(BurnTick(collider.GetComponent<FranProjectile>().burnTick, collider.GetComponent<FranProjectile>().damage));
+                StartCoroutine(BurnTick(collider.GetComponent<Projectile>().burnTick, collider.GetComponent<Projectile>().damage));
+            }
+            if (collider.GetComponent<Projectile>().slow && !slowed)
+            {
+                slowed = true;
+                StartCoroutine(SlowTick(collider.GetComponent<Projectile>().slowTick, collider.GetComponent<Projectile>().damage));
             }
         }
 
@@ -85,19 +101,19 @@ public class Enemy : MonoBehaviour
 
     void Direction(Collider2D collider)
     {
-        if (collider.gameObject.name == "PathUp" || direction == "up")
+        if (collider.gameObject.name == "PathUp")
         {
             MoveUp();
         }
-        if (collider.gameObject.name == "PathDown" || direction == "down")
+        if (collider.gameObject.name == "PathDown")
         {
             MoveDown();
         }
-        if (collider.gameObject.name == "PathLeft" || direction == "left")
+        if (collider.gameObject.name == "PathLeft")
         {
             MoveLeft();
         }
-        if (collider.gameObject.name == "PathRight" || direction == "right")
+        if (collider.gameObject.name == "PathRight")
         {
             MoveRight();
         }
@@ -105,6 +121,25 @@ public class Enemy : MonoBehaviour
         {
             Destroy(gameObject);
             GameObject.Find("GameUI").GetComponent<Player>().health -= health;
+        }
+    }
+
+    void UpdateSpeed()
+    {
+        switch (direction)
+        {
+            case "up":
+                MoveUp();
+                break;
+            case "down":
+                MoveDown();
+                break;
+            case "left":
+                MoveLeft();
+                break;
+            case "right":
+                MoveRight();
+                break;
         }
     }
 
@@ -149,6 +184,10 @@ public class Enemy : MonoBehaviour
                 break;
         }
     }
+    void UpdateSpeedAfterHit()
+    {
+        speed = health > 5 ? 5.5f : health + 0.5f;
+    }
 
     IEnumerator BurnTick(int time, int damage)
     {
@@ -156,7 +195,7 @@ public class Enemy : MonoBehaviour
 
         for(int tick = 0; tick < time; tick++)
         {
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(1f);
             health -= damage;
             hit = true;
             gameManager.GetComponent<GameManager>().PlayPopNoise(gameObject);
@@ -164,5 +203,26 @@ public class Enemy : MonoBehaviour
 
         burning = false;
         spriteFire.SetActive(false);
+    }
+
+    IEnumerator SlowTick(int time, int damage)
+    {
+        spriteIce.SetActive(true);
+        speed /= 2;
+
+        for (int tick = 0; tick < time; tick++)
+        {
+            yield return new WaitForSeconds(1f);
+            if (damage > 0)
+            {
+                health -= damage;
+                hit = true;
+                gameManager.GetComponent<GameManager>().PlayPopNoise(gameObject);
+            }
+        }
+
+        UpdateSpeedAfterHit();
+        slowed = false;
+        spriteIce.SetActive(false);
     }
 }

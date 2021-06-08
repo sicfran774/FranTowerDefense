@@ -6,10 +6,10 @@ TagManager:
   tags:
   - Enemy
   - Tower
-  - Projectile
   - SelectedTower
   - Upgrade
   - Spawner
+  - Projectile
   layers:
   - Default
   - TransparentFX
