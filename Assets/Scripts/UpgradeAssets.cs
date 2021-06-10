@@ -12,7 +12,6 @@ public class UpgradeAssets : MonoBehaviour
     [Header("Price Text")]
     public Text upgradePriceOne;
     public Text upgradePriceTwo;
-    [Space(10)]
 
     [Header("Image GameObject")]
     public Image upgradeImageOne;
@@ -21,20 +20,24 @@ public class UpgradeAssets : MonoBehaviour
     [Header("Upgrade Description")]
     public Text upgradeDescOne;
     public Text upgradeDescTwo;
-    [Space(10)]
 
     [Header("Pog Shooter Images")]
     public Sprite pogShooterImageOneOne;
     public Sprite pogShooterImageOneTwo;
     public Sprite pogShooterImageTwoOne;
     public Sprite pogShooterImageTwoTwo;
-    [Space(10)]
 
     [Header("Jroll Images")]
     public Sprite jrollImageOneOne;
     public Sprite jrollImageOneTwo;
     public Sprite jrollImageTwoOne;
     public Sprite jrollImageTwoTwo;
+
+    [Header("Juuls Images")]
+    public Sprite juulsImageOneOne;
+    public Sprite juulsImageOneTwo;
+    public Sprite juulsImageTwoOne;
+    public Sprite juulsImageTwoTwo;
 
     private GameObject currentTower;
 
@@ -71,6 +74,9 @@ public class UpgradeAssets : MonoBehaviour
                 break;
             case "Jroll":
                 JrollAssets(treeOneLevel, treeTwoLevel, upgradeOnePrice, upgradeTwoPrice);
+                break;
+            case "Juuls":
+                JuulsAssets(treeOneLevel, treeTwoLevel, upgradeOnePrice, upgradeTwoPrice);
                 break;
         }
     }
@@ -141,6 +147,48 @@ public class UpgradeAssets : MonoBehaviour
         else if (treeTwoLevel == 2)
         {
             upgradeDescTwo.text = "Jroll\nSpike Stacks";
+            upgradeImageTwo.sprite = jrollImageTwoTwo;
+            upgradePriceTwo.text = upgradeTwoPrice.ToString();
+        }
+    }
+    private void JuulsAssets(int treeOneLevel, int treeTwoLevel, int upgradeOnePrice, int upgradeTwoPrice)
+    {
+        if (treeOneLevel == 1)
+        {
+            upgradeDescOne.text = "";
+            upgradeImageOne.sprite = jrollImageOneOne;
+            upgradePriceOne.text = upgradeOnePrice.ToString();
+        }
+        else if (treeOneLevel == 2)
+        {
+            upgradeDescOne.text = "";
+            upgradeImageOne.sprite = jrollImageOneTwo;
+            upgradePriceOne.text = upgradeOnePrice.ToString();
+        }
+        else
+        {
+            upgradeDescOne.text = "";
+
+            if (currentTower.GetComponent<Tower>().secondsUntilCooldownDone != 0)
+            {
+                upgradePriceOne.text = currentTower.GetComponent<Tower>().secondsUntilCooldownDone.ToString();
+            }
+            else
+            {
+                upgradePriceOne.text = null;
+            }
+
+            upgradeOneGameObject.transform.GetChild(3).gameObject.SetActive(false);
+        }
+        if (treeTwoLevel == 1)
+        {
+            upgradeDescTwo.text = "";
+            upgradeImageTwo.sprite = jrollImageTwoOne;
+            upgradePriceTwo.text = upgradeTwoPrice.ToString();
+        }
+        else if (treeTwoLevel == 2)
+        {
+            upgradeDescTwo.text = "";
             upgradeImageTwo.sprite = jrollImageTwoTwo;
             upgradePriceTwo.text = upgradeTwoPrice.ToString();
         }

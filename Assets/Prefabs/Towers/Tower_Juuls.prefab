@@ -118,7 +118,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerType: Juuls
   rangeRadius: 2
-  fireRate: 0.3
+  fireRate: 0.1
   projectileSpeed: 400
   price: 200
   ammo: {fileID: 2729044805137084285, guid: ad28d7161ee55ce41944506e202f490c, type: 3}

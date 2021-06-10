@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class UpgradeManager : MonoBehaviour
 {
@@ -31,17 +32,22 @@ public class UpgradeManager : MonoBehaviour
 
     private string towerType;
     private int refund;
+    private List<GameObject> towers;
 
     void Awake()
     {
         upgradeUI = GameObject.Find("Buttons");
         gameUI = GameObject.Find("GameUI");
         refund = 0;
+
+        towers = new List<GameObject>();
     }
 
     void Update()
     {
         currentTower = GameObject.FindGameObjectWithTag("SelectedTower");
+
+        //Debug.Log(string.Join(" ", towers));
 
         if (currentTower != null && currentTower.GetComponent<PlaceTower>().placedTower)
         {
@@ -150,6 +156,9 @@ public class UpgradeManager : MonoBehaviour
                 break;
             case "Jroll":
                 JrollUpgrades(tree, upgradeLevel);
+                break;
+            case "Juuls":
+                JuulsUpgrades(tree, upgradeLevel);
                 break;
             default:
                 break;
@@ -267,6 +276,56 @@ public class UpgradeManager : MonoBehaviour
         upgrade.IncrementUpgradeLevel(tree);
     }
 
+    void JuulsUpgrades(int tree, int upgradeLevel)
+    {
+        if (tree == 1 && upgradeLevel == 1)
+        {
+            Debug.Log("Juuls upgrade 1-1");
+        }
+        if (tree == 1 && upgradeLevel == 2)
+        {
+            Debug.Log("Juuls upgrade 1-2");
+        }
+        if (tree == 2 && upgradeLevel == 1)
+        {
+            Debug.Log("Juuls upgrade 2-1");
+        }
+        if (tree == 2 && upgradeLevel == 2)
+        {
+            Debug.Log("Juuls upgrade 2-2");
+        }
+
+        upgrade.IncrementUpgradeLevel(tree);
+    }
+
+    /* */
+
+    public void ActivateAllJrollAbilities()
+    {
+        towers.Clear();
+        UpdateList();
+        foreach (GameObject tower in towers)
+        {
+            if (!tower.GetComponent<Tower>().abilityOnCooldown)
+            {
+                StartCoroutine(tower.GetComponent<JrollHandler>().RapidSpikes());
+                StartCoroutine(tower.GetComponent<Tower>().AbilityCooldown());
+            }
+        }
+        //StartCoroutine(DisableButton(EventSystem.current.currentSelectedGameObject));
+    }
+
+    void UpdateList()
+    {
+        foreach (GameObject tower in GameObject.FindGameObjectsWithTag("Tower"))
+        {
+            if (tower.GetComponent<JrollHandler>() != null && tower.GetComponent<PlaceTower>().placedTower && tower.GetComponent<Tower>().GetUpgradeInstance().GetUpgradeLevel(1) == 4)
+            {
+                towers.Add(tower);
+            }
+        }
+    }
+
     /* */
 
     void SubtractMoney(int price)
@@ -287,5 +346,15 @@ public class UpgradeManager : MonoBehaviour
     void UpgradeProjectile(GameObject projectile)
     {
         currentTower.GetComponent<Tower>().SetProjectile(projectile);
+    }
+
+    public IEnumerator DisableButton(GameObject button = null)
+    {
+        if (button != null)
+        {
+            button.GetComponent<Button>().interactable = false;
+            yield return new WaitForSeconds(0.5f);
+            button.GetComponent<Button>().interactable = true;
+        }
     }
 }

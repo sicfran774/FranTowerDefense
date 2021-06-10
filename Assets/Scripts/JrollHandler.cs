@@ -160,26 +160,28 @@ public class JrollHandler : MonoBehaviour
 
     void PushJroll(GameObject jroll)
     {
-        jroll.GetComponent<Rigidbody2D>().drag = GetComponent<JrollHandler>().GetLinearDrag();
-        jroll.GetComponent<Rigidbody2D>().AddForce(GetComponent<JrollHandler>().GetDirection() * GetComponent<Tower>().projectileSpeed);
+        jroll.GetComponent<Rigidbody2D>().drag = GetLinearDrag();
+        jroll.GetComponent<Rigidbody2D>().AddForce(direction * GetComponent<Tower>().projectileSpeed);
     }
 
     public IEnumerator RapidSpikes()
     {
-        float tempFireRate = GetComponent<Tower>().fireRate;
-        GetComponent<Tower>().fireRate = rapidFireRate;
+        //if (GetComponent<Tower>().secondsUntilCooldownDone <= 0)
+        //{
+            float tempFireRate = GetComponent<Tower>().fireRate;
+            GetComponent<Tower>().fireRate = rapidFireRate;
 
-        Color color = GetComponent<SpriteRenderer>().color;
-        GetComponent<SpriteRenderer>().color = Color.yellow;
+            Color color = GetComponent<SpriteRenderer>().color;
+            GetComponent<SpriteRenderer>().color = Color.yellow;
 
-        yield return new WaitForSeconds(GetComponent<Tower>().abilityDuration);
+            yield return new WaitForSeconds(GetComponent<Tower>().abilityDuration);
 
-        if (!towerDestroyed)
-        {
-            GetComponent<Tower>().fireRate = tempFireRate;
-            GetComponent<SpriteRenderer>().color = color;
-        }
-        
+            if (!towerDestroyed)
+            {
+                GetComponent<Tower>().fireRate = tempFireRate;
+                GetComponent<SpriteRenderer>().color = color;
+            }
+        //}
     }
 
     void OnDestroy()
