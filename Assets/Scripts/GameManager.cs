@@ -164,7 +164,7 @@ public class GameManager : MonoBehaviour
         public string[] twistedStones;
     }
 
-    public void PlayPopNoise(GameObject enemy)
+    public void PlayPopNoise()
     {
         pop.Play();
     }
@@ -174,5 +174,3 @@ public class GameManager : MonoBehaviour
         whish.Play();
     }
 }
-
-

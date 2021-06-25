@@ -8,7 +8,7 @@ public class JrollHandler : MonoBehaviour
     public EdgeCollider2D edge;
     public LayerMask layerMask;
     private TilemapCollider2D tileMap;
-    private GameObject gameManager;
+    private GameManager gameManager;
 
     private Vector2[] colliderpoints;
     private Vector2 direction;
@@ -28,7 +28,7 @@ public class JrollHandler : MonoBehaviour
     {
         range = GetComponentInParent<Tower>().rangeRadius;
         tileMap = GameObject.Find("Tilemap").GetComponent<TilemapCollider2D>();
-        gameManager = GameObject.FindGameObjectWithTag("GameController");
+        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
 
         colliderpoints = edge.points;
         colliderpoints[0] = Vector2.zero;
@@ -47,7 +47,7 @@ public class JrollHandler : MonoBehaviour
             GenerateRandomLine();
         }
 
-        if (gameManager.GetComponent<GameManager>().roundInProgress)
+        if (gameManager.roundInProgress)
         {
             if (GetComponent<Tower>().timer > GetComponent<Tower>().fireRate && GetComponent<PlaceTower>().placedTower && hitPath)
             {

@@ -44,7 +44,6 @@ public class Tower : MonoBehaviour
     private bool enemyWithinRange;
     public float timer;
     private float angle;
-    //private Color original;
 
     void Start()
     {
@@ -89,7 +88,7 @@ public class Tower : MonoBehaviour
             {
                 this.tag = "SelectedTower";
                 ShowRange();
-                //Debug.Log(string.Join(", ", enemies));
+                Debug.Log(string.Join(", ", enemies));
             }
             else if(hit.collider != null && hit.collider.tag == "Upgrade" || hit.collider != null && hit.collider.tag == "Target")
             {
@@ -219,10 +218,16 @@ public class Tower : MonoBehaviour
         GetComponent<SpriteRenderer>().color = color;
     }
 
+    public List<GameObject> GetEnemyList()
+    {
+        return enemies;
+    }
+
     void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.tag == "Enemy")
         {
+            //collider.GetComponent<SpriteRenderer>().color = Color.red;
             enemies.Add(collider.gameObject);
         }
     }

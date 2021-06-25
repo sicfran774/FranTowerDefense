@@ -17,6 +17,13 @@ public class UpgradeManager : MonoBehaviour
     [Header("Juuls Upgrades")]
     public float juulsFireRateUpgrade = 0.1f;
 
+    [Header("Coopa Troopa Upgrades")]
+    public float coopaLongerFlameDuration = 3f;
+    public float coopaUpgradedCooldown = 1f;
+    public int coopaTickAmountUpgrade = 5;
+    public float coopaTickIntervalUpgrade = 0.5f;
+    public float coopaLongestFlameDuration = 4f;
+    
     [Header("Upgraded Ammo")]
     public GameObject pogShooterDoubleDamageProjectile;
     public GameObject jrollBurnSpike;
@@ -170,6 +177,9 @@ public class UpgradeManager : MonoBehaviour
                 break;
             case "Juuls":
                 JuulsUpgrades(tree, upgradeLevel);
+                break;
+            case "Coopa Troopa":
+                CoopaUpgrades(tree, upgradeLevel);
                 break;
             default:
                 break;
@@ -327,6 +337,33 @@ public class UpgradeManager : MonoBehaviour
         {
             UpgradeProjectile(juulCubeLongerSlow);
         }
+    }
+
+    void CoopaUpgrades(int tree, int upgradeLevel)
+    {
+        if (tree == 1 && upgradeLevel == 1)
+        {
+            currentTower.GetComponent<CoopaHandler>().flameDuration = coopaLongerFlameDuration;
+            Debug.Log("Coopa upgrade 1-1");
+        }
+        if (tree == 1 && upgradeLevel == 2)
+        {
+            currentTower.GetComponent<CoopaHandler>().flameDuration = coopaLongestFlameDuration;
+            Debug.Log("Coopa upgrade 1-2");
+        }
+        if (tree == 2 && upgradeLevel == 1)
+        {
+            currentTower.GetComponent<CoopaHandler>().cooldownDuration = coopaUpgradedCooldown;
+            currentTower.GetComponent<CoopaHandler>().tickInterval = coopaTickIntervalUpgrade;
+            Debug.Log("Coopa upgrade 2-1");
+        }
+        if (tree == 2 && upgradeLevel == 2)
+        {
+            currentTower.GetComponent<CoopaHandler>().tickAmount = coopaTickAmountUpgrade;
+            Debug.Log("Coopa upgrade 2-2");
+        }
+
+        upgrade.IncrementUpgradeLevel(tree);
     }
 
     /* */

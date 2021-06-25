@@ -37,7 +37,7 @@ public class Projectile : MonoBehaviour
 
         if (!slow)
         {
-            gameManager.PlayPopNoise(collider.gameObject);
+            gameManager.PlayPopNoise();
         }
         else
         {

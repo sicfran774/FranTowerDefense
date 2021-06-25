@@ -61,6 +61,7 @@ public class Enemy : MonoBehaviour
 
         if (health <= 0)
         {
+            StopAllCoroutines();
             Destroy(gameObject);
         }
         
@@ -190,6 +191,11 @@ public class Enemy : MonoBehaviour
         speed = health > 5 ? 5.5f : health + 0.5f;
     }
 
+    public void StartBurnTick(int time, int damage, float interval)
+    {
+        StartCoroutine(BurnTick(time, damage, interval));
+    }
+
     IEnumerator BurnTick(int time, int damage, float interval)
     {
         spriteFire.SetActive(true);
@@ -199,7 +205,7 @@ public class Enemy : MonoBehaviour
             yield return new WaitForSeconds(interval);
             health -= damage;
             hit = true;
-            gameManager.PlayPopNoise(gameObject);
+            gameManager.PlayPopNoise();
         }
 
         burning = false;
@@ -218,7 +224,7 @@ public class Enemy : MonoBehaviour
             {
                 health -= damage;
                 hit = true;
-                gameManager.PlayPopNoise(gameObject);
+                gameManager.PlayPopNoise();
             }
         }
 
@@ -229,5 +235,10 @@ public class Enemy : MonoBehaviour
         {
             spriteIce.SetActive(false);
         }
+    }
+
+    void OnDestroy()
+    {
+        StopAllCoroutines();
     }
 }
