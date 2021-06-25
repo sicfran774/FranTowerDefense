@@ -14,15 +14,21 @@ public class UpgradeManager : MonoBehaviour
     public float jrollFireRateUpgrade = 0.5f;
     public int jrollPerStack = 3;
 
+    [Header("Juuls Upgrades")]
+    public float juulsFireRateUpgrade = 0.1f;
+
     [Header("Upgraded Ammo")]
     public GameObject pogShooterDoubleDamageProjectile;
     public GameObject jrollBurnSpike;
+    public GameObject juulCubeLongerSlow;
+    public GameObject juulCubeDamage;
+    public GameObject juulCubeBoth;
 
     [Header("Other")]
     public float sellMultiplier;
 
     [Header("Game Object Reference")]
-    public GameObject upgradeAssets;
+    public UpgradeAssets upgradeAssets;
     public Text sellAmount;
 
     private GameObject upgradeUI;
@@ -33,6 +39,7 @@ public class UpgradeManager : MonoBehaviour
     private string towerType;
     private int refund;
     private List<GameObject> towers;
+    public bool enemiesAlreadyFrozen;
 
     void Awake()
     {
@@ -63,7 +70,7 @@ public class UpgradeManager : MonoBehaviour
             int priceOne = GetUpgradePrice(1, treeOneLevel);
             int priceTwo = GetUpgradePrice(2, treeTwoLevel);
 
-            upgradeAssets.GetComponent<UpgradeAssets>().UpdateImagesAndText(currentTower, upgrade.GetUpgradeLevel(1), upgrade.GetUpgradeLevel(2), priceOne, priceTwo, refund);
+            upgradeAssets.UpdateImagesAndText(currentTower, upgrade.GetUpgradeLevel(1), upgrade.GetUpgradeLevel(2), priceOne, priceTwo, refund);
             ToggleUpgradeButton(treeOneLevel, treeTwoLevel);
         }
         else
@@ -83,11 +90,11 @@ public class UpgradeManager : MonoBehaviour
         {
             if (upgradeLevel == 1)
             {
-                return currentTower.GetComponent<Tower>().upgrade11Price;
+                return currentTower.GetComponent<Tower>().upgrade1_1Price;
             }
             else if (upgradeLevel == 2)
             {
-                return currentTower.GetComponent<Tower>().upgrade12Price;
+                return currentTower.GetComponent<Tower>().upgrade1_2Price;
             }
             else
             {
@@ -98,11 +105,11 @@ public class UpgradeManager : MonoBehaviour
         {
             if (upgradeLevel == 1)
             {
-                return currentTower.GetComponent<Tower>().upgrade21Price;
+                return currentTower.GetComponent<Tower>().upgrade2_1Price;
             }
             else if (upgradeLevel == 2)
             {
-                return currentTower.GetComponent<Tower>().upgrade22Price;
+                return currentTower.GetComponent<Tower>().upgrade2_2Price;
             }
             else
             {
@@ -139,6 +146,10 @@ public class UpgradeManager : MonoBehaviour
             case "Jroll":
                 Debug.Log("Activated jroll ability");
                 StartCoroutine(currentTower.GetComponent<JrollHandler>().RapidSpikes());
+                break;
+            case "Juuls":
+                Debug.Log("Activated juuls ablility");
+                StartCoroutine(currentTower.GetComponent<JuulsHandler>().FreezeAllEnemies());
                 break;
             default:
                 break;
@@ -280,22 +291,42 @@ public class UpgradeManager : MonoBehaviour
     {
         if (tree == 1 && upgradeLevel == 1)
         {
+            EitherOrBothJuulCube(tree);
             Debug.Log("Juuls upgrade 1-1");
         }
         if (tree == 1 && upgradeLevel == 2)
         {
+            upgrade.IncrementUpgradeLevel(1);
             Debug.Log("Juuls upgrade 1-2");
         }
         if (tree == 2 && upgradeLevel == 1)
         {
+            EitherOrBothJuulCube(tree);
             Debug.Log("Juuls upgrade 2-1");
         }
         if (tree == 2 && upgradeLevel == 2)
         {
+            UpgradeFireRate(juulsFireRateUpgrade);
             Debug.Log("Juuls upgrade 2-2");
         }
 
         upgrade.IncrementUpgradeLevel(tree);
+    }
+
+    void EitherOrBothJuulCube(int tree)
+    {
+        if (upgrade.GetUpgradeLevel(1) > 1 || upgrade.GetUpgradeLevel(2) > 1)
+        {
+            UpgradeProjectile(juulCubeBoth);
+        }
+        else if (tree == 1)
+        {
+            UpgradeProjectile(juulCubeDamage);
+        }
+        else
+        {
+            UpgradeProjectile(juulCubeLongerSlow);
+        }
     }
 
     /* */

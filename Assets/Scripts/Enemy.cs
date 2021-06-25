@@ -10,23 +10,22 @@ public class Enemy : MonoBehaviour
     public string direction;
     public bool burning;
     public bool slowed;
+    public bool frozen;
 
     private bool hit;
 
-    private GameObject gameManager;
+    private GameManager gameManager;
 
     private Rigidbody2D rb;
 
     private SpriteRenderer sprite;
     private GameObject spriteFire;
     private GameObject spriteIce;
-
-    private CircleCollider2D circle;
     private Color color;
 
     void Awake()
     {
-        gameManager = GameObject.FindGameObjectWithTag("GameController");
+        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
 
         rb = GetComponent<Rigidbody2D>();
 
@@ -35,7 +34,6 @@ public class Enemy : MonoBehaviour
         spriteIce = transform.GetChild(1).gameObject;
 
         color = GetComponent<SpriteRenderer>().color;
-        circle = GetComponent<CircleCollider2D>();
 
         hit = false;
 
@@ -45,7 +43,10 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        UpdateSpeed();
+        if (!frozen)
+        {
+            UpdateSpeed();
+        }
 
         if (hit)
         {
@@ -76,12 +77,12 @@ public class Enemy : MonoBehaviour
             if (collider.GetComponent<Projectile>().burn && !burning)
             {
                 burning = true;
-                StartCoroutine(BurnTick(collider.GetComponent<Projectile>().burnTick, collider.GetComponent<Projectile>().damage));
+                StartCoroutine(BurnTick(collider.GetComponent<Projectile>().burnTick, collider.GetComponent<Projectile>().tickDamage, collider.GetComponent<Projectile>().tickInterval));
             }
             if (collider.GetComponent<Projectile>().slow && !slowed)
             {
                 slowed = true;
-                StartCoroutine(SlowTick(collider.GetComponent<Projectile>().slowTick, collider.GetComponent<Projectile>().damage));
+                StartCoroutine(SlowTick(collider.GetComponent<Projectile>().slowTick, collider.GetComponent<Projectile>().tickDamage, collider.GetComponent<Projectile>().tickInterval));
             }
         }
 
@@ -189,40 +190,44 @@ public class Enemy : MonoBehaviour
         speed = health > 5 ? 5.5f : health + 0.5f;
     }
 
-    IEnumerator BurnTick(int time, int damage)
+    IEnumerator BurnTick(int time, int damage, float interval)
     {
         spriteFire.SetActive(true);
 
         for(int tick = 0; tick < time; tick++)
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(interval);
             health -= damage;
             hit = true;
-            gameManager.GetComponent<GameManager>().PlayPopNoise(gameObject);
+            gameManager.PlayPopNoise(gameObject);
         }
 
         burning = false;
         spriteFire.SetActive(false);
     }
 
-    IEnumerator SlowTick(int time, int damage)
+    IEnumerator SlowTick(int time, int damage, float interval)
     {
         spriteIce.SetActive(true);
         speed /= 2;
 
         for (int tick = 0; tick < time; tick++)
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(interval);
             if (damage > 0)
             {
                 health -= damage;
                 hit = true;
-                gameManager.GetComponent<GameManager>().PlayPopNoise(gameObject);
+                gameManager.PlayPopNoise(gameObject);
             }
         }
 
         UpdateSpeedAfterHit();
         slowed = false;
-        spriteIce.SetActive(false);
+
+        if (!frozen)
+        {
+            spriteIce.SetActive(false);
+        }
     }
 }

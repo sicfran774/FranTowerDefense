@@ -10,6 +10,7 @@ public class Tower : MonoBehaviour
     public float fireRate;
     public float projectileSpeed;
     public int price;
+    public bool specialTower;
 
     [Header("Type Of Ammo")]
 
@@ -24,33 +25,33 @@ public class Tower : MonoBehaviour
 
     [Header("Upgrade Prices")]
 
-    public int upgrade11Price;
-    public int upgrade12Price;
-    public int upgrade21Price;
-    public int upgrade22Price;
+    public int upgrade1_1Price;
+    public int upgrade1_2Price;
+    public int upgrade2_1Price;
+    public int upgrade2_2Price;
 
     [Header("Misc")]
-
     public int bulletsShot;
     public LayerMask layer;
 
     private GameObject currentEnemy;
     private List<GameObject> enemies;
 
-    private GameObject gameManager;
+    private GameManager gameManager;
     private Upgrade upgrade;
 
     private GameObject rangeIndicator;
     private bool enemyWithinRange;
     public float timer;
     private float angle;
+    //private Color original;
 
     void Start()
     {
-        gameManager = GameObject.FindGameObjectWithTag("GameController");
+        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
 
         rangeIndicator = transform.GetChild(1).gameObject;
-        UpdateRange();
+        //UpdateRange();
 
         enemies = new List<GameObject>();
         upgrade = new Upgrade();
@@ -62,12 +63,13 @@ public class Tower : MonoBehaviour
     {
         timer += Time.deltaTime;
 
-        if (GetComponent<JrollHandler>() == null)
+        if (!specialTower)
         {
             if (enemies.Count > 0)
             {
                 enemyWithinRange = true;
                 currentEnemy = enemies[0];
+                //currentEnemy.GetComponent<SpriteRenderer>().color = Color.red;
             }
             else
             {
@@ -89,7 +91,7 @@ public class Tower : MonoBehaviour
                 ShowRange();
                 //Debug.Log(string.Join(", ", enemies));
             }
-            else if(hit.collider != null && hit.collider.tag == "Upgrade")
+            else if(hit.collider != null && hit.collider.tag == "Upgrade" || hit.collider != null && hit.collider.tag == "Target")
             {
                    // do nothing..for now
             }
@@ -100,7 +102,10 @@ public class Tower : MonoBehaviour
             }
         }
 
-        UpdateRange();
+        if (GetComponent<CoopaHandler>() == null)
+        {
+            UpdateRange();
+        }
     }
 
     public GameObject InstantiateAmmo(Transform transform)
@@ -126,13 +131,13 @@ public class Tower : MonoBehaviour
         {
             projectile.GetComponent<Rigidbody2D>().AddForce(direction * projectileSpeed);
         }
-        gameManager.GetComponent<GameManager>().PlayWhishNoise();
+        gameManager.PlayWhishNoise();
 
         bulletsShot++;
         timer = 0;
     }
 
-    Vector2 PointAtEnemy(ref GameObject enemy)
+    public Vector2 PointAtEnemy(ref GameObject enemy)
     {
         Vector3 targ = enemy.transform.position;
         targ.z = 0f;
@@ -226,7 +231,8 @@ public class Tower : MonoBehaviour
     {
         if (collider.tag == "Enemy" && enemies.Count > 0)
         {
-            enemies.RemoveAt(0);
+            //collider.GetComponent<SpriteRenderer>().color = Color.white;
+            enemies.Remove(collider.gameObject);
         }
     }
 

@@ -89,7 +89,7 @@ public class UpgradeAssets : MonoBehaviour
             upgradeImageOne.sprite = pogShooterImageOneOne;
             upgradePriceOne.text = upgradeOnePrice.ToString();
         }
-        else if (treeOneLevel == 2)
+        else
         {
             upgradeDescOne.text = "Double\nDamage";
             upgradeImageOne.sprite = pogShooterImageOneTwo;
@@ -101,7 +101,7 @@ public class UpgradeAssets : MonoBehaviour
             upgradeImageTwo.sprite = pogShooterImageTwoOne;
             upgradePriceTwo.text = upgradeTwoPrice.ToString();
         }
-        else if (treeTwoLevel == 2)
+        else
         {
             upgradeDescTwo.text = "Spread\nShot";
             upgradeImageTwo.sprite = pogShooterImageTwoTwo;
@@ -126,17 +126,8 @@ public class UpgradeAssets : MonoBehaviour
         else
         {
             upgradeDescOne.text = "Activate\nRapid Spikes";
-            
-            if(currentTower.GetComponent<Tower>().secondsUntilCooldownDone != 0)
-            {
-                upgradePriceOne.text = currentTower.GetComponent<Tower>().secondsUntilCooldownDone.ToString();
-            }
-            else
-            {
-                upgradePriceOne.text = null;
-            }
-
-            upgradeOneGameObject.transform.GetChild(3).gameObject.SetActive(false);
+            upgradeImageOne.sprite = jrollImageOneTwo;
+            AbilityButtonAsset();
         }
         if (treeTwoLevel == 1)
         {
@@ -144,7 +135,7 @@ public class UpgradeAssets : MonoBehaviour
             upgradeImageTwo.sprite = jrollImageTwoOne;
             upgradePriceTwo.text = upgradeTwoPrice.ToString();
         }
-        else if (treeTwoLevel == 2)
+        else
         {
             upgradeDescTwo.text = "Jroll\nSpike Stacks";
             upgradeImageTwo.sprite = jrollImageTwoTwo;
@@ -155,42 +146,47 @@ public class UpgradeAssets : MonoBehaviour
     {
         if (treeOneLevel == 1)
         {
-            upgradeDescOne.text = "";
+            upgradeDescOne.text = "Dry Ice";
             upgradeImageOne.sprite = jrollImageOneOne;
             upgradePriceOne.text = upgradeOnePrice.ToString();
         }
         else if (treeOneLevel == 2)
         {
-            upgradeDescOne.text = "";
+            upgradeDescOne.text = "Unlock\nBlizzard Ability";
             upgradeImageOne.sprite = jrollImageOneTwo;
             upgradePriceOne.text = upgradeOnePrice.ToString();
         }
         else
         {
-            upgradeDescOne.text = "";
-
-            if (currentTower.GetComponent<Tower>().secondsUntilCooldownDone != 0)
-            {
-                upgradePriceOne.text = currentTower.GetComponent<Tower>().secondsUntilCooldownDone.ToString();
-            }
-            else
-            {
-                upgradePriceOne.text = null;
-            }
-
-            upgradeOneGameObject.transform.GetChild(3).gameObject.SetActive(false);
+            upgradeDescOne.text = "Activate\nBlizzard";
+            upgradeImageOne.sprite = jrollImageOneTwo;
+            AbilityButtonAsset();
         }
         if (treeTwoLevel == 1)
         {
-            upgradeDescTwo.text = "";
+            upgradeDescTwo.text = "Double Slow Duration";
             upgradeImageTwo.sprite = jrollImageTwoOne;
             upgradePriceTwo.text = upgradeTwoPrice.ToString();
         }
-        else if (treeTwoLevel == 2)
+        else
         {
-            upgradeDescTwo.text = "";
+            upgradeDescTwo.text = "Ice Rush";
             upgradeImageTwo.sprite = jrollImageTwoTwo;
             upgradePriceTwo.text = upgradeTwoPrice.ToString();
         }
+    }
+
+    void AbilityButtonAsset()
+    {
+        if (currentTower.GetComponent<Tower>().secondsUntilCooldownDone != 0)
+        {
+            upgradePriceOne.text = currentTower.GetComponent<Tower>().secondsUntilCooldownDone.ToString();
+        }
+        else
+        {
+            upgradePriceOne.text = null;
+        }
+
+        upgradeOneGameObject.transform.GetChild(3).gameObject.SetActive(false);
     }
 }

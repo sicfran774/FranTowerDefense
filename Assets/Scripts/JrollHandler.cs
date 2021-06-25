@@ -166,22 +166,19 @@ public class JrollHandler : MonoBehaviour
 
     public IEnumerator RapidSpikes()
     {
-        //if (GetComponent<Tower>().secondsUntilCooldownDone <= 0)
-        //{
-            float tempFireRate = GetComponent<Tower>().fireRate;
-            GetComponent<Tower>().fireRate = rapidFireRate;
+        float tempFireRate = GetComponent<Tower>().fireRate;
+        GetComponent<Tower>().fireRate = rapidFireRate;
 
-            Color color = GetComponent<SpriteRenderer>().color;
-            GetComponent<SpriteRenderer>().color = Color.yellow;
+        Color color = GetComponent<SpriteRenderer>().color;
+        GetComponent<SpriteRenderer>().color = Color.yellow;
 
-            yield return new WaitForSeconds(GetComponent<Tower>().abilityDuration);
+        yield return new WaitForSeconds(GetComponent<Tower>().abilityDuration);
 
-            if (!towerDestroyed)
-            {
-                GetComponent<Tower>().fireRate = tempFireRate;
-                GetComponent<SpriteRenderer>().color = color;
-            }
-        //}
+        if (!towerDestroyed)
+        {
+            GetComponent<Tower>().fireRate = tempFireRate;
+            GetComponent<SpriteRenderer>().color = color;
+        }
     }
 
     void OnDestroy()

@@ -92,5 +92,10 @@ PrefabInstance:
       propertyPath: burnTick
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 7294774890946284216, guid: 0e0655ecaf8b5b44b9f3504a0315b1bb,
+        type: 3}
+      propertyPath: tickDamage
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0e0655ecaf8b5b44b9f3504a0315b1bb, type: 3}

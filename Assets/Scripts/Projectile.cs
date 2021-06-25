@@ -5,6 +5,8 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     public int damage;
+    public int tickDamage;
+    public float tickInterval = 1f;
 
     [Header("Specific Properties")]
     public bool burn;
@@ -13,7 +15,7 @@ public class Projectile : MonoBehaviour
     public int burnTick;
     public int slowTick;
 
-    private GameObject gameManager;
+    private GameManager gameManager;
     private int reward;
 
     void Start()
@@ -22,23 +24,24 @@ public class Projectile : MonoBehaviour
         {
             StartCoroutine(DestroyProjectile());
         }
-        gameManager = GameObject.FindGameObjectWithTag("GameController");
+        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
     }
 
     void OnTriggerEnter2D(Collider2D collider)
     {
         CalculateReward(collider);
+        Debug.Log(reward);
 
         collider.GetComponent<Enemy>().reward = reward;
         RemoveEnemyHealth(collider);
 
-        if (damage > 0)
+        if (!slow)
         {
-            gameManager.GetComponent<GameManager>().PlayPopNoise(collider.gameObject);
+            gameManager.PlayPopNoise(collider.gameObject);
         }
         else
         {
-            gameManager.GetComponent<GameManager>().PlayWhishNoise();
+            gameManager.PlayWhishNoise();
         }
         GetComponent<BoxCollider2D>().enabled = false;
         Destroy(gameObject);
@@ -57,6 +60,11 @@ public class Projectile : MonoBehaviour
         else
         {
             reward = damage;
+        }
+
+        if(reward < 1)
+        {
+            reward = 1;
         }
     }
 

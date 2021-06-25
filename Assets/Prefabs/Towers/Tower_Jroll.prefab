@@ -203,15 +203,16 @@ MonoBehaviour:
   fireRate: 1
   projectileSpeed: 100
   price: 800
+  specialTower: 1
   ammo: {fileID: 5821463407135236317, guid: 0e0655ecaf8b5b44b9f3504a0315b1bb, type: 3}
   abilityDuration: 5
   abilityCooldown: 30
   abilityOnCooldown: 0
   secondsUntilCooldownDone: 0
-  upgrade11Price: 450
-  upgrade12Price: 1200
-  upgrade21Price: 500
-  upgrade22Price: 1000
+  upgrade1_1Price: 0
+  upgrade1_2Price: 0
+  upgrade2_1Price: 0
+  upgrade2_2Price: 0
   bulletsShot: 0
   layer:
     serializedVersion: 2

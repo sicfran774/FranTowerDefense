@@ -70,7 +70,7 @@ public class PlaceTower : MonoBehaviour
                 Destroy(gameObject);
                 EnableButtons();
             }
-            if (!overlapping && !placedTower && afford)
+            if (!overlapping && !placedTower && afford) //This runs when tower is placed, runs only ONCE
             {
                 placedTower = true;
                 transform.GetChild(0).gameObject.SetActive(true);
