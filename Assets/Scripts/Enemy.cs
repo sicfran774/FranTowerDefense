@@ -7,8 +7,16 @@ public class Enemy : MonoBehaviour
     public float speed;
     public int health;
     public int reward;
-    public string direction;
+
+    [Header("Special Enemy")]
+    public bool ice;
+    public bool fire;
+
+    private string direction;
+
+    [Header("States")]
     public bool burning;
+    public bool flamed;
     public bool slowed;
     public bool frozen;
 
@@ -71,19 +79,18 @@ public class Enemy : MonoBehaviour
     {
         if (!hit && collider.tag == "Projectile")
         {
-            if (collider.GetComponent<Projectile>().damage > 0)
+            Projectile projectile = collider.GetComponent<Projectile>();
+            if (ice)
             {
-                hit = true;
+                IceEnemyTrigger(projectile);
             }
-            if (collider.GetComponent<Projectile>().burn && !burning)
+            else if (fire)
             {
-                burning = true;
-                StartCoroutine(BurnTick(collider.GetComponent<Projectile>().burnTick, collider.GetComponent<Projectile>().tickDamage, collider.GetComponent<Projectile>().tickInterval));
+                FireEnemyTrigger(projectile);
             }
-            if (collider.GetComponent<Projectile>().slow && !slowed)
+            else
             {
-                slowed = true;
-                StartCoroutine(SlowTick(collider.GetComponent<Projectile>().slowTick, collider.GetComponent<Projectile>().tickDamage, collider.GetComponent<Projectile>().tickInterval));
+                NormalEnemyTrigger(projectile);
             }
         }
 
@@ -96,6 +103,44 @@ public class Enemy : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    void NormalEnemyTrigger(Projectile projectile)
+    {
+        if (projectile.damage > 0)
+        {
+            hit = true;
+        }
+        if (projectile.burn && !burning)
+        {
+            burning = true;
+            StartCoroutine(BurnTick(projectile.burnTick, projectile.tickDamage, projectile.tickInterval));
+        }
+        if (projectile.slow && !slowed)
+        {
+            slowed = true;
+            StartCoroutine(SlowTick(projectile.slowTick, projectile.tickDamage, projectile.tickInterval));
+        }
+    }
+
+    void IceEnemyTrigger(Projectile projectile)
+    {
+        if (projectile.burn || projectile.GetComponentInParent<Tower>().canShootAllTypes)
+        {
+            Debug.Log("melted");
+            burning = false;
+            ice = false;
+        }
+    }
+    void FireEnemyTrigger(Projectile projectile)
+    {
+        if (projectile.slow || projectile.GetComponentInParent<Tower>().canShootAllTypes)
+        {
+            Debug.Log("cooled");
+            slowed = false;
+            fire = false;
+        }
+    }
+
     void RewardMoney()
     {
         GameObject.Find("GameUI").GetComponent<Player>().money += reward;
@@ -208,6 +253,7 @@ public class Enemy : MonoBehaviour
             gameManager.PlayPopNoise();
         }
 
+        flamed = false;
         burning = false;
         spriteFire.SetActive(false);
     }

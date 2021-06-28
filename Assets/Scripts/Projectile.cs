@@ -29,22 +29,31 @@ public class Projectile : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        CalculateReward(collider);
-        Debug.Log(reward);
-
-        collider.GetComponent<Enemy>().reward = reward;
-        RemoveEnemyHealth(collider);
-
-        if (!slow)
+        if (!collider.GetComponent<Enemy>().fire && !collider.GetComponent<Enemy>().ice)
         {
-            gameManager.PlayPopNoise();
+            CalculateReward(collider);
+
+            if (GetComponentInParent<Tower>().doubleMoney)
+            {
+                DoubleMoney();
+            }
+
+            Debug.Log(reward);
+
+            collider.GetComponent<Enemy>().reward = reward;
+            RemoveEnemyHealth(collider);
+
+            if (!slow)
+            {
+                gameManager.PlayPopNoise();
+            }
+            else
+            {
+                gameManager.PlayWhishNoise();
+            }
+            GetComponent<BoxCollider2D>().enabled = false;
+            Destroy(gameObject);
         }
-        else
-        {
-            gameManager.PlayWhishNoise();
-        }
-        GetComponent<BoxCollider2D>().enabled = false;
-        Destroy(gameObject);
     }
 
     void RemoveEnemyHealth(Collider2D collider)
@@ -66,6 +75,11 @@ public class Projectile : MonoBehaviour
         {
             reward = 1;
         }
+    }
+
+    void DoubleMoney()
+    {
+        reward *= 2;
     }
 
     IEnumerator DestroyProjectile()

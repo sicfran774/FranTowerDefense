@@ -27,8 +27,12 @@ public class GameManager : MonoBehaviour
     private GameObject gameUI;
     private GameObject pauseMenu;
 
+    private string path;
+
     void Awake()
     {
+        path = Application.dataPath;
+
         round = 0;
         roundInProgress = false;
         startRound = false;

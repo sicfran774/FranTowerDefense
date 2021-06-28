@@ -6,7 +6,9 @@ using UnityEngine;
 /*  Format of spawning enemies
  *  
  *  ***Legend***
- *  a = abner
+ *  a = normal abner
+ *  i = ice abner
+ *  f = fire abner
  *  
  *  endRound = End the round (must be last element for that round)
  *  
@@ -29,6 +31,8 @@ public class SpawnManager : MonoBehaviour
 
     public GameManager gameManager;
     public GameObject enemyAbner;
+    public GameObject enemyIceAbner;
+    public GameObject enemyFireAbner;
 
     private string[] enemyOrder;
     private int currentPosition;
@@ -65,11 +69,21 @@ public class SpawnManager : MonoBehaviour
             if(enemyOrder[currentPosition].StartsWith("a"))
             {
                 CheckHealthOfEnemy(ref health);
-                SpawnEnemyAbner(health);
+                SpawnEnemy(health, enemyAbner);
+            }
+            if (enemyOrder[currentPosition].StartsWith("i"))
+            {
+                CheckHealthOfEnemy(ref health);
+                SpawnEnemy(health, enemyIceAbner);
+            }
+            if (enemyOrder[currentPosition].StartsWith("f"))
+            {
+                CheckHealthOfEnemy(ref health);
+                SpawnEnemy(health, enemyFireAbner);
             }
 
             //End the round
-            if(enemyOrder[currentPosition] == "endRound")
+            if (enemyOrder[currentPosition] == "endRound")
             {
                 Debug.Log("Finished spawning successfully.");
                 currentPosition++;
@@ -111,9 +125,9 @@ public class SpawnManager : MonoBehaviour
         numEnemiesSpawned += health;
     }
 
-    public void SpawnEnemyAbner(int health)
+    public void SpawnEnemy(int health, GameObject type)
     {
-        GameObject newObject = Instantiate(enemyAbner);
+        GameObject newObject = Instantiate(type);
         newObject.transform.SetParent(GameObject.Find("Enemies").transform);
         newObject.transform.position = this.transform.position;
 

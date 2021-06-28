@@ -30,6 +30,10 @@ public class Tower : MonoBehaviour
     public int upgrade2_1Price;
     public int upgrade2_2Price;
 
+    [Header("Tad Rock Buffs")]
+    public bool doubleMoney;
+    public bool canShootAllTypes;
+
     [Header("Misc")]
     public int bulletsShot;
     public LayerMask layer;
@@ -88,7 +92,6 @@ public class Tower : MonoBehaviour
             {
                 this.tag = "SelectedTower";
                 ShowRange();
-                Debug.Log(string.Join(", ", enemies));
             }
             else if(hit.collider != null && hit.collider.tag == "Upgrade" || hit.collider != null && hit.collider.tag == "Target")
             {

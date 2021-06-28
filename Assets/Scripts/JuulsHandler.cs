@@ -18,9 +18,12 @@ public class JuulsHandler : MonoBehaviour
     {
         foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
         {
-            enemy.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-            enemy.transform.GetChild(1).gameObject.SetActive(true);
-            enemy.GetComponent<Enemy>().frozen = true;
+            if (!enemy.GetComponent<Enemy>().ice)
+            {
+                enemy.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                enemy.transform.GetChild(1).gameObject.SetActive(true);
+                enemy.GetComponent<Enemy>().frozen = true;
+            }
         }
     }
     void Unfreeze()

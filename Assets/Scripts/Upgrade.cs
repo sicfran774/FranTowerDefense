@@ -39,4 +39,16 @@ public class Upgrade
             upgradeTwoLevel++;
         }
     }
+
+    public void SetUpgradeLevel(int tree, int level)
+    {
+        if(tree == 1)
+        {
+            upgradeOneLevel = level;
+        }
+        else if(tree == 2)
+        {
+            upgradeTwoLevel = level;
+        }
+    }
 }

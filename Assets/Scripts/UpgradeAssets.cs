@@ -78,6 +78,17 @@ public class UpgradeAssets : MonoBehaviour
             case "Juuls":
                 JuulsAssets(treeOneLevel, treeTwoLevel, upgradeOnePrice, upgradeTwoPrice);
                 break;
+            case "Coopa Troopa":
+                CoopaAssets(treeOneLevel, treeTwoLevel, upgradeOnePrice, upgradeTwoPrice);
+                break;
+            case "Super Fran":
+                FranAssets(treeOneLevel, treeTwoLevel, upgradeOnePrice, upgradeTwoPrice);
+                break;
+            case "Tad Rock":
+                RockAssets(treeOneLevel, treeTwoLevel, upgradeOnePrice, upgradeTwoPrice);
+                break;
+            default:
+                break;
         }
     }
     
@@ -171,6 +182,87 @@ public class UpgradeAssets : MonoBehaviour
         else
         {
             upgradeDescTwo.text = "Ice Rush";
+            upgradeImageTwo.sprite = jrollImageTwoTwo;
+            upgradePriceTwo.text = upgradeTwoPrice.ToString();
+        }
+    }
+    private void CoopaAssets(int treeOneLevel, int treeTwoLevel, int upgradeOnePrice, int upgradeTwoPrice)
+    {
+        if (treeOneLevel == 1)
+        {
+            upgradeDescOne.text = "Longer Flames\nDuration";
+            upgradeImageOne.sprite = jrollImageOneOne;
+            upgradePriceOne.text = upgradeOnePrice.ToString();
+        }
+        else
+        {
+            upgradeDescOne.text = "Even Longer\nFlame Duration";
+            upgradeImageOne.sprite = jrollImageOneTwo;
+            upgradePriceOne.text = upgradeOnePrice.ToString();
+        }
+        if (treeTwoLevel == 1)
+        {
+            upgradeDescTwo.text = "Reduce Cooldown\nand Fire Effectiveness";
+            upgradeImageTwo.sprite = jrollImageTwoOne;
+            upgradePriceTwo.text = upgradeTwoPrice.ToString();
+        }
+        else
+        {
+            upgradeDescTwo.text = "Increase Burn Duration";
+            upgradeImageTwo.sprite = jrollImageTwoTwo;
+            upgradePriceTwo.text = upgradeTwoPrice.ToString();
+        }
+    }
+    private void FranAssets(int treeOneLevel, int treeTwoLevel, int upgradeOnePrice, int upgradeTwoPrice)
+    {
+        if (treeOneLevel == 1)
+        {
+            upgradeDescOne.text = "Faster Fire Rate";
+            upgradeImageOne.sprite = jrollImageOneOne;
+            upgradePriceOne.text = upgradeOnePrice.ToString();
+        }
+        else
+        {
+            upgradeDescOne.text = "Spread Shot";
+            upgradeImageOne.sprite = jrollImageOneTwo;
+            upgradePriceOne.text = upgradeOnePrice.ToString();
+        }
+        if (treeTwoLevel == 1)
+        {
+            upgradeDescTwo.text = "Increase Range";
+            upgradeImageTwo.sprite = jrollImageTwoOne;
+            upgradePriceTwo.text = upgradeTwoPrice.ToString();
+        }
+        else
+        {
+            upgradeDescTwo.text = "Double Damage";
+            upgradeImageTwo.sprite = jrollImageTwoTwo;
+            upgradePriceTwo.text = upgradeTwoPrice.ToString();
+        }
+    }
+    private void RockAssets(int treeOneLevel, int treeTwoLevel, int upgradeOnePrice, int upgradeTwoPrice)
+    {
+        if (treeOneLevel == 1)
+        {
+            upgradeDescOne.text = "Faster Fire Rate";
+            upgradeImageOne.sprite = jrollImageOneOne;
+            upgradePriceOne.text = upgradeOnePrice.ToString();
+        }
+        else
+        {
+            upgradeDescOne.text = "Spread Shot";
+            upgradeImageOne.sprite = jrollImageOneTwo;
+            upgradePriceOne.text = upgradeOnePrice.ToString();
+        }
+        if (treeTwoLevel == 1)
+        {
+            upgradeDescTwo.text = "Increase Range";
+            upgradeImageTwo.sprite = jrollImageTwoOne;
+            upgradePriceTwo.text = upgradeTwoPrice.ToString();
+        }
+        else
+        {
+            upgradeDescTwo.text = "Double Damage";
             upgradeImageTwo.sprite = jrollImageTwoTwo;
             upgradePriceTwo.text = upgradeTwoPrice.ToString();
         }

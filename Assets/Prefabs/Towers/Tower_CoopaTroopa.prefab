@@ -286,7 +286,7 @@ MonoBehaviour:
   tickAmount: 2
   tickInterval: 1
   flameDuration: 2
-  cooldownDuration: 2
+  cooldownDuration: 3
   target: {fileID: 7622697691997842473, guid: b6067055c31001e4e9a47e0c6662840c, type: 3}
   layer:
     serializedVersion: 2

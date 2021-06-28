@@ -722,9 +722,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pogRangeUpgrade: 1.5
   pogFireRateUpgrade: 0.7
+  juulsFireRateUpgrade: 0.2
+  coopaLongerFlameDuration: 3
+  coopaUpgradedCooldown: 2
+  coopaTickAmountUpgrade: 5
+  coopaTickIntervalUpgrade: 0.5
+  coopaLongestFlameDuration: 5
   jrollFireRateUpgrade: 0.75
   jrollPerStack: 2
-  juulsFireRateUpgrade: 0.2
+  franFireRate: 0.1
+  franRange: 4
   pogShooterDoubleDamageProjectile: {fileID: 4769109584760763530, guid: 9864b6e4663a4e94abd39c9cb9ad4be3,
     type: 3}
   jrollBurnSpike: {fileID: 3166994110562841604, guid: 52a28515a31abd244bdf1b1228dc6b54,
@@ -1229,8 +1236,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 9a8d55847bef79a44a6fb7c2f83ed966, type: 3}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: a0582bdb7d7a5cf4ab3089990a06f86a, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1378,7 +1385,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2120317474335829097, guid: 982de3eec16711b4f94e0b73187b6963,
+      - m_Target: {fileID: 6283963296018679933, guid: d59f3721340e4f248b2c2b70f412df55,
           type: 3}
         m_MethodName: ButtonPressed
         m_Mode: 1
@@ -1464,6 +1471,10 @@ MonoBehaviour:
   numEnemiesSpawned: 0
   gameManager: {fileID: 801358740}
   enemyAbner: {fileID: 5354585276728548343, guid: 2cbee9195c6eff740a45a1593edc9b5d,
+    type: 3}
+  enemyIceAbner: {fileID: 9150282449263581838, guid: 4b6c87789816c274abd713d63ac5005c,
+    type: 3}
+  enemyFireAbner: {fileID: 5989444399442502952, guid: 2bf0386b5bec03e46b3f2e4632e69527,
     type: 3}
 --- !u!4 &465122490
 Transform:
@@ -1707,7 +1718,7 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 076160a1ac2b3b34eb0d2553f2d6d554, type: 3}
     m_FontSize: 30
     m_FontStyle: 1
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 0
     m_MaxSize: 300
     m_Alignment: 4
@@ -5043,8 +5054,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 9a8d55847bef79a44a6fb7c2f83ed966, type: 3}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 07f296d2e350d684ab65ce420e80be98, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -6514,7 +6525,7 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 076160a1ac2b3b34eb0d2553f2d6d554, type: 3}
     m_FontSize: 30
     m_FontStyle: 1
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 0
     m_MaxSize: 300
     m_Alignment: 4
@@ -6797,7 +6808,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 07f296d2e350d684ab65ce420e80be98, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e771719f69158ff4191638d28cd40d73, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7293,7 +7304,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1840658394}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1571357697777703456, guid: 7e9a6304709b0c844940943014458823,
+          type: 3}
+        m_MethodName: ButtonPressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1840658394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7418,7 +7441,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1853237975}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2120317474335829097, guid: 982de3eec16711b4f94e0b73187b6963,
+          type: 3}
+        m_MethodName: ButtonPressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1853237975
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -10,9 +10,7 @@ public class UpgradeManager : MonoBehaviour
     public float pogRangeUpgrade = 2f;
     public float pogFireRateUpgrade = 0.70f;
 
-    [Header("Jroll Upgrades")]
-    public float jrollFireRateUpgrade = 0.5f;
-    public int jrollPerStack = 3;
+    
 
     [Header("Juuls Upgrades")]
     public float juulsFireRateUpgrade = 0.1f;
@@ -23,7 +21,15 @@ public class UpgradeManager : MonoBehaviour
     public int coopaTickAmountUpgrade = 5;
     public float coopaTickIntervalUpgrade = 0.5f;
     public float coopaLongestFlameDuration = 4f;
-    
+
+    [Header("Jroll Upgrades")]
+    public float jrollFireRateUpgrade = 0.5f;
+    public int jrollPerStack = 3;
+
+    [Header("Super Fran Upgrades")]
+    public float franFireRate = 0.1f;
+    public float franRange = 4f;
+
     [Header("Upgraded Ammo")]
     public GameObject pogShooterDoubleDamageProjectile;
     public GameObject jrollBurnSpike;
@@ -172,14 +178,20 @@ public class UpgradeManager : MonoBehaviour
             case "Pog Shooter":
                 PogShooterUpgrades(tree, upgradeLevel);
                 break;
-            case "Jroll":
-                JrollUpgrades(tree, upgradeLevel);
-                break;
             case "Juuls":
                 JuulsUpgrades(tree, upgradeLevel);
                 break;
             case "Coopa Troopa":
                 CoopaUpgrades(tree, upgradeLevel);
+                break;
+            case "Tad Rock":
+                RockUpgrades(tree, upgradeLevel);
+                break;
+            case "Jroll":
+                JrollUpgrades(tree, upgradeLevel);
+                break;
+            case "Super Fran":
+                FranUpgrades(tree, upgradeLevel);
                 break;
             default:
                 break;
@@ -270,33 +282,6 @@ public class UpgradeManager : MonoBehaviour
         upgrade.IncrementUpgradeLevel(tree);
     }
 
-    void JrollUpgrades(int tree, int upgradeLevel)
-    {
-        if (tree == 1 && upgradeLevel == 1)
-        {
-            UpgradeFireRate(jrollFireRateUpgrade);
-            Debug.Log("Jroll upgrade 1-1");
-        }
-        if (tree == 1 && upgradeLevel == 2)
-        {
-            upgrade.IncrementUpgradeLevel(1);
-            Debug.Log("Jroll upgrade 1-2");
-        }
-        if (tree == 2 && upgradeLevel == 1)
-        {
-            UpgradeProjectile(jrollBurnSpike);
-            Debug.Log("Jroll upgrade 2-1");
-        }
-        if (tree == 2 && upgradeLevel == 2)
-        {
-            currentTower.GetComponent<JrollHandler>().SetJrollPerStack(jrollPerStack);
-            currentTower.GetComponent<JrollHandler>().activatedStack = true;
-            Debug.Log("Jroll upgrade 2-2");
-        }
-
-        upgrade.IncrementUpgradeLevel(tree);
-    }
-
     void JuulsUpgrades(int tree, int upgradeLevel)
     {
         if (tree == 1 && upgradeLevel == 1)
@@ -361,6 +346,72 @@ public class UpgradeManager : MonoBehaviour
         {
             currentTower.GetComponent<CoopaHandler>().tickAmount = coopaTickAmountUpgrade;
             Debug.Log("Coopa upgrade 2-2");
+        }
+
+        upgrade.IncrementUpgradeLevel(tree);
+    }
+    void RockUpgrades(int tree, int upgradeLevel)
+    {
+        if (tree == 2 && upgradeLevel == 1)
+        {
+            
+            Debug.Log("Tad Rock upgrade 2-1");
+        }
+        if (tree == 2 && upgradeLevel == 2)
+        {
+            
+            Debug.Log("Tad Rock upgrade 2-2");
+        }
+
+        upgrade.IncrementUpgradeLevel(tree);
+    }
+    void JrollUpgrades(int tree, int upgradeLevel)
+    {
+        if (tree == 1 && upgradeLevel == 1)
+        {
+            UpgradeFireRate(jrollFireRateUpgrade);
+            Debug.Log("Jroll upgrade 1-1");
+        }
+        if (tree == 1 && upgradeLevel == 2)
+        {
+            upgrade.IncrementUpgradeLevel(1);
+            Debug.Log("Jroll upgrade 1-2");
+        }
+        if (tree == 2 && upgradeLevel == 1)
+        {
+            UpgradeProjectile(jrollBurnSpike);
+            Debug.Log("Jroll upgrade 2-1");
+        }
+        if (tree == 2 && upgradeLevel == 2)
+        {
+            currentTower.GetComponent<JrollHandler>().SetJrollPerStack(jrollPerStack);
+            currentTower.GetComponent<JrollHandler>().activatedStack = true;
+            Debug.Log("Jroll upgrade 2-2");
+        }
+
+        upgrade.IncrementUpgradeLevel(tree);
+    }
+    void FranUpgrades(int tree, int upgradeLevel)
+    {
+        if (tree == 1 && upgradeLevel == 1)
+        {
+            UpgradeFireRate(franFireRate);
+            Debug.Log("Super Fran upgrade 1-1");
+        }
+        if (tree == 1 && upgradeLevel == 2)
+        {
+            currentTower.GetComponent<SpreadShot>().activated = true;
+            Debug.Log("Super Fran upgrade 1-2");
+        }
+        if (tree == 2 && upgradeLevel == 1)
+        {
+            UpgradeRange(franRange);
+            Debug.Log("Super Fran upgrade 2-1");
+        }
+        if (tree == 2 && upgradeLevel == 2)
+        {
+            UpgradeProjectile(pogShooterDoubleDamageProjectile);
+            Debug.Log("Super Fran upgrade 2-2");
         }
 
         upgrade.IncrementUpgradeLevel(tree);
