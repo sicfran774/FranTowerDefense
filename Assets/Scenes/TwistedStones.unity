@@ -720,14 +720,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4288d73e1c356946a189a7dee789ffc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pogRangeUpgrade: 1.5
-  pogFireRateUpgrade: 0.7
+  pogRangeUpgrade: 2
+  pogFireRateUpgrade: 0.5
   juulsFireRateUpgrade: 0.2
   coopaLongerFlameDuration: 3
   coopaUpgradedCooldown: 2
   coopaTickAmountUpgrade: 5
   coopaTickIntervalUpgrade: 0.5
   coopaLongestFlameDuration: 5
+  rockFireRate: 0.7
   jrollFireRateUpgrade: 0.75
   jrollPerStack: 2
   franFireRate: 0.1
@@ -741,6 +742,8 @@ MonoBehaviour:
   juulCubeDamage: {fileID: 5144310247370616010, guid: e1eb3f67eadb02341938d5d8525a67a3,
     type: 3}
   juulCubeBoth: {fileID: 5144310247370616010, guid: feeffb386efa66842b4b7f7b9a42a75b,
+    type: 3}
+  rockStack: {fileID: 6035500952150589906, guid: 8ba87a62596982845885b241a59216dc,
     type: 3}
   sellMultiplier: 0.7
   upgradeAssets: {fileID: 898647312}
@@ -3009,7 +3012,7 @@ MonoBehaviour:
   round: 0
   roundInProgress: 0
   startRound: 0
-  roundBonusMultiplier: 0.8
+  roundBonusMultiplier: 1.5
   paused: 0
   startRoundButton: {fileID: 1753925710}
   pop: {fileID: 801358742}
@@ -7911,7 +7914,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 200
-  money: 100000
+  money: 500
 --- !u!1 &1970021694
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,8 +10,6 @@ public class UpgradeManager : MonoBehaviour
     public float pogRangeUpgrade = 2f;
     public float pogFireRateUpgrade = 0.70f;
 
-    
-
     [Header("Juuls Upgrades")]
     public float juulsFireRateUpgrade = 0.1f;
 
@@ -21,6 +19,9 @@ public class UpgradeManager : MonoBehaviour
     public int coopaTickAmountUpgrade = 5;
     public float coopaTickIntervalUpgrade = 0.5f;
     public float coopaLongestFlameDuration = 4f;
+
+    [Header("Tad Rock Upgrades")]
+    public float rockFireRate = 0.7f;
 
     [Header("Jroll Upgrades")]
     public float jrollFireRateUpgrade = 0.5f;
@@ -36,6 +37,7 @@ public class UpgradeManager : MonoBehaviour
     public GameObject juulCubeLongerSlow;
     public GameObject juulCubeDamage;
     public GameObject juulCubeBoth;
+    public GameObject rockStack;
 
     [Header("Other")]
     public float sellMultiplier;
@@ -354,12 +356,13 @@ public class UpgradeManager : MonoBehaviour
     {
         if (tree == 2 && upgradeLevel == 1)
         {
-            
+            currentTower.GetComponent<TadRockHandler>().passiveIncome = true;
             Debug.Log("Tad Rock upgrade 2-1");
         }
         if (tree == 2 && upgradeLevel == 2)
         {
-            
+            UpgradeFireRate(rockFireRate);
+            UpgradeProjectile(rockStack);
             Debug.Log("Tad Rock upgrade 2-2");
         }
 

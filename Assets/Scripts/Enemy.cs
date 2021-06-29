@@ -233,7 +233,7 @@ public class Enemy : MonoBehaviour
     }
     void UpdateSpeedAfterHit()
     {
-        speed = health > 5 ? 5.5f : health + 0.5f;
+        speed = health > 5 ? 7f : health + 1f;
     }
 
     public void StartBurnTick(int time, int damage, float interval)

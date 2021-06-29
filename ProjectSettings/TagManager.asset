@@ -11,6 +11,7 @@ TagManager:
   - Spawner
   - Projectile
   - Target
+  - Rock
   layers:
   - Default
   - TransparentFX
@@ -27,7 +28,7 @@ TagManager:
   - Projectile
   - Path
   - Target
-  - 
+  - Rock
   - 
   - 
   - 

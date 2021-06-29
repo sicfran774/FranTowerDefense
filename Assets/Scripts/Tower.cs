@@ -52,9 +52,9 @@ public class Tower : MonoBehaviour
     void Start()
     {
         gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+        gameManager.towerCount++;
 
         rangeIndicator = transform.GetChild(1).gameObject;
-        //UpdateRange();
 
         enemies = new List<GameObject>();
         upgrade = new Upgrade();
@@ -259,5 +259,9 @@ public class Tower : MonoBehaviour
             yield return new WaitForSeconds(1f);
             secondsUntilCooldownDone = abilityCooldown - i;
         }
+    }
+    void OnDestroy()
+    {
+        gameManager.towerCount--;
     }
 }

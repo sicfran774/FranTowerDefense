@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -27,11 +28,11 @@ public class GameManager : MonoBehaviour
     private GameObject gameUI;
     private GameObject pauseMenu;
 
-    private string path;
+    private string sceneName;
 
     void Awake()
     {
-        path = Application.dataPath;
+        sceneName = SceneManager.GetActiveScene().name;
 
         round = 0;
         roundInProgress = false;
@@ -66,6 +67,11 @@ public class GameManager : MonoBehaviour
             startRoundButton.interactable = true;
             roundInProgress = false;
         }
+
+        if(gameUI.GetComponent<Player>().health < 1)
+        {
+            EndGame();
+        }
     }
 
     public void StartRound()
@@ -90,7 +96,14 @@ public class GameManager : MonoBehaviour
     {
         string json = File.ReadAllText(Application.dataPath + "/Data/levelData.json");
         LevelData levelData = JsonUtility.FromJson<LevelData>(json);
-        return levelData.twistedStones;
+
+        switch (sceneName)
+        {
+            case "TwistedStones":
+                return levelData.twistedStones;
+            default:
+                return null;
+        }
     }
 
     public void Pause()
@@ -113,6 +126,10 @@ public class GameManager : MonoBehaviour
             //EnableAllButtons();
             EnableAllTowers();
         }
+    }
+    private void EndGame()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 
     private void DisableAllButtons()

@@ -37,7 +37,7 @@ public class SpawnManager : MonoBehaviour
     private string[] enemyOrder;
     private int currentPosition;
 
-    void Awake()
+    void Start()
     {
         enemyOrder = gameManager.LoadLevelData();
     }
@@ -132,6 +132,6 @@ public class SpawnManager : MonoBehaviour
         newObject.transform.position = this.transform.position;
 
         newObject.GetComponent<Enemy>().health = health;
-        newObject.GetComponent<Enemy>().speed = health > 5 ? 5.5f : health + 0.5f;
+        newObject.GetComponent<Enemy>().speed = health > 5 ? 7f : health + 1f;
     }
 }

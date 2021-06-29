@@ -20,7 +20,7 @@ public class Projectile : MonoBehaviour
 
     void Start()
     {
-        if(transform.GetComponentInParent<JrollHandler>() == null)
+        if(!transform.GetComponentInParent<Tower>().specialTower)
         {
             StartCoroutine(DestroyProjectile());
         }
