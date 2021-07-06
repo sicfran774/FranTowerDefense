@@ -11,8 +11,9 @@ public class Enemy : MonoBehaviour
     [Header("Special Enemy")]
     public bool ice;
     public bool fire;
+    public bool boss;
 
-    private string direction;
+    public string direction;
 
     [Header("States")]
     public bool burning;
@@ -21,6 +22,7 @@ public class Enemy : MonoBehaviour
     public bool frozen;
 
     private bool hit;
+    private float tempSpeed;
 
     private GameManager gameManager;
 
@@ -44,36 +46,46 @@ public class Enemy : MonoBehaviour
         color = GetComponent<SpriteRenderer>().color;
 
         hit = false;
-
+        tempSpeed = speed;
         spriteFire.SetActive(false);
         spriteIce.SetActive(false);
     }
 
     void Update()
     {
-        if (!frozen)
+        if (!boss)
         {
-            UpdateSpeed();
-        }
-
-        if (hit)
-        {
-            hit = false;
-            RewardMoney();
-
-            if (!slowed)
+            ChangeColor(health);
+            if (!frozen)
             {
-                UpdateSpeedAfterHit();
+                UpdateSpeed(direction);
             }
+
+            if (hit)
+            {
+                hit = false;
+                RewardMoney();
+
+                if (!slowed)
+                {
+                    UpdateSpeedAfterHit();
+                }
+            }
+        }
+        else
+        {
+            ChangeDirection();
         }
 
         if (health <= 0)
         {
             StopAllCoroutines();
+            if (boss)
+            {
+                GameObject.FindGameObjectWithTag("Spawner").GetComponent<SpawnManager>().StartBossDefeated(transform, direction);
+            }
             Destroy(gameObject);
         }
-        
-        ChangeColor(health);
     }
     void OnTriggerEnter2D(Collider2D collider)
     {
@@ -124,20 +136,16 @@ public class Enemy : MonoBehaviour
 
     void IceEnemyTrigger(Projectile projectile)
     {
-        if (projectile.burn || projectile.GetComponentInParent<Tower>().canShootAllTypes)
+        if (projectile.burn || projectile.canShootAllTypes)
         {
-            Debug.Log("melted");
-            burning = false;
-            ice = false;
+            NormalEnemyTrigger(projectile);
         }
     }
     void FireEnemyTrigger(Projectile projectile)
     {
-        if (projectile.slow || projectile.GetComponentInParent<Tower>().canShootAllTypes)
+        if (projectile.slow || projectile.canShootAllTypes)
         {
-            Debug.Log("cooled");
-            slowed = false;
-            fire = false;
+            NormalEnemyTrigger(projectile);
         }
     }
 
@@ -167,11 +175,18 @@ public class Enemy : MonoBehaviour
         if (collider.gameObject.name == "DestroyBlock")
         {
             Destroy(gameObject);
-            GameObject.Find("GameUI").GetComponent<Player>().health -= health;
+            if (!boss)
+            {
+                GameObject.Find("GameUI").GetComponent<Player>().health -= health;
+            }
+            else
+            {
+                GameObject.Find("GameUI").GetComponent<Player>().health -= 100;
+            }
         }
     }
 
-    void UpdateSpeed()
+    public void UpdateSpeed(string direction)
     {
         switch (direction)
         {
@@ -213,6 +228,25 @@ public class Enemy : MonoBehaviour
         direction = "right";
     }
 
+    void ChangeDirection()
+    {
+        switch (direction)
+        {
+            case "up":
+                transform.rotation = Quaternion.Euler(new Vector3(0, 0, 90));
+                break;
+            case "down":
+                transform.rotation = Quaternion.Euler(new Vector3(0, 0, -90));
+                break;
+            case "left":
+                transform.rotation = Quaternion.Euler(new Vector3(0, 0, 180));
+                break;
+            case "right":
+                transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+                break;
+        }
+    }
+
     void ChangeColor(int health)
     {
         switch (health)
@@ -228,6 +262,18 @@ public class Enemy : MonoBehaviour
                 break;
             case 4:
                 sprite.color = Color.magenta;
+                break;
+            case 5:
+                sprite.color = Color.cyan;
+                break;
+            case 6:
+                sprite.color = Color.yellow;
+                break;
+            case 7:
+                sprite.color = Color.gray;
+                break;
+            default:
+                sprite.color = Color.black;
                 break;
         }
     }
@@ -265,6 +311,7 @@ public class Enemy : MonoBehaviour
 
         for (int tick = 0; tick < time; tick++)
         {
+            UpdateSpeed(direction);
             yield return new WaitForSeconds(interval);
             if (damage > 0)
             {
@@ -274,7 +321,15 @@ public class Enemy : MonoBehaviour
             }
         }
 
-        UpdateSpeedAfterHit();
+        if (!boss)
+        {
+            UpdateSpeedAfterHit();
+        }
+        else
+        {
+            speed = tempSpeed;
+            UpdateSpeed(direction);
+        }
         slowed = false;
 
         if (!frozen)

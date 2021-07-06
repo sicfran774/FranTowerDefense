@@ -244,25 +244,25 @@ public class UpgradeAssets : MonoBehaviour
     {
         if (treeOneLevel == 1)
         {
-            upgradeDescOne.text = "Faster Fire Rate";
+            upgradeDescOne.text = "Towers Gain\nDouble Money";
             upgradeImageOne.sprite = jrollImageOneOne;
             upgradePriceOne.text = upgradeOnePrice.ToString();
         }
         else
         {
-            upgradeDescOne.text = "Spread Shot";
+            upgradeDescOne.text = "Towers Can Shoot\nAny Enemy Type";
             upgradeImageOne.sprite = jrollImageOneTwo;
             upgradePriceOne.text = upgradeOnePrice.ToString();
         }
         if (treeTwoLevel == 1)
         {
-            upgradeDescTwo.text = "Increase Range";
+            upgradeDescTwo.text = "Passive Rock Income";
             upgradeImageTwo.sprite = jrollImageTwoOne;
             upgradePriceTwo.text = upgradeTwoPrice.ToString();
         }
         else
         {
-            upgradeDescTwo.text = "Double Damage";
+            upgradeDescTwo.text = "Stacks of Rock";
             upgradeImageTwo.sprite = jrollImageTwoTwo;
             upgradePriceTwo.text = upgradeTwoPrice.ToString();
         }

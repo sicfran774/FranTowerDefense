@@ -209,10 +209,13 @@ MonoBehaviour:
   abilityCooldown: 30
   abilityOnCooldown: 0
   secondsUntilCooldownDone: 0
-  upgrade1_1Price: 0
-  upgrade1_2Price: 0
-  upgrade2_1Price: 0
-  upgrade2_2Price: 0
+  upgrade1_1Price: 400
+  upgrade1_2Price: 2000
+  upgrade2_1Price: 500
+  upgrade2_2Price: 1250
+  buffed: 0
+  doubleMoney: 0
+  canShootAllTypes: 0
   bulletsShot: 0
   layer:
     serializedVersion: 2

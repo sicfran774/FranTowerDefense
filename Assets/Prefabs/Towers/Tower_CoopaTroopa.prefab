@@ -254,17 +254,20 @@ MonoBehaviour:
   rangeRadius: 0
   fireRate: 0
   projectileSpeed: 0
-  price: 200
+  price: 500
   specialTower: 1
   ammo: {fileID: 2729044805137084285, guid: 4affe7eaf3cb7e84996eda273f8bc3ce, type: 3}
   abilityDuration: 0
   abilityCooldown: 0
   abilityOnCooldown: 0
   secondsUntilCooldownDone: 0
-  upgrade1_1Price: 0
-  upgrade1_2Price: 0
-  upgrade2_1Price: 0
-  upgrade2_2Price: 0
+  upgrade1_1Price: 150
+  upgrade1_2Price: 500
+  upgrade2_1Price: 250
+  upgrade2_2Price: 1000
+  buffed: 0
+  doubleMoney: 0
+  canShootAllTypes: 0
   bulletsShot: 0
   layer:
     serializedVersion: 2

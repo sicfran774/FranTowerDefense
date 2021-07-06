@@ -27,6 +27,12 @@ public class SpreadShot : MonoBehaviour
         GameObject projectileLeft = GetComponent<Tower>().InstantiateAmmo(transform);
         GameObject projectileRight = GetComponent<Tower>().InstantiateAmmo(transform);
 
+        if (GetComponent<Tower>().canShootAllTypes)
+        {
+            projectileLeft.GetComponent<Projectile>().canShootAllTypes = true;
+            projectileRight.GetComponent<Projectile>().canShootAllTypes = true;
+        }
+
         Vector2 directionLeft;
         Vector2 directionRight;
 

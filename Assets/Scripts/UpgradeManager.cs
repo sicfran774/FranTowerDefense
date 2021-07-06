@@ -462,6 +462,10 @@ public class UpgradeManager : MonoBehaviour
 
     void UpgradeFireRate(float fireRate)
     {
+        if (currentTower.GetComponent<Tower>().buffed)
+        {
+            fireRate *= TadRockHandler.fireRateMultiplier;
+        }
         currentTower.GetComponent<Tower>().SetFireRate(fireRate);
     }
 

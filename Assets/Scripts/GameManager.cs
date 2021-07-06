@@ -23,7 +23,14 @@ public class GameManager : MonoBehaviour
     public AudioSource pop;
     public AudioSource whish;
 
-    private GameObject spawner;
+    public GameObject PogShooter;
+    public GameObject CoopaTroopa;
+    public GameObject Juuls;
+    public GameObject TadRock;
+    public GameObject Jroll;
+    public GameObject SuperFran;
+
+    private SpawnManager spawner;
     private GameObject upgradeUI;
     private GameObject gameUI;
     private GameObject pauseMenu;
@@ -40,12 +47,12 @@ public class GameManager : MonoBehaviour
         paused = false;
 
         upgradeUI = GameObject.Find("Buttons");
-        spawner = GameObject.FindGameObjectWithTag("Spawner");
+        spawner = GameObject.FindGameObjectWithTag("Spawner").GetComponent<SpawnManager>();
         gameUI = GameObject.Find("GameUI");
         pauseMenu = GameObject.Find("PauseMenu");
 
         Time.timeScale = 1f;
-
+         
         //Start game with upgrade UI disabled and not showing
         upgradeUI.GetComponent<CanvasGroup>().interactable = false;
         upgradeUI.GetComponent<CanvasGroup>().alpha = 0;
@@ -55,22 +62,16 @@ public class GameManager : MonoBehaviour
 
         //Hide pause UI
         pauseMenu.SetActive(false);
+
+        LoadPlayerSaveData();
+        LoadTowerSaveData();
     }
 
     void Update()
     {
-        if (!GameObject.FindGameObjectWithTag("Enemy") && roundInProgress) //Occurs only once when last enemy disappears
-        {
-            RewardEndOfRound();
-            ClearAllProjectiles();
-
-            startRoundButton.interactable = true;
-            roundInProgress = false;
-        }
-
         if(gameUI.GetComponent<Player>().health < 1)
         {
-            EndGame();
+            //EndGame();
         }
     }
 
@@ -78,6 +79,8 @@ public class GameManager : MonoBehaviour
     {
         if (!roundInProgress)
         {
+            SavePlayerData();
+            SaveTowerData();
             roundInProgress = true;
             startRoundButton.interactable = false;
             round++;
@@ -87,14 +90,14 @@ public class GameManager : MonoBehaviour
 
     public void RewardEndOfRound()
     {
-        int bonus = (int)(round * spawner.GetComponent<SpawnManager>().numEnemiesSpawned * roundBonusMultiplier);
+        int bonus = (int)(round * roundBonusMultiplier * 100); 
         gameUI.GetComponent<Player>().money += bonus;
         Debug.Log("Rewarded " + bonus + " money");
     }
 
     public string[] LoadLevelData()
     {
-        string json = File.ReadAllText(Application.dataPath + "/Data/levelData.json");
+        string json = File.ReadAllText(Application.dataPath + "/Resources/levelData.json");
         LevelData levelData = JsonUtility.FromJson<LevelData>(json);
 
         switch (sceneName)
@@ -114,7 +117,7 @@ public class GameManager : MonoBehaviour
             paused = true;
 
             ShowPauseMenu();
-            //DisableAllButtons();
+            HideSaveMenu();
             DisableAllTowers();
         }
         else
@@ -123,13 +126,110 @@ public class GameManager : MonoBehaviour
             paused = false;
 
             HidePauseMenu();
-            //EnableAllButtons();
             EnableAllTowers();
         }
     }
-    private void EndGame()
+    public void QuitGame()
     {
-        SceneManager.LoadScene("MainMenu");
+        ShowSaveMenu();
+    }
+
+    public void SaveChoice(string choice)
+    {
+        if (choice == "yes")
+        {
+            SceneManager.LoadScene("MainMenu");
+        }
+        else
+        {
+            HideSaveMenu();
+        }
+    }
+
+    public void SavePlayerData()
+    {
+        SaveManager.SavePlayer(gameUI.GetComponent<Player>());
+        Debug.Log("Saved.");
+    }
+    public void SaveTowerData()
+    {
+        TowerData[] towers = new TowerData[300];
+        int count = 0;
+        foreach (GameObject tower in GameObject.FindGameObjectsWithTag("Tower"))
+        {
+            towers[count] = new TowerData(tower.GetComponent<Tower>());
+            count++;
+        }
+        SaveManager.SaveTowers(towers);
+    }
+
+    private void LoadPlayerSaveData()
+    {
+        PlayerData playerData = SaveManager.LoadPlayer();
+        if(playerData == null)
+        {
+            Player player = gameUI.GetComponent<Player>();
+            playerData = new PlayerData(player);
+        }
+        
+        gameUI.GetComponent<Player>().money = playerData.money;
+        gameUI.GetComponent<Player>().health = playerData.health;
+        spawner.GoToRound(playerData.round);
+    }
+
+    private void LoadTowerSaveData()
+    {
+        TowerData[] towerData = SaveManager.LoadTowers();
+        if (towerData == null)
+        {
+            return;
+        }
+
+        foreach (TowerData data in towerData)
+        {
+            if(data == null)
+            {
+                continue;
+            }
+
+            GameObject tower = InstantiateTower(data.type);
+
+            tower.GetComponent<PlaceTower>().placedTower = true;
+            tower.transform.position = new Vector2(data.position[0], data.position[1]);
+
+            tower.GetComponent<Tower>().GetUpgradeInstance().SetUpgradeLevel(1, data.upgrade[0]);
+            tower.GetComponent<Tower>().GetUpgradeInstance().SetUpgradeLevel(2, data.upgrade[1]);
+        }
+    }
+
+    private GameObject InstantiateTower(string type)
+    {
+        GameObject tower;
+        switch (type)
+        {
+            case "Pog Shooter":
+                tower = Instantiate(PogShooter);
+                break;
+            case "Coopa Troopa":
+                tower = Instantiate(CoopaTroopa);
+                break;
+            case "Juuls":
+                tower = Instantiate(Juuls);
+                break;
+            case "Tad Rock":
+                tower = Instantiate(TadRock);
+                break;
+            case "Jroll":
+                tower = Instantiate(Jroll);
+                break;
+            case "Super Fran":
+                tower = Instantiate(SuperFran);
+                break;
+            default:
+                tower = Instantiate(PogShooter);
+                break;
+        }
+        return tower;
     }
 
     private void DisableAllButtons()
@@ -162,7 +262,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void ClearAllProjectiles()
+    public void ClearAllProjectiles()
     {
         foreach (GameObject projectile in GameObject.FindGameObjectsWithTag("Projectile"))
         {
@@ -178,6 +278,18 @@ public class GameManager : MonoBehaviour
     private void HidePauseMenu()
     {
         pauseMenu.SetActive(false);
+    }
+
+    private void ShowSaveMenu()
+    {
+        pauseMenu.transform.GetChild(1).gameObject.SetActive(false);
+        pauseMenu.transform.GetChild(2).gameObject.SetActive(true);
+    }
+
+    private void HideSaveMenu()
+    {
+        pauseMenu.transform.GetChild(1).gameObject.SetActive(true);
+        pauseMenu.transform.GetChild(2).gameObject.SetActive(false);
     }
 
     private class LevelData

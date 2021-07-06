@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class RockHandler : MonoBehaviour
 {
-    public bool stack;
     public int reward;
 
     public LayerMask layer;

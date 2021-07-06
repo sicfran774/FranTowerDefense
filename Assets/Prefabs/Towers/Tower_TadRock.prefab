@@ -166,19 +166,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerType: Tad Rock
   rangeRadius: 1.25
-  fireRate: 1
+  fireRate: 3
   projectileSpeed: 400
-  price: 200
+  price: 1250
   specialTower: 1
   ammo: {fileID: 369512585972549634, guid: 8723471177a7bdc48b393c8d80465832, type: 3}
   abilityDuration: 0
   abilityCooldown: 0
   abilityOnCooldown: 0
   secondsUntilCooldownDone: 0
-  upgrade1_1Price: 0
-  upgrade1_2Price: 0
-  upgrade2_1Price: 0
-  upgrade2_2Price: 0
+  upgrade1_1Price: 1500
+  upgrade1_2Price: 1000
+  upgrade2_1Price: 2250
+  upgrade2_2Price: 3000
+  buffed: 0
   doubleMoney: 0
   canShootAllTypes: 0
   bulletsShot: 0

@@ -94,7 +94,6 @@ public class CoopaHandler : MonoBehaviour
         if (collider.tag == "Enemy" && currentlyFiring && !collider.GetComponent<Enemy>().flamed && !collider.GetComponent<Enemy>().fire)
         {
             collider.gameObject.GetComponent<Enemy>().burning = true;
-            collider.gameObject.GetComponent<Enemy>().ice = false;
             collider.gameObject.GetComponent<Enemy>().flamed = true;
             collider.gameObject.GetComponent<Enemy>().StartBurnTick(tickAmount, damage, tickInterval);
         }

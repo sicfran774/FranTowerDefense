@@ -144,7 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stack: 0
-  reward: 5
+  reward: 10
   layer:
     serializedVersion: 2
     m_Bits: 32768

@@ -33,13 +33,16 @@ public class SpawnManager : MonoBehaviour
     public GameObject enemyAbner;
     public GameObject enemyIceAbner;
     public GameObject enemyFireAbner;
+    public GameObject enemyAbnerOgre;
 
     private string[] enemyOrder;
+    private bool enemiesOnBoard;
     private int currentPosition;
 
-    void Start()
+    void Awake()
     {
         enemyOrder = gameManager.LoadLevelData();
+        enemiesOnBoard = false;
     }
 
     void Update()
@@ -49,6 +52,29 @@ public class SpawnManager : MonoBehaviour
             gameManager.startRound = false;
             Debug.Log("Begin Round " + gameManager.round);
             StartCoroutine(SpawnEnemy());
+        }
+
+        if (!GameObject.FindGameObjectWithTag("Enemy"))
+        {
+            enemiesOnBoard = false;
+        }
+        else
+        {
+            enemiesOnBoard = true;
+        }
+    }
+    public void GoToRound(int round)
+    {
+        enemyOrder = gameManager.LoadLevelData();
+        int count = 1;
+        while (count <= round)
+        {
+            if (enemyOrder[currentPosition] == "endRound")
+            {
+                gameManager.round++;
+                count++;
+            }
+            currentPosition++;
         }
     }
 
@@ -81,6 +107,11 @@ public class SpawnManager : MonoBehaviour
                 CheckHealthOfEnemy(ref health);
                 SpawnEnemy(health, enemyFireAbner);
             }
+            if (enemyOrder[currentPosition].StartsWith("o"))
+            {
+                CheckHealthOfEnemy(ref health);
+                SpawnEnemy(health, enemyAbnerOgre);
+            }
 
             //End the round
             if (enemyOrder[currentPosition] == "endRound")
@@ -95,6 +126,24 @@ public class SpawnManager : MonoBehaviour
 
             yield return new WaitForSeconds(time); //Wait time, repeat until it reaches "End the round"
         }
+        StartCoroutine(CheckIfEnemyOnBoard());
+    }
+    IEnumerator CheckIfEnemyOnBoard()
+    {
+        while (true)
+        {
+            if (!enemiesOnBoard)
+            {
+                break;
+            }
+            yield return null;
+        }
+        gameManager.RewardEndOfRound();
+        gameManager.ClearAllProjectiles();
+        gameManager.startRoundButton.interactable = true;
+        gameManager.roundInProgress = false;
+        gameManager.SavePlayerData();
+        gameManager.SaveTowerData();
     }
 
     void CheckIfTimeGiven(ref float time)
@@ -132,6 +181,35 @@ public class SpawnManager : MonoBehaviour
         newObject.transform.position = this.transform.position;
 
         newObject.GetComponent<Enemy>().health = health;
+        if(!newObject.GetComponent<Enemy>().boss) newObject.GetComponent<Enemy>().speed = health > 5 ? 7f : health + 1f;
+    }
+
+    public void SpawnEnemy(int health, GameObject type, Vector2 pos, string direction)
+    {
+        GameObject newObject = Instantiate(type);
+        newObject.transform.SetParent(GameObject.Find("Enemies").transform);
+        newObject.transform.position = new Vector3(pos.x, pos.y, 0);
+
+        newObject.GetComponent<Enemy>().health = health;
         newObject.GetComponent<Enemy>().speed = health > 5 ? 7f : health + 1f;
+        newObject.GetComponent<Enemy>().UpdateSpeed(direction);
+    }
+
+    public void StartBossDefeated(Transform transform, string direction)
+    {
+        Vector2 pos = new Vector2(transform.position.x, transform.position.y);
+        StartCoroutine(BossDefeated(pos, direction));
+    }
+
+    IEnumerator BossDefeated(Vector2 pos, string direction)
+    {
+        SpawnEnemy(8, enemyAbner, pos, direction);
+        yield return new WaitForSeconds(0.05f);
+        SpawnEnemy(8, enemyAbner, pos, direction);
+        yield return new WaitForSeconds(0.05f);
+        SpawnEnemy(8, enemyAbner, pos, direction);
+        yield return new WaitForSeconds(0.05f);
+        SpawnEnemy(8, enemyAbner, pos, direction);
+        yield return new WaitForSeconds(0.05f);
     }
 }

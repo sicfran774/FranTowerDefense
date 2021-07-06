@@ -20,12 +20,8 @@ public class PlaceTower : MonoBehaviour
     private Color color;
     private Color colorRed;
 
-    void Start()
+    void Awake()
     {
-        placedTower = false;
-        destroyable = false;
-        overlapping = false;
-
         gameUI = GameObject.Find("GameUI");
         pauseButton = GameObject.Find("PauseButton").GetComponent<Button>();
 

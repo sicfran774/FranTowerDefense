@@ -31,11 +31,13 @@ public class Tower : MonoBehaviour
     public int upgrade2_2Price;
 
     [Header("Tad Rock Buffs")]
+    public bool buffed;
     public bool doubleMoney;
     public bool canShootAllTypes;
 
     [Header("Misc")]
     public int bulletsShot;
+    private float originalFireRate;
     public LayerMask layer;
 
     private GameObject currentEnemy;
@@ -49,7 +51,7 @@ public class Tower : MonoBehaviour
     public float timer;
     private float angle;
 
-    void Start()
+    void Awake()
     {
         gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         gameManager.towerCount++;
@@ -60,6 +62,8 @@ public class Tower : MonoBehaviour
         upgrade = new Upgrade();
 
         transform.SetParent(GameObject.Find("Towers").transform);
+
+        originalFireRate = fireRate;
     }
 
     void Update()
@@ -108,6 +112,10 @@ public class Tower : MonoBehaviour
         {
             UpdateRange();
         }
+        else if(GetComponent<PlaceTower>().placedTower)
+        {
+            transform.GetChild(0).gameObject.SetActive(true);
+        }
     }
 
     public GameObject InstantiateAmmo(Transform transform)
@@ -122,16 +130,14 @@ public class Tower : MonoBehaviour
         //Debug.Log(direction);
 
         GameObject projectile = InstantiateAmmo(transform);
+        if(canShootAllTypes) projectile.GetComponent<Projectile>().canShootAllTypes = true;
+
+        projectile.GetComponent<Rigidbody2D>().AddForce(direction * projectileSpeed);
 
         if (GetComponent<SpreadShot>() != null && GetComponent<SpreadShot>().activated)
         {
-            projectile.GetComponent<Rigidbody2D>().AddForce(direction * projectileSpeed);
             GetComponent<SpreadShot>().ShootSpread(direction, projectileSpeed);
             bulletsShot += 2;
-        }
-        else
-        {
-            projectile.GetComponent<Rigidbody2D>().AddForce(direction * projectileSpeed);
         }
         gameManager.PlayWhishNoise();
 
@@ -173,6 +179,7 @@ public class Tower : MonoBehaviour
     {
         if (GetComponent<PlaceTower>().placedTower)
         {
+            transform.GetChild(0).gameObject.SetActive(true);
             if (GetComponent<JrollHandler>() != null)
             {
                 rangeIndicator.transform.localScale = new Vector3(rangeRadius * 10 + 0.8f, rangeRadius * 10 + 0.8f, 0);
@@ -224,6 +231,10 @@ public class Tower : MonoBehaviour
     public List<GameObject> GetEnemyList()
     {
         return enemies;
+    }
+    public float GetOriginalFireRate()
+    {
+        return originalFireRate;
     }
 
     void OnTriggerEnter2D(Collider2D collider)

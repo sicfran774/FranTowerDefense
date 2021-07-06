@@ -5,6 +5,7 @@ using UnityEngine;
 public class TadRockHandler : MonoBehaviour
 {
     public bool passiveIncome;
+    public static float fireRateMultiplier = 0.8f;
 
     private List<GameObject> towers;
     private GameManager gameManager;
@@ -45,13 +46,24 @@ public class TadRockHandler : MonoBehaviour
     {
         foreach (GameObject tower in towers)
         {
-            if(GetComponent<Tower>().GetUpgradeInstance().GetUpgradeLevel(1) == 2 && !tower.GetComponent<Tower>().doubleMoney)
+            if(tower == null)
             {
-                tower.GetComponent<Tower>().doubleMoney = true;
+                continue;
             }
-            else if(GetComponent<Tower>().GetUpgradeInstance().GetUpgradeLevel(1) == 3 && !tower.GetComponent<Tower>().canShootAllTypes)
+            Tower t = tower.GetComponent<Tower>();
+            if (!t.buffed)
             {
-                tower.GetComponent<Tower>().canShootAllTypes = true;
+                t.buffed = true;
+                t.fireRate *= fireRateMultiplier;
+            }
+            if(GetComponent<Tower>().GetUpgradeInstance().GetUpgradeLevel(1) == 2)
+            {
+                t.doubleMoney = true;
+            }
+            else if(GetComponent<Tower>().GetUpgradeInstance().GetUpgradeLevel(1) > 2)
+            {
+                t.doubleMoney = true;
+                t.canShootAllTypes = true;
             }
         }
     }
@@ -60,9 +72,13 @@ public class TadRockHandler : MonoBehaviour
     {
         foreach (GameObject tower in towers)
         {
-            tower.GetComponent<SpriteRenderer>().color = Color.white;
-            tower.GetComponent<Tower>().doubleMoney = false;
-            tower.GetComponent<Tower>().canShootAllTypes = false;
+            if (tower != null)
+            {
+                tower.GetComponent<SpriteRenderer>().color = Color.white;
+                tower.GetComponent<Tower>().buffed = false;
+                tower.GetComponent<Tower>().doubleMoney = false;
+                tower.GetComponent<Tower>().canShootAllTypes = false;
+            }
         }
     }
 
@@ -105,7 +121,7 @@ public class TadRockHandler : MonoBehaviour
     {
         foreach (GameObject tower in towers)
         {
-            tower.GetComponent<SpriteRenderer>().color = Color.white;
+            if(tower != null) tower.GetComponent<SpriteRenderer>().color = Color.white;
         }
     }
     void GenerateRock()

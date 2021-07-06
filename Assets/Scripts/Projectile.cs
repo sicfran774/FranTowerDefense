@@ -11,6 +11,7 @@ public class Projectile : MonoBehaviour
     [Header("Specific Properties")]
     public bool burn;
     public bool slow;
+    public bool canShootAllTypes;
 
     public int burnTick;
     public int slowTick;
@@ -29,31 +30,42 @@ public class Projectile : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if (!collider.GetComponent<Enemy>().fire && !collider.GetComponent<Enemy>().ice)
+        if (canShootAllTypes || !collider.GetComponent<Enemy>().fire && !collider.GetComponent<Enemy>().ice && !collider.GetComponent<Enemy>().boss)
         {
-            CalculateReward(collider);
-
-            if (GetComponentInParent<Tower>().doubleMoney)
-            {
-                DoubleMoney();
-            }
-
-            Debug.Log(reward);
-
-            collider.GetComponent<Enemy>().reward = reward;
-            RemoveEnemyHealth(collider);
-
-            if (!slow)
-            {
-                gameManager.PlayPopNoise();
-            }
-            else
-            {
-                gameManager.PlayWhishNoise();
-            }
-            GetComponent<BoxCollider2D>().enabled = false;
-            Destroy(gameObject);
+            HitEnemy(collider);
+            gameManager.PlayPopNoise();
         }
+        else if (slow && collider.GetComponent<Enemy>().fire)
+        {
+            HitEnemy(collider);
+            gameManager.PlayWhishNoise();
+        }
+        else if (burn && collider.GetComponent<Enemy>().ice)
+        {
+            HitEnemy(collider);
+        }
+
+        if (collider.GetComponent<Enemy>().boss)
+        {
+            RemoveEnemyHealth(collider);
+            Destroy(gameObject);
+            gameManager.PlayPopNoise();
+        }
+    }
+
+    void HitEnemy(Collider2D collider)
+    {
+        CalculateReward(collider);
+
+        if (GetComponentInParent<Tower>().doubleMoney)
+        {
+            DoubleMoney();
+        }
+
+        collider.GetComponent<Enemy>().reward = reward;
+        RemoveEnemyHealth(collider);
+        GetComponent<BoxCollider2D>().enabled = false;
+        Destroy(gameObject);
     }
 
     void RemoveEnemyHealth(Collider2D collider)
