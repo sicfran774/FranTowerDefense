@@ -200,6 +200,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   passiveIncome: 0
+  layer:
+    serializedVersion: 2
+    m_Bits: 32768
   range: 3
 --- !u!50 &3030054557319677235
 Rigidbody2D:

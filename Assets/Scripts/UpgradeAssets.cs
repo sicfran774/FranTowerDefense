@@ -90,6 +90,37 @@ public class UpgradeAssets : MonoBehaviour
             default:
                 break;
         }
+
+        ChangeColorOfText(GameObject.Find("GameUI").GetComponent<Player>().money, upgradeOnePrice, upgradeTwoPrice);
+
+        if(upgradeOnePrice <= 0)
+        {
+            ZeroPriceOne();
+        }
+        if (upgradeTwoPrice <= 0)
+        {
+            ZeroPriceTwo();
+        }
+    }
+
+    private void ChangeColorOfText(int money, int priceOne, int priceTwo)
+    {
+        if (money < priceOne)
+        {
+            upgradePriceOne.color = Color.red;
+        }
+        else
+        {
+            upgradePriceOne.color = Color.green;
+        }
+        if (money < priceTwo)
+        {
+            upgradePriceTwo.color = Color.red;
+        }
+        else
+        {
+            upgradePriceTwo.color = Color.green;
+        }
     }
     
     private void PogShooterAssets(int treeOneLevel, int treeTwoLevel, int upgradeOnePrice, int upgradeTwoPrice)
@@ -280,5 +311,17 @@ public class UpgradeAssets : MonoBehaviour
         }
 
         upgradeOneGameObject.transform.GetChild(3).gameObject.SetActive(false);
+    }
+
+    void ZeroPriceOne()
+    {
+        upgradePriceOne.text = null;
+        upgradeOneGameObject.transform.GetChild(3).gameObject.SetActive(false);
+    }
+
+    void ZeroPriceTwo()
+    {
+        upgradePriceTwo.text = null;
+        upgradeTwoGameObject.transform.GetChild(3).gameObject.SetActive(false);
     }
 }

@@ -355,6 +355,7 @@ GameObject:
   - component: {fileID: 134360926}
   - component: {fileID: 134360925}
   - component: {fileID: 134360924}
+  - component: {fileID: 134360927}
   m_Layer: 5
   m_Name: Border
   m_TagString: Untagged
@@ -474,6 +475,49 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 134360922}
   m_CullTransparentMesh: 0
+--- !u!114 &134360927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 134360922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1968338704}
+          m_MethodName: MouseOverButton
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: Juuls
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1968338704}
+          m_MethodName: HideTowerInfo
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: Juuls
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &142317582
 GameObject:
   m_ObjectHideFlags: 0
@@ -680,7 +724,7 @@ Transform:
   - {fileID: 898647311}
   - {fileID: 1643195327}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &206238921
 BoxCollider2D:
@@ -748,6 +792,7 @@ MonoBehaviour:
   sellMultiplier: 0.7
   upgradeAssets: {fileID: 898647312}
   sellAmount: {fileID: 844423787}
+  currentTower: {fileID: 0}
   enemiesAlreadyFrozen: 0
 --- !u!1 &241627083
 GameObject:
@@ -1318,6 +1363,7 @@ GameObject:
   - component: {fileID: 460192870}
   - component: {fileID: 460192869}
   - component: {fileID: 460192868}
+  - component: {fileID: 460192871}
   m_Layer: 5
   m_Name: Border
   m_TagString: Untagged
@@ -1437,6 +1483,49 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 460192866}
   m_CullTransparentMesh: 0
+--- !u!114 &460192871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 460192866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1968338704}
+          m_MethodName: MouseOverButton
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: Tad
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1968338704}
+          m_MethodName: HideTowerInfo
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: Tad
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &465122488
 GameObject:
   m_ObjectHideFlags: 0
@@ -1493,7 +1582,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &465122491
 MonoBehaviour:
@@ -2724,6 +2813,7 @@ GameObject:
   - component: {fileID: 760860201}
   - component: {fileID: 760860200}
   - component: {fileID: 760860199}
+  - component: {fileID: 760860202}
   m_Layer: 5
   m_Name: Border
   m_TagString: Untagged
@@ -2843,6 +2933,49 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 760860197}
   m_CullTransparentMesh: 0
+--- !u!114 &760860202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 760860197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1968338704}
+          m_MethodName: MouseOverButton
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: Pog
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1968338704}
+          m_MethodName: HideTowerInfo
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: Pog
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1001 &770887729
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3077,7 +3210,6 @@ GameObject:
   - component: {fileID: 801358740}
   - component: {fileID: 801358742}
   - component: {fileID: 801358743}
-  - component: {fileID: 801358744}
   m_Layer: 9
   m_Name: Game Manager
   m_TagString: GameController
@@ -3127,7 +3259,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &801358742
 AudioSource:
@@ -3321,18 +3453,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &801358744
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 801358739}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af27fb8288e435f41a2b491f3226c974, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &802547859
 GameObject:
   m_ObjectHideFlags: 0
@@ -3522,8 +3642,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 128.00006, y: -16.44}
-  m_SizeDelta: {x: 49.058838, y: 66.93905}
+  m_AnchoredPosition: {x: 148.37, y: 1.015}
+  m_SizeDelta: {x: 89.79779, y: 32.029}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &844423787
 MonoBehaviour:
@@ -7623,6 +7743,7 @@ GameObject:
   - component: {fileID: 1840658395}
   - component: {fileID: 1840658394}
   - component: {fileID: 1840658393}
+  - component: {fileID: 1840658396}
   m_Layer: 5
   m_Name: Border
   m_TagString: Untagged
@@ -7742,6 +7863,49 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1840658391}
   m_CullTransparentMesh: 0
+--- !u!114 &1840658396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1840658391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1968338704}
+          m_MethodName: MouseOverButton
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: SuperFran
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1968338704}
+          m_MethodName: HideTowerInfo
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: Jroll
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!4 &1851701925 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7283614463633848565, guid: d953c565e52ddb5499ac70f22a1a5925,
@@ -7760,6 +7924,7 @@ GameObject:
   - component: {fileID: 1853237976}
   - component: {fileID: 1853237975}
   - component: {fileID: 1853237974}
+  - component: {fileID: 1853237977}
   m_Layer: 5
   m_Name: Border
   m_TagString: Untagged
@@ -7879,6 +8044,49 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1853237972}
   m_CullTransparentMesh: 0
+--- !u!114 &1853237977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1853237972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1968338704}
+          m_MethodName: MouseOverButton
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: Coopa
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1968338704}
+          m_MethodName: HideTowerInfo
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: Coopa
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1862478994
 GameObject:
   m_ObjectHideFlags: 0
@@ -8270,6 +8478,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1968338702}
   - component: {fileID: 1968338703}
+  - component: {fileID: 1968338704}
   - component: {fileID: 1968338701}
   - component: {fileID: 1968338700}
   - component: {fileID: 1968338699}
@@ -8375,9 +8584,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cb29ad5aba710741850bad8783e84a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  level: 
   health: 200
   money: 750
   round: 0
+--- !u!114 &1968338704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1968338698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af27fb8288e435f41a2b491f3226c974, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Pog: {fileID: 2400081579519672122, guid: 12a06f4416bbdea4e92f441eba48c555, type: 3}
+  Coopa: {fileID: 2965760063115962640, guid: 982de3eec16711b4f94e0b73187b6963, type: 3}
+  Juuls: {fileID: 1203396547719798361, guid: eea2f90133f3b1d49b0a0c6ef56fca06, type: 3}
+  Tad: {fileID: 7165651147230760196, guid: d59f3721340e4f248b2c2b70f412df55, type: 3}
+  Jroll: {fileID: 4231876074660609655, guid: 6d6fa2af13aed994c88ce9d58d719038, type: 3}
+  SuperFran: {fileID: 2416756322123620185, guid: 7e9a6304709b0c844940943014458823,
+    type: 3}
 --- !u!1 &1970021694
 GameObject:
   m_ObjectHideFlags: 0
@@ -8850,6 +9079,7 @@ GameObject:
   - component: {fileID: 2105864523}
   - component: {fileID: 2105864522}
   - component: {fileID: 2105864521}
+  - component: {fileID: 2105864524}
   m_Layer: 5
   m_Name: Border
   m_TagString: Untagged
@@ -8969,6 +9199,49 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2105864519}
   m_CullTransparentMesh: 0
+--- !u!114 &2105864524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2105864519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1968338704}
+          m_MethodName: MouseOverButton
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: Jroll
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1968338704}
+          m_MethodName: HideTowerInfo
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: SuperFran
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &2110253173
 GameObject:
   m_ObjectHideFlags: 0

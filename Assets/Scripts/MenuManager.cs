@@ -43,9 +43,10 @@ public class MenuManager : MonoBehaviour
         {
             LoadScene(data.level);
         }
-        else
+        else if(choice == "no")
         {
             SaveManager.ClearData();
+            data = null;
             transform.GetChild(3).gameObject.SetActive(false);
             transform.GetChild(4).gameObject.SetActive(true);
         }

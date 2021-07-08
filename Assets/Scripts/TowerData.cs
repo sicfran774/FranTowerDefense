@@ -6,12 +6,14 @@ using UnityEngine;
 public class TowerData
 {
     public string type;
+    public int price;
     public float[] position;
     public int[] upgrade;
 
     public TowerData(Tower tower)
     {
         type = tower.towerType;
+        price = tower.price;
 
         position = new float[2];
         upgrade = new int[2];

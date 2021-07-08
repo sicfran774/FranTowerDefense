@@ -202,7 +202,7 @@ MonoBehaviour:
   rangeRadius: 1.5
   fireRate: 1
   projectileSpeed: 100
-  price: 800
+  price: 600
   specialTower: 1
   ammo: {fileID: 5821463407135236317, guid: 0e0655ecaf8b5b44b9f3504a0315b1bb, type: 3}
   abilityDuration: 5

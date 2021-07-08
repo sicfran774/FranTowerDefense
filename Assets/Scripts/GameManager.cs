@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     public GameObject SuperFran;
 
     private SpawnManager spawner;
+    private UpgradeManager upgradeManager;
     private GameObject upgradeUI;
     private GameObject gameUI;
     private GameObject pauseMenu;
@@ -47,6 +48,7 @@ public class GameManager : MonoBehaviour
         paused = false;
 
         upgradeUI = GameObject.Find("Buttons");
+        upgradeManager = GameObject.Find("Upgrade Manager").GetComponent<UpgradeManager>();
         spawner = GameObject.FindGameObjectWithTag("Spawner").GetComponent<SpawnManager>();
         gameUI = GameObject.Find("GameUI");
         pauseMenu = GameObject.Find("PauseMenu");
@@ -197,8 +199,18 @@ public class GameManager : MonoBehaviour
             tower.GetComponent<PlaceTower>().placedTower = true;
             tower.transform.position = new Vector2(data.position[0], data.position[1]);
 
-            tower.GetComponent<Tower>().GetUpgradeInstance().SetUpgradeLevel(1, data.upgrade[0]);
-            tower.GetComponent<Tower>().GetUpgradeInstance().SetUpgradeLevel(2, data.upgrade[1]);
+            Tower t = tower.GetComponent<Tower>();
+            upgradeManager.currentTower = tower;
+            upgradeManager.upgrade = t.GetUpgradeInstance();
+            t.GetUpgradeInstance().SetUpgradeLevel(1, data.upgrade[0]);
+            upgradeManager.UnlockUpgradeForSpecificTower(data.type, 1, data.upgrade[0] - 1);
+            t.GetUpgradeInstance().SetUpgradeLevel(2, data.upgrade[1]);
+            upgradeManager.UnlockUpgradeForSpecificTower(data.type, 2, data.upgrade[1] - 1);
+            t.price = data.price;
+
+            t.transform.GetChild(1).gameObject.SetActive(false);
+
+            tower.tag = "Tower";
         }
     }
 

@@ -5,6 +5,7 @@ using UnityEngine;
 public class TadRockHandler : MonoBehaviour
 {
     public bool passiveIncome;
+    public LayerMask layer;
     public static float fireRateMultiplier = 0.8f;
 
     private List<GameObject> towers;
@@ -40,6 +41,18 @@ public class TadRockHandler : MonoBehaviour
             GenerateRock();
             timer = 0;
         }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero, Mathf.Infinity, layer);
+
+            if (hit.collider != null)
+            {
+                GameObject.Find("GameUI").GetComponent<Player>().money += hit.collider.gameObject.GetComponent<RockHandler>().reward;
+                Destroy(hit.collider.gameObject);
+            }
+        }
     }
 
     void ApplyBuffs()
@@ -55,6 +68,11 @@ public class TadRockHandler : MonoBehaviour
             {
                 t.buffed = true;
                 t.fireRate *= fireRateMultiplier;
+
+                if(t.GetComponent<CoopaHandler>() != null)
+                {
+                    t.GetComponent<CoopaHandler>().cooldownDuration *= fireRateMultiplier;
+                }
             }
             if(GetComponent<Tower>().GetUpgradeInstance().GetUpgradeLevel(1) == 2)
             {
@@ -70,12 +88,22 @@ public class TadRockHandler : MonoBehaviour
 
     void RemoveAllBuffs()
     {
+        UpgradeManager upgradeManager = GameObject.Find("Upgrade Manager").GetComponent<UpgradeManager>();
         foreach (GameObject tower in towers)
         {
             if (tower != null)
             {
                 tower.GetComponent<SpriteRenderer>().color = Color.white;
-                tower.GetComponent<Tower>().buffed = false;
+
+                Tower t = tower.GetComponent<Tower>();
+
+                t.buffed = false;
+                t.GetComponent<Tower>().fireRate = t.GetOriginalFireRate();
+
+                upgradeManager.currentTower = tower;
+                upgradeManager.UnlockUpgradeForSpecificTower(t.towerType, 1, t.GetUpgradeInstance().GetUpgradeLevel(1) - 1);
+                upgradeManager.UnlockUpgradeForSpecificTower(t.towerType, 2, t.GetUpgradeInstance().GetUpgradeLevel(2) - 1);
+
                 tower.GetComponent<Tower>().doubleMoney = false;
                 tower.GetComponent<Tower>().canShootAllTypes = false;
             }

@@ -47,8 +47,8 @@ public class UpgradeManager : MonoBehaviour
     public Text sellAmount;
 
     private GameObject upgradeUI;
-    private GameObject currentTower;
-    private Upgrade upgrade;
+    public GameObject currentTower;
+    public Upgrade upgrade;
     private GameObject gameUI;
 
     private string towerType;
@@ -56,13 +56,14 @@ public class UpgradeManager : MonoBehaviour
     private List<GameObject> towers;
     public bool enemiesAlreadyFrozen;
 
-    void Awake()
+    void Start()
     {
         upgradeUI = GameObject.Find("Buttons");
         gameUI = GameObject.Find("GameUI");
         refund = 0;
 
         towers = new List<GameObject>();
+        currentTower = GameObject.FindGameObjectWithTag("SelectedTower");
     }
 
     void Update()
@@ -150,6 +151,7 @@ public class UpgradeManager : MonoBehaviour
         {
             SubtractMoney(price);
             currentTower.GetComponent<Tower>().price += price; //This adds the upgrade price to the total value of the tower; specifically for the CalculateRefund() function
+            upgrade.IncrementUpgradeLevel(tree);
             UnlockUpgradeForSpecificTower(towerType, tree, upgradeLevel);
         }
     }
@@ -263,25 +265,21 @@ public class UpgradeManager : MonoBehaviour
         if(tree == 1 && upgradeLevel == 1)
         {
             UpgradeRange(pogRangeUpgrade);
-            Debug.Log("Pog Shooter upgrade 1-1");
         }
         if(tree == 1 && upgradeLevel == 2)
         {
+            UpgradeRange(pogRangeUpgrade);
             UpgradeProjectile(pogShooterDoubleDamageProjectile);
-            Debug.Log("Pog Shooter upgrade 1-2");
         }
         if(tree == 2 && upgradeLevel == 1)
         {
             UpgradeFireRate(pogFireRateUpgrade);
-            Debug.Log("Pog Shooter upgrade 2-1");
         }
         if(tree == 2 && upgradeLevel == 2)
         {
+            UpgradeFireRate(pogFireRateUpgrade);
             currentTower.GetComponent<SpreadShot>().activated = true;
-            Debug.Log("Pog Shooter upgrade 2-2");
         }
-
-        upgrade.IncrementUpgradeLevel(tree);
     }
 
     void JuulsUpgrades(int tree, int upgradeLevel)
@@ -289,25 +287,21 @@ public class UpgradeManager : MonoBehaviour
         if (tree == 1 && upgradeLevel == 1)
         {
             EitherOrBothJuulCube(tree);
-            Debug.Log("Juuls upgrade 1-1");
         }
         if (tree == 1 && upgradeLevel == 2)
         {
+            EitherOrBothJuulCube(tree);
             upgrade.IncrementUpgradeLevel(1);
-            Debug.Log("Juuls upgrade 1-2");
         }
         if (tree == 2 && upgradeLevel == 1)
         {
             EitherOrBothJuulCube(tree);
-            Debug.Log("Juuls upgrade 2-1");
         }
         if (tree == 2 && upgradeLevel == 2)
         {
+            EitherOrBothJuulCube(tree);
             UpgradeFireRate(juulsFireRateUpgrade);
-            Debug.Log("Juuls upgrade 2-2");
         }
-
-        upgrade.IncrementUpgradeLevel(tree);
     }
 
     void EitherOrBothJuulCube(int tree)
@@ -331,93 +325,78 @@ public class UpgradeManager : MonoBehaviour
         if (tree == 1 && upgradeLevel == 1)
         {
             currentTower.GetComponent<CoopaHandler>().flameDuration = coopaLongerFlameDuration;
-            Debug.Log("Coopa upgrade 1-1");
         }
         if (tree == 1 && upgradeLevel == 2)
         {
             currentTower.GetComponent<CoopaHandler>().flameDuration = coopaLongestFlameDuration;
-            Debug.Log("Coopa upgrade 1-2");
         }
         if (tree == 2 && upgradeLevel == 1)
         {
             currentTower.GetComponent<CoopaHandler>().cooldownDuration = coopaUpgradedCooldown;
             currentTower.GetComponent<CoopaHandler>().tickInterval = coopaTickIntervalUpgrade;
-            Debug.Log("Coopa upgrade 2-1");
         }
         if (tree == 2 && upgradeLevel == 2)
         {
+            currentTower.GetComponent<CoopaHandler>().cooldownDuration = coopaUpgradedCooldown;
+            currentTower.GetComponent<CoopaHandler>().tickInterval = coopaTickIntervalUpgrade;
             currentTower.GetComponent<CoopaHandler>().tickAmount = coopaTickAmountUpgrade;
-            Debug.Log("Coopa upgrade 2-2");
         }
-
-        upgrade.IncrementUpgradeLevel(tree);
     }
     void RockUpgrades(int tree, int upgradeLevel)
     {
         if (tree == 2 && upgradeLevel == 1)
         {
             currentTower.GetComponent<TadRockHandler>().passiveIncome = true;
-            Debug.Log("Tad Rock upgrade 2-1");
         }
         if (tree == 2 && upgradeLevel == 2)
         {
+            currentTower.GetComponent<TadRockHandler>().passiveIncome = true;
             UpgradeFireRate(rockFireRate);
             UpgradeProjectile(rockStack);
-            Debug.Log("Tad Rock upgrade 2-2");
         }
-
-        upgrade.IncrementUpgradeLevel(tree);
     }
     void JrollUpgrades(int tree, int upgradeLevel)
     {
         if (tree == 1 && upgradeLevel == 1)
         {
             UpgradeFireRate(jrollFireRateUpgrade);
-            Debug.Log("Jroll upgrade 1-1");
         }
         if (tree == 1 && upgradeLevel == 2)
         {
+            UpgradeFireRate(jrollFireRateUpgrade);
             upgrade.IncrementUpgradeLevel(1);
-            Debug.Log("Jroll upgrade 1-2");
         }
         if (tree == 2 && upgradeLevel == 1)
         {
             UpgradeProjectile(jrollBurnSpike);
-            Debug.Log("Jroll upgrade 2-1");
         }
         if (tree == 2 && upgradeLevel == 2)
         {
+            UpgradeProjectile(jrollBurnSpike);
             currentTower.GetComponent<JrollHandler>().SetJrollPerStack(jrollPerStack);
             currentTower.GetComponent<JrollHandler>().activatedStack = true;
-            Debug.Log("Jroll upgrade 2-2");
         }
-
-        upgrade.IncrementUpgradeLevel(tree);
     }
     void FranUpgrades(int tree, int upgradeLevel)
     {
         if (tree == 1 && upgradeLevel == 1)
         {
             UpgradeFireRate(franFireRate);
-            Debug.Log("Super Fran upgrade 1-1");
         }
         if (tree == 1 && upgradeLevel == 2)
         {
+            UpgradeFireRate(franFireRate);
             currentTower.GetComponent<SpreadShot>().activated = true;
-            Debug.Log("Super Fran upgrade 1-2");
         }
         if (tree == 2 && upgradeLevel == 1)
         {
             UpgradeRange(franRange);
-            Debug.Log("Super Fran upgrade 2-1");
         }
         if (tree == 2 && upgradeLevel == 2)
         {
+            UpgradeRange(franRange);
             UpgradeProjectile(pogShooterDoubleDamageProjectile);
-            Debug.Log("Super Fran upgrade 2-2");
         }
-
-        upgrade.IncrementUpgradeLevel(tree);
     }
 
     /* */

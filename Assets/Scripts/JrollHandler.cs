@@ -160,6 +160,7 @@ public class JrollHandler : MonoBehaviour
 
     void PushJroll(GameObject jroll)
     {
+        if (GetComponent<Tower>().canShootAllTypes) jroll.GetComponent<Projectile>().canShootAllTypes = true;
         jroll.GetComponent<Rigidbody2D>().drag = GetLinearDrag();
         jroll.GetComponent<Rigidbody2D>().AddForce(direction * GetComponent<Tower>().projectileSpeed);
     }
