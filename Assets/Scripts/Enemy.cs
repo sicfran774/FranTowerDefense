@@ -175,6 +175,8 @@ public class Enemy : MonoBehaviour
         if (collider.gameObject.name == "DestroyBlock")
         {
             Destroy(gameObject);
+            if (gameManager.sceneName == "Sandbox") return;
+
             if (!boss)
             {
                 GameObject.Find("GameUI").GetComponent<Player>().health -= health;

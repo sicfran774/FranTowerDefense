@@ -45,6 +45,7 @@ public class Tower : MonoBehaviour
 
     private GameManager gameManager;
     private Upgrade upgrade;
+    private PlaceTower placeTower;
 
     private GameObject rangeIndicator;
     private bool enemyWithinRange;
@@ -60,6 +61,7 @@ public class Tower : MonoBehaviour
 
         enemies = new List<GameObject>();
         upgrade = new Upgrade();
+        placeTower = GetComponent<PlaceTower>();
 
         transform.SetParent(GameObject.Find("Towers").transform);
 
@@ -83,7 +85,7 @@ public class Tower : MonoBehaviour
                 enemyWithinRange = false;
             }
 
-            if (enemyWithinRange && currentEnemy != null && timer > fireRate && GetComponent<PlaceTower>().placedTower) //Shoot enemy
+            if (enemyWithinRange && currentEnemy != null && timer > fireRate && placeTower.placedTower) //Shoot enemy
             {
                 ShootEnemy(currentEnemy);
             }
@@ -112,7 +114,7 @@ public class Tower : MonoBehaviour
         {
             UpdateRange();
         }
-        else if(GetComponent<PlaceTower>().placedTower)
+        else if(placeTower.placedTower)
         {
             transform.GetChild(0).gameObject.SetActive(true);
         }
@@ -177,7 +179,7 @@ public class Tower : MonoBehaviour
 
     void UpdateRange()
     {
-        if (GetComponent<PlaceTower>().placedTower)
+        if (placeTower.placedTower)
         {
             transform.GetChild(0).gameObject.SetActive(true);
             if (GetComponent<JrollHandler>() != null)

@@ -123,7 +123,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2062500809
   m_SortingLayer: 3
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a0582bdb7d7a5cf4ab3089990a06f86a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -167,7 +167,7 @@ MonoBehaviour:
   towerType: Super Fran
   rangeRadius: 2.5
   fireRate: 0.15
-  projectileSpeed: 400
+  projectileSpeed: 450
   price: 4000
   specialTower: 0
   ammo: {fileID: 2729044805137084285, guid: 4affe7eaf3cb7e84996eda273f8bc3ce, type: 3}
@@ -176,9 +176,9 @@ MonoBehaviour:
   abilityOnCooldown: 0
   secondsUntilCooldownDone: 0
   upgrade1_1Price: 2500
-  upgrade1_2Price: 5000
-  upgrade2_1Price: 750
-  upgrade2_2Price: 3500
+  upgrade1_2Price: 4500
+  upgrade2_1Price: 1000
+  upgrade2_2Price: 4000
   buffed: 0
   doubleMoney: 0
   canShootAllTypes: 0

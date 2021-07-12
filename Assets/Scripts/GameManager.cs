@@ -13,6 +13,9 @@ public class GameManager : MonoBehaviour
     public bool startRound;
     public float roundBonusMultiplier;
     public bool paused;
+    public float soundEffectsVolume;
+    public float musicVolume;
+    private bool enemyMenuOpen;
 
     [Space(20)]
 
@@ -35,23 +38,37 @@ public class GameManager : MonoBehaviour
     private GameObject upgradeUI;
     private GameObject gameUI;
     private GameObject pauseMenu;
+    private GameObject enemyMenu;
+    private GameObject victoryMenu;
+    private GameObject settingsMenu;
 
-    private string sceneName;
+    public string sceneName;
+    public bool mouseHeld;
 
     void Awake()
     {
+        SaveManager.SaveLevelData(new LevelData());
+
         sceneName = SceneManager.GetActiveScene().name;
 
         round = 0;
-        roundInProgress = false;
+        if (sceneName != "Sandbox")
+            roundInProgress = false;
+        else
+            roundInProgress = true;
         startRound = false;
         paused = false;
+        enemyMenuOpen = true;
+        mouseHeld = true;
 
         upgradeUI = GameObject.Find("Buttons");
         upgradeManager = GameObject.Find("Upgrade Manager").GetComponent<UpgradeManager>();
         spawner = GameObject.FindGameObjectWithTag("Spawner").GetComponent<SpawnManager>();
         gameUI = GameObject.Find("GameUI");
         pauseMenu = GameObject.Find("PauseMenu");
+        enemyMenu = GameObject.Find("EnemyMenu");
+        victoryMenu = GameObject.Find("VictoryMenu");
+        settingsMenu = GameObject.Find("SettingsMenu");
 
         Time.timeScale = 1f;
          
@@ -64,16 +81,29 @@ public class GameManager : MonoBehaviour
 
         //Hide pause UI
         pauseMenu.SetActive(false);
+        settingsMenu.SetActive(false);
+        if (victoryMenu != null) victoryMenu.SetActive(false);
 
         LoadPlayerSaveData();
         LoadTowerSaveData();
+        LoadVolumeConfig();
+
+        if (sceneName != "Sandbox")
+        {
+            enemyMenu.SetActive(false);
+        }
     }
 
     void Update()
     {
-        if(gameUI.GetComponent<Player>().health < 1)
+        if(sceneName != "Sandbox" && gameUI.GetComponent<Player>().health < 1 && Time.timeScale != 0f)
         {
-            //EndGame();
+            Time.timeScale = 0f;
+            StatsData data = SaveManager.LoadStats();
+            data.currency += round;
+            SaveManager.SaveStats(data);
+            victoryMenu.SetActive(true);
+            victoryMenu.transform.GetChild(0).GetChild(2).GetComponent<Text>().text = "Wow, you lost. You have been given " + round + " FranBux!";
         }
     }
 
@@ -97,10 +127,43 @@ public class GameManager : MonoBehaviour
         Debug.Log("Rewarded " + bonus + " money");
     }
 
+    public void Victory(int health)
+    {
+        StatsData data = SaveManager.LoadStats();
+        victoryMenu.SetActive(true);
+
+        int reward;
+        if (health < 200)
+        {
+            reward = round + 25;
+
+        }
+        else
+        {
+            reward = 100;
+        }
+        data.currency += reward;
+
+        SaveManager.SaveStats(data);
+        Time.timeScale = 0f;
+        victoryMenu.transform.GetChild(0).GetChild(2).GetComponent<Text>().text = "You have beaten " + sceneName + "! You have been granted " + reward + " FranBux.";
+    }
+
+    public void EndGame()
+    {
+        SceneManager.LoadScene("MainMenu");
+        SaveManager.ClearData();
+    }
+
+    public void RestartGame()
+    {
+        SaveManager.ClearData();
+        SceneManager.LoadScene(sceneName);
+    }
+
     public string[] LoadLevelData()
     {
-        string json = File.ReadAllText(Application.dataPath + "/Resources/levelData.json");
-        LevelData levelData = JsonUtility.FromJson<LevelData>(json);
+        LevelData levelData = SaveManager.LoadLevelData();
 
         switch (sceneName)
         {
@@ -133,7 +196,27 @@ public class GameManager : MonoBehaviour
     }
     public void QuitGame()
     {
-        ShowSaveMenu();
+        if (sceneName == "Sandbox")
+        {
+            SaveChoice("yes");
+        }
+        else
+        {
+            ShowSaveMenu();
+        }
+    }
+    public void EnemyMenu()
+    {
+        if (!enemyMenuOpen)
+        {
+            enemyMenuOpen = true;
+            GameObject.Find("EnemyMenu").GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.25f);
+        }
+        else
+        {
+            enemyMenuOpen = false;
+            GameObject.Find("EnemyMenu").GetComponent<RectTransform>().pivot = new Vector2(0.5f, 0.5f);
+        }
     }
 
     public void SaveChoice(string choice)
@@ -157,6 +240,12 @@ public class GameManager : MonoBehaviour
     {
         TowerData[] towers = new TowerData[300];
         int count = 0;
+        
+        if(GameObject.FindGameObjectWithTag("SelectedTower") != null)
+        {
+            GameObject.FindGameObjectWithTag("SelectedTower").tag = "Tower";
+        }
+
         foreach (GameObject tower in GameObject.FindGameObjectsWithTag("Tower"))
         {
             towers[count] = new TowerData(tower.GetComponent<Tower>());
@@ -304,18 +393,137 @@ public class GameManager : MonoBehaviour
         pauseMenu.transform.GetChild(2).gameObject.SetActive(false);
     }
 
-    private class LevelData
+    public void SettingsMenu(string str)
     {
-        public string[] twistedStones;
+        if (str == "open")
+        {
+            settingsMenu.SetActive(true);
+            pauseMenu.SetActive(false);
+            settingsMenu.transform.GetChild(1).GetChild(0).GetChild(2).GetComponent<Text>().text = "Sound Effects Volume " + Mathf.Round(soundEffectsVolume * 100) + "%";
+            settingsMenu.transform.GetChild(1).GetChild(1).GetChild(2).GetComponent<Text>().text = "Music Volume\n" + Mathf.Round(musicVolume * 100) + "%";
+        }
+        else
+        {
+            pauseMenu.SetActive(true);
+            settingsMenu.SetActive(false);
+        }
+    }
+    public void MouseDown()
+    {
+        mouseHeld = true;
+    }
+
+    public void MouseUp()
+    {
+        mouseHeld = false;
+    }
+
+    public void IncreaseSoundEffectsVolume()
+    {
+        StartCoroutine(VolumeSFXChange(true));
+    }
+    public void DecreaseSoundEffectsVolume()
+    {
+        StartCoroutine(VolumeSFXChange(false));
+    }
+    public void IncreaseMusicVolume()
+    {
+        StartCoroutine(VolumeMusicChange(true));
+    }
+    public void DecreaseMusicVolume()
+    {
+        StartCoroutine(VolumeMusicChange(false));
+    }
+
+    IEnumerator VolumeSFXChange(bool increase)
+    {
+        if (increase)
+        {
+            while (soundEffectsVolume <= 0.99f)
+            {
+                IncreaseVolume("SoundEffects", ref soundEffectsVolume, "Sound Effects Volume ");
+                yield return new WaitForSecondsRealtime(0.03f);
+                if (!mouseHeld)
+                {
+                    break;
+                }
+            }
+        }
+        else
+        {
+            while (soundEffectsVolume >= 0.01f)
+            {
+                DecreaseVolume("SoundEffects", ref soundEffectsVolume, "Sound Effects Volume ");
+                yield return new WaitForSecondsRealtime(0.03f);
+                if (!mouseHeld)
+                {
+                    break;
+                }
+            }
+        }
+        StatsData stats = SaveManager.LoadStats();
+        stats.sfxVolume = soundEffectsVolume;
+        SaveManager.SaveStats(stats);
+    }
+    IEnumerator VolumeMusicChange(bool increase)
+    {
+        if (increase)
+        {
+            while (musicVolume <= 0.99f)
+            {
+                IncreaseVolume("Music", ref musicVolume, "Music Volume\n");
+                yield return new WaitForSecondsRealtime(0.03f);
+                if (!mouseHeld)
+                {
+                    break;
+                }
+            }
+        }
+        else
+        {
+            while (musicVolume >= 0.01f)
+            {
+                DecreaseVolume("Music", ref musicVolume, "Music Volume\n");
+                yield return new WaitForSecondsRealtime(0.03f);
+                if (!mouseHeld)
+                {
+                    break;
+                }
+            }
+        }
+        StatsData stats = SaveManager.LoadStats();
+        stats.musicVolume = musicVolume;
+        SaveManager.SaveStats(stats);
+    }
+
+    private void IncreaseVolume(string type, ref float volume, string str)
+    {
+        volume += 0.01f;
+        GameObject.Find(type).transform.GetChild(2).GetComponent<Text>().text = str + Mathf.Round((volume * 100)) + "%";
+    }
+
+    private void DecreaseVolume(string type, ref float volume, string str)
+    {
+        volume -= 0.01f;
+        GameObject.Find(type).transform.GetChild(2).GetComponent<Text>().text = str + Mathf.Round((volume * 100)) + "%";
+    }
+    private void LoadVolumeConfig()
+    {
+        StatsData stats = SaveManager.LoadStats();
+        soundEffectsVolume = stats.sfxVolume;
+        musicVolume = stats.musicVolume;
     }
 
     public void PlayPopNoise()
     {
+        pop.volume = soundEffectsVolume;
+        pop.pitch = Random.Range(0.8f, 1.2f);
         pop.Play();
     }
 
     public void PlayWhishNoise()
     {
+        whish.volume = soundEffectsVolume;
         whish.Play();
     }
 }

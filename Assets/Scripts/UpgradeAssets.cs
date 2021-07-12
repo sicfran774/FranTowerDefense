@@ -188,7 +188,7 @@ public class UpgradeAssets : MonoBehaviour
     {
         if (treeOneLevel == 1)
         {
-            upgradeDescOne.text = "Dry Ice";
+            upgradeDescOne.text = "Burning Ice";
             upgradeImageOne.sprite = jrollImageOneOne;
             upgradePriceOne.text = upgradeOnePrice.ToString();
         }

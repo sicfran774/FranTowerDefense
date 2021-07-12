@@ -157,7 +157,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2062500809
   m_SortingLayer: 3
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a74b4a58b882af045821499525abd0c9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -206,13 +206,13 @@ MonoBehaviour:
   specialTower: 1
   ammo: {fileID: 5821463407135236317, guid: 0e0655ecaf8b5b44b9f3504a0315b1bb, type: 3}
   abilityDuration: 5
-  abilityCooldown: 30
+  abilityCooldown: 25
   abilityOnCooldown: 0
   secondsUntilCooldownDone: 0
   upgrade1_1Price: 400
-  upgrade1_2Price: 2000
+  upgrade1_2Price: 1500
   upgrade2_1Price: 500
-  upgrade2_2Price: 1250
+  upgrade2_2Price: 1000
   buffed: 0
   doubleMoney: 0
   canShootAllTypes: 0

@@ -8,10 +8,10 @@ public class UpgradeManager : MonoBehaviour
 {
     [Header("Pog Shooter Upgrades")]
     public float pogRangeUpgrade = 2f;
-    public float pogFireRateUpgrade = 0.70f;
+    public float pogFireRateUpgrade = 0.5f;
 
     [Header("Juuls Upgrades")]
-    public float juulsFireRateUpgrade = 0.1f;
+    public float juulsFireRateUpgrade = 0.3f;
 
     [Header("Coopa Troopa Upgrades")]
     public float coopaLongerFlameDuration = 3f;
@@ -21,11 +21,11 @@ public class UpgradeManager : MonoBehaviour
     public float coopaLongestFlameDuration = 4f;
 
     [Header("Tad Rock Upgrades")]
-    public float rockFireRate = 0.7f;
+    public float rockFireRate = 2.5f;
 
     [Header("Jroll Upgrades")]
     public float jrollFireRateUpgrade = 0.5f;
-    public int jrollPerStack = 3;
+    public int jrollPerStack = 2;
 
     [Header("Super Fran Upgrades")]
     public float franFireRate = 0.1f;

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /*  Format of spawning enemies
  *  
@@ -85,33 +86,31 @@ public class SpawnManager : MonoBehaviour
         {
             int health = defaultHealth;
             float time = defaultTimeInterval;
+            GameObject gameObject = enemyAbner;
 
             CheckIfTimeGiven(ref time);
 
             //Start of conditions
             //Checks what letter/number it sees
 
-            //Abner
-            if(enemyOrder[currentPosition].StartsWith("a"))
+            CheckHealthOfEnemy(ref health);
+            if (enemyOrder[currentPosition].StartsWith("a"))
             {
-                CheckHealthOfEnemy(ref health);
                 SpawnEnemy(health, enemyAbner);
             }
             if (enemyOrder[currentPosition].StartsWith("i"))
             {
-                CheckHealthOfEnemy(ref health);
                 SpawnEnemy(health, enemyIceAbner);
             }
             if (enemyOrder[currentPosition].StartsWith("f"))
             {
-                CheckHealthOfEnemy(ref health);
                 SpawnEnemy(health, enemyFireAbner);
             }
             if (enemyOrder[currentPosition].StartsWith("o"))
             {
-                CheckHealthOfEnemy(ref health);
                 SpawnEnemy(health, enemyAbnerOgre);
             }
+            
 
             //End the round
             if (enemyOrder[currentPosition] == "endRound")
@@ -142,6 +141,11 @@ public class SpawnManager : MonoBehaviour
         gameManager.ClearAllProjectiles();
         gameManager.startRoundButton.interactable = true;
         gameManager.roundInProgress = false;
+        if(enemyOrder.Length == currentPosition)
+        {
+            gameManager.Victory(GameObject.Find("GameUI").GetComponent<Player>().health);
+            yield break;
+        }
         gameManager.SavePlayerData();
         gameManager.SaveTowerData();
     }
@@ -172,6 +176,38 @@ public class SpawnManager : MonoBehaviour
             health = defaultHealth;
         }
         numEnemiesSpawned += health;
+    }
+
+    public void SandboxEnemySpawn(string type)
+    {
+        int health;
+        bool isParsable = int.TryParse(GameObject.Find("EnemyHealth").GetComponent<Text>().text, out health);
+        if (isParsable)
+        {
+            health = int.Parse(GameObject.Find("EnemyHealth").GetComponent<Text>().text); //use that health
+        }
+        else
+        {
+            health = 1;
+        }
+
+        switch (type)
+        {
+            case "Abner":
+                SpawnEnemy(health, enemyAbner);
+                break;
+            case "IceAbner":
+                SpawnEnemy(health, enemyIceAbner);
+                break;
+            case "FireAbner":
+                SpawnEnemy(health, enemyFireAbner);
+                break;
+            case "BossAbner":
+                SpawnEnemy(health, enemyAbnerOgre);
+                break;
+            default:
+                break;
+        }
     }
 
     public void SpawnEnemy(int health, GameObject type)

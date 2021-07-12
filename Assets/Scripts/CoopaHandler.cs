@@ -22,6 +22,7 @@ public class CoopaHandler : MonoBehaviour
 
     private bool currentlyFiring;
     private bool cooldown;
+    private float originalCooldownDuration;
 
     void Start()
     {
@@ -33,6 +34,8 @@ public class CoopaHandler : MonoBehaviour
         transform.GetChild(2).gameObject.SetActive(false);
         placeTower = GetComponent<PlaceTower>();
         tower = GetComponent<Tower>();
+
+        originalCooldownDuration = cooldownDuration;
     }
     void Update()
     {
@@ -89,6 +92,12 @@ public class CoopaHandler : MonoBehaviour
     {
         transform.GetChild(2).gameObject.SetActive(false);
     }
+
+    public float GetOriginalCooldownDuration()
+    {
+        return originalCooldownDuration;
+    }
+
     void OnTriggerStay2D(Collider2D collider)
     {
         if (collider.tag == "Enemy" && currentlyFiring && !collider.GetComponent<Enemy>().flamed && !collider.GetComponent<Enemy>().fire)

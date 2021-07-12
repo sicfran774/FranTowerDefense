@@ -10,6 +10,7 @@ public class TadRockHandler : MonoBehaviour
 
     private List<GameObject> towers;
     private GameManager gameManager;
+    private UpgradeManager upgradeManager;
 
     private float timer;
     public float range;
@@ -18,6 +19,7 @@ public class TadRockHandler : MonoBehaviour
     {
         towers = new List<GameObject>();
         gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+        upgradeManager = GameObject.Find("Upgrade Manager").GetComponent<UpgradeManager>();
     }
 
     void Update()
@@ -33,8 +35,11 @@ public class TadRockHandler : MonoBehaviour
             RevertTowerColors();
         }
 
-        UpdateTowerList();
-        ApplyBuffs();
+        if (GetComponent<PlaceTower>().placedTower)
+        {
+            UpdateTowerList();
+            ApplyBuffs();
+        }
 
         if (gameManager.roundInProgress && timer > GetComponent<Tower>().fireRate && passiveIncome)
         {
@@ -88,7 +93,6 @@ public class TadRockHandler : MonoBehaviour
 
     void RemoveAllBuffs()
     {
-        UpgradeManager upgradeManager = GameObject.Find("Upgrade Manager").GetComponent<UpgradeManager>();
         foreach (GameObject tower in towers)
         {
             if (tower != null)
@@ -99,6 +103,10 @@ public class TadRockHandler : MonoBehaviour
 
                 t.buffed = false;
                 t.GetComponent<Tower>().fireRate = t.GetOriginalFireRate();
+                if(t.GetComponent<CoopaHandler>() != null)
+                {
+                    t.GetComponent<CoopaHandler>().cooldownDuration = t.GetComponent<CoopaHandler>().GetOriginalCooldownDuration();
+                }
 
                 upgradeManager.currentTower = tower;
                 upgradeManager.UnlockUpgradeForSpecificTower(t.towerType, 1, t.GetUpgradeInstance().GetUpgradeLevel(1) - 1);

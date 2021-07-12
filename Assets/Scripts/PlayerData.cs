@@ -9,6 +9,7 @@ public class PlayerData
     public int round;
     public int health;
     public int money;
+    public bool sandboxMode;
 
     public PlayerData(Player player)
     {

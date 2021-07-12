@@ -76,7 +76,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2062500809
   m_SortingLayer: 3
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: aa73fd047d664a2468f7d95686256134, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -119,17 +119,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerType: Juuls
   rangeRadius: 2
-  fireRate: 0.25
-  projectileSpeed: 400
-  price: 400
+  fireRate: 0.6
+  projectileSpeed: 450
+  price: 500
   specialTower: 0
   ammo: {fileID: 2729044805137084285, guid: ad28d7161ee55ce41944506e202f490c, type: 3}
   abilityDuration: 5
-  abilityCooldown: 20
+  abilityCooldown: 30
   abilityOnCooldown: 0
   secondsUntilCooldownDone: 0
   upgrade1_1Price: 250
-  upgrade1_2Price: 1500
+  upgrade1_2Price: 1000
   upgrade2_1Price: 300
   upgrade2_2Price: 450
   buffed: 0

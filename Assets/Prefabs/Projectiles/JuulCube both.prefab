@@ -15,7 +15,7 @@ PrefabInstance:
     - target: {fileID: -4246759040175378306, guid: ad28d7161ee55ce41944506e202f490c,
         type: 3}
       propertyPath: damage
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -4246759040175378306, guid: ad28d7161ee55ce41944506e202f490c,
         type: 3}
@@ -26,6 +26,21 @@ PrefabInstance:
         type: 3}
       propertyPath: tickDamage
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1232314101945398204, guid: ad28d7161ee55ce41944506e202f490c,
+        type: 3}
+      propertyPath: m_SortingLayer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1232314101945398204, guid: ad28d7161ee55ce41944506e202f490c,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1232314101945398204, guid: ad28d7161ee55ce41944506e202f490c,
+        type: 3}
+      propertyPath: m_SortingLayerID
+      value: 1444010371
       objectReference: {fileID: 0}
     - target: {fileID: 2729044805137084285, guid: ad28d7161ee55ce41944506e202f490c,
         type: 3}

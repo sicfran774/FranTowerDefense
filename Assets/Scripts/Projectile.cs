@@ -30,53 +30,55 @@ public class Projectile : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        if (canShootAllTypes || !collider.GetComponent<Enemy>().fire && !collider.GetComponent<Enemy>().ice && !collider.GetComponent<Enemy>().boss)
+        Enemy enemy = collider.GetComponent<Enemy>();
+        if (canShootAllTypes || !enemy.fire && !enemy.ice && !enemy.boss)
         {
-            HitEnemy(collider);
+            HitEnemy(enemy);
             gameManager.PlayPopNoise();
         }
-        else if (slow && collider.GetComponent<Enemy>().fire)
+        else if (slow && enemy.fire)
         {
-            HitEnemy(collider);
+            HitEnemy(enemy);
             gameManager.PlayWhishNoise();
         }
-        else if (burn && collider.GetComponent<Enemy>().ice)
+        else if (burn && enemy.ice)
         {
-            HitEnemy(collider);
+            HitEnemy(enemy);
+            gameManager.PlayPopNoise();
         }
 
-        if (collider.GetComponent<Enemy>().boss)
+        if (enemy.boss)
         {
-            RemoveEnemyHealth(collider);
+            RemoveEnemyHealth(enemy);
             Destroy(gameObject);
             gameManager.PlayPopNoise();
         }
     }
 
-    void HitEnemy(Collider2D collider)
+    void HitEnemy(Enemy enemy)
     {
-        CalculateReward(collider);
+        CalculateReward(enemy);
 
         if (GetComponentInParent<Tower>().doubleMoney)
         {
             DoubleMoney();
         }
 
-        collider.GetComponent<Enemy>().reward = reward;
-        RemoveEnemyHealth(collider);
+        enemy.reward = reward;
+        RemoveEnemyHealth(enemy);
         GetComponent<BoxCollider2D>().enabled = false;
         Destroy(gameObject);
     }
 
-    void RemoveEnemyHealth(Collider2D collider)
+    void RemoveEnemyHealth(Enemy enemy)
     {
-        collider.GetComponent<Enemy>().health -= damage;
+        enemy.health -= damage;
     }
-    void CalculateReward(Collider2D collider)
+    void CalculateReward(Enemy enemy)
     {
-        if(damage > collider.GetComponent<Enemy>().health)
+        if(damage > enemy.health)
         {
-            reward = collider.GetComponent<Enemy>().health;
+            reward = enemy.health;
         }
         else
         {

@@ -123,7 +123,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 2062500809
   m_SortingLayer: 3
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e771719f69158ff4191638d28cd40d73, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -176,9 +176,9 @@ MonoBehaviour:
   abilityOnCooldown: 0
   secondsUntilCooldownDone: 0
   upgrade1_1Price: 1500
-  upgrade1_2Price: 1000
-  upgrade2_1Price: 2250
-  upgrade2_2Price: 3000
+  upgrade1_2Price: 3500
+  upgrade2_1Price: 1500
+  upgrade2_2Price: 2000
   buffed: 0
   doubleMoney: 0
   canShootAllTypes: 0
