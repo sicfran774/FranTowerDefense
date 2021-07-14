@@ -34,6 +34,9 @@ public class MenuManager : MonoBehaviour
 
         transform.GetChild(4).gameObject.SetActive(false);
         transform.GetChild(5).gameObject.SetActive(false);
+        transform.GetChild(7).gameObject.SetActive(false);
+        transform.GetChild(8).gameObject.SetActive(false);
+        transform.GetChild(9).gameObject.SetActive(false);
     }
     void Update()
     {
@@ -98,6 +101,38 @@ public class MenuManager : MonoBehaviour
     public void Cancel(string transform)
     {
         GameObject.Find(transform).SetActive(false);
+    }
+
+    public void Settings()
+    {
+        transform.GetChild(7).gameObject.SetActive(true);
+    }
+
+    public void ClearGame()
+    {
+        transform.GetChild(8).gameObject.SetActive(true);
+        transform.GetChild(7).gameObject.SetActive(false);
+    }
+
+    public void ClearGames(string choice)
+    {
+        if (choice == "yes")
+        {
+            SaveManager.ClearData();
+            SaveManager.ClearSaveData();
+            SceneManager.LoadScene("MainMenu");
+        }
+        else
+        {
+            transform.GetChild(7).gameObject.SetActive(true);
+            Cancel("AreYouSure");
+        }
+    }
+    
+    public void About()
+    {
+        transform.GetChild(7).gameObject.SetActive(false);
+        transform.GetChild(9).gameObject.SetActive(true);
     }
 
     private void CheckUnlockedLevels()

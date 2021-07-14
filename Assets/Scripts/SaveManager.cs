@@ -125,4 +125,9 @@ public static class SaveManager
         path = Application.persistentDataPath + "/player.json";
         File.Delete(path);
     }
+    public static void ClearSaveData()
+    {
+        string path = Application.persistentDataPath + "/stats.json";
+        File.Delete(path);
+    }
 }

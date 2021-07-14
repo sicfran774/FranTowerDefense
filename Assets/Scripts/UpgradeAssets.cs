@@ -27,6 +27,18 @@ public class UpgradeAssets : MonoBehaviour
     public Sprite pogShooterImageTwoOne;
     public Sprite pogShooterImageTwoTwo;
 
+    [Header("Coopa Images")]
+    public Sprite coopaImageOneOne;
+    public Sprite coopaImageOneTwo;
+    public Sprite coopaImageTwoOne;
+    public Sprite coopaImageTwoTwo;
+
+    [Header("Tad Images")]
+    public Sprite tadImageOneOne;
+    public Sprite tadImageOneTwo;
+    public Sprite tadImageTwoOne;
+    public Sprite tadImageTwoTwo;
+
     [Header("Jroll Images")]
     public Sprite jrollImageOneOne;
     public Sprite jrollImageOneTwo;
@@ -38,6 +50,12 @@ public class UpgradeAssets : MonoBehaviour
     public Sprite juulsImageOneTwo;
     public Sprite juulsImageTwoOne;
     public Sprite juulsImageTwoTwo;
+
+    [Header("SuperFran Images")]
+    public Sprite superFranImageOneOne;
+    public Sprite superFranImageOneTwo;
+    public Sprite superFranImageTwoOne;
+    public Sprite superFranImageTwoTwo;
 
     private GameObject currentTower;
 
@@ -189,31 +207,31 @@ public class UpgradeAssets : MonoBehaviour
         if (treeOneLevel == 1)
         {
             upgradeDescOne.text = "Burning Ice";
-            upgradeImageOne.sprite = jrollImageOneOne;
+            upgradeImageOne.sprite = juulsImageOneOne;
             upgradePriceOne.text = upgradeOnePrice.ToString();
         }
         else if (treeOneLevel == 2)
         {
             upgradeDescOne.text = "Unlock\nBlizzard Ability";
-            upgradeImageOne.sprite = jrollImageOneTwo;
+            upgradeImageOne.sprite = juulsImageOneTwo;
             upgradePriceOne.text = upgradeOnePrice.ToString();
         }
         else
         {
             upgradeDescOne.text = "Activate\nBlizzard";
-            upgradeImageOne.sprite = jrollImageOneTwo;
+            upgradeImageOne.sprite = juulsImageOneTwo;
             AbilityButtonAsset();
         }
         if (treeTwoLevel == 1)
         {
             upgradeDescTwo.text = "Double Slow Duration";
-            upgradeImageTwo.sprite = jrollImageTwoOne;
+            upgradeImageTwo.sprite = juulsImageTwoOne;
             upgradePriceTwo.text = upgradeTwoPrice.ToString();
         }
         else
         {
             upgradeDescTwo.text = "Ice Rush";
-            upgradeImageTwo.sprite = jrollImageTwoTwo;
+            upgradeImageTwo.sprite = juulsImageTwoTwo;
             upgradePriceTwo.text = upgradeTwoPrice.ToString();
         }
     }
@@ -222,25 +240,25 @@ public class UpgradeAssets : MonoBehaviour
         if (treeOneLevel == 1)
         {
             upgradeDescOne.text = "Longer Flames\nDuration";
-            upgradeImageOne.sprite = jrollImageOneOne;
+            upgradeImageOne.sprite = coopaImageOneOne;
             upgradePriceOne.text = upgradeOnePrice.ToString();
         }
         else
         {
             upgradeDescOne.text = "Even Longer\nFlame Duration";
-            upgradeImageOne.sprite = jrollImageOneTwo;
+            upgradeImageOne.sprite = coopaImageOneTwo;
             upgradePriceOne.text = upgradeOnePrice.ToString();
         }
         if (treeTwoLevel == 1)
         {
             upgradeDescTwo.text = "Reduce Cooldown\nand Fire Effectiveness";
-            upgradeImageTwo.sprite = jrollImageTwoOne;
+            upgradeImageTwo.sprite = coopaImageTwoOne;
             upgradePriceTwo.text = upgradeTwoPrice.ToString();
         }
         else
         {
             upgradeDescTwo.text = "Increase Burn Duration";
-            upgradeImageTwo.sprite = jrollImageTwoTwo;
+            upgradeImageTwo.sprite = coopaImageTwoTwo;
             upgradePriceTwo.text = upgradeTwoPrice.ToString();
         }
     }
@@ -249,25 +267,25 @@ public class UpgradeAssets : MonoBehaviour
         if (treeOneLevel == 1)
         {
             upgradeDescOne.text = "Faster Fire Rate";
-            upgradeImageOne.sprite = jrollImageOneOne;
+            upgradeImageOne.sprite = superFranImageOneOne;
             upgradePriceOne.text = upgradeOnePrice.ToString();
         }
         else
         {
             upgradeDescOne.text = "Spread Shot";
-            upgradeImageOne.sprite = jrollImageOneTwo;
+            upgradeImageOne.sprite = superFranImageOneTwo;
             upgradePriceOne.text = upgradeOnePrice.ToString();
         }
         if (treeTwoLevel == 1)
         {
             upgradeDescTwo.text = "Increase Range";
-            upgradeImageTwo.sprite = jrollImageTwoOne;
+            upgradeImageTwo.sprite = superFranImageTwoOne;
             upgradePriceTwo.text = upgradeTwoPrice.ToString();
         }
         else
         {
             upgradeDescTwo.text = "Double Damage";
-            upgradeImageTwo.sprite = jrollImageTwoTwo;
+            upgradeImageTwo.sprite = superFranImageTwoTwo;
             upgradePriceTwo.text = upgradeTwoPrice.ToString();
         }
     }
@@ -276,25 +294,25 @@ public class UpgradeAssets : MonoBehaviour
         if (treeOneLevel == 1)
         {
             upgradeDescOne.text = "Towers Gain\nDouble Money";
-            upgradeImageOne.sprite = jrollImageOneOne;
+            upgradeImageOne.sprite = tadImageOneOne;
             upgradePriceOne.text = upgradeOnePrice.ToString();
         }
         else
         {
             upgradeDescOne.text = "Towers Can Shoot\nAny Enemy Type";
-            upgradeImageOne.sprite = jrollImageOneTwo;
+            upgradeImageOne.sprite = tadImageOneTwo;
             upgradePriceOne.text = upgradeOnePrice.ToString();
         }
         if (treeTwoLevel == 1)
         {
             upgradeDescTwo.text = "Passive Rock Income";
-            upgradeImageTwo.sprite = jrollImageTwoOne;
+            upgradeImageTwo.sprite = tadImageTwoOne;
             upgradePriceTwo.text = upgradeTwoPrice.ToString();
         }
         else
         {
             upgradeDescTwo.text = "Stacks of Rock";
-            upgradeImageTwo.sprite = jrollImageTwoTwo;
+            upgradeImageTwo.sprite = tadImageTwoTwo;
             upgradePriceTwo.text = upgradeTwoPrice.ToString();
         }
     }
@@ -309,7 +327,7 @@ public class UpgradeAssets : MonoBehaviour
         {
             upgradePriceOne.text = null;
         }
-
+        
         upgradeOneGameObject.transform.GetChild(3).gameObject.SetActive(false);
     }
 
